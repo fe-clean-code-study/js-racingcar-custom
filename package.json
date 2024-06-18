@@ -1,0 +1,14 @@
+{
+  "name": "js-racingcar-deep",
+  "version": "1.0.0",
+  "description": "자동차 경주 미션을 통해서 학습하는 클린코드",
+  "main": "./src/main.js",
+  "type":  "module",
+  "scripts": {
+    "start": "node src/main.js",
+    "start:watch": "node --watch src/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
