@@ -1,13 +1,12 @@
 export default class Game {
-  constructor({ maxRound, setup, action, ending, termTime }) {
+  constructor({ maxRound, termTime }) {
     this.maxRound = maxRound;
     this.currentRound = 0;
-    this.setup = setup
-    this.action = action
-    this.ending = ending
     this.termTime = termTime;
   }
-
+  setup(){}
+  action(){}
+  ending(){}
   playARound() {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -19,7 +18,7 @@ export default class Game {
   }
 
   async play() {
-    this.setup()
+    await this.setup()
     while (this.currentRound < this.maxRound) {
       await this.playARound();
     }
