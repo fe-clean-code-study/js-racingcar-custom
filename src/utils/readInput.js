@@ -1,21 +1,17 @@
 import readline from "readline"
+import { defaultInputValidations } from "../validations/input.js"
 
-const defaultValidations = [
-  {
-    check: input => input.trim().length > 0,
-    errorMessage: "1자 이상 입력해야 합니다."
-  },
-  {
-    check: input => input !== 'abc',
-    errorMessage: "abc라는 이름은 없습니다."
-  }
-]
-
-
-const createReadline = () => readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-})
+const createReadline = () => {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
+  rl.isOpened = true;
+  rl.on('close', () => {
+    rl.isOpened = false;
+  })
+  return rl
+}
 
 const askQuestion = (rl, message) => {
   return new Promise((resolve) => {
@@ -31,17 +27,18 @@ const findInputError = (input, validations) => {
 }
 
 const readInput = (message, validations = [], option = 'once') => {
-  const rl = createReadline()
+  let rl = createReadline()
   const processInput = async () => {
+    if (!rl.isOpened) rl = createReadline()
     const input = await askQuestion(rl, message)
-    const errorMessage = findInputError(input, [...defaultValidations, ...validations])
+    const errorMessage = findInputError(input, [...defaultInputValidations, ...validations])
 
-    if (option === 'keep' && errorMessage){
+    if (option === 'repeat' && errorMessage){
       console.error(errorMessage)
       return processInput()
     }
     rl.close()
-    return { input, error: errorMessage }
+    return { input, error: errorMessage, retry: processInput }
   }
   return processInput()
 }
