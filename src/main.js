@@ -10,20 +10,29 @@ async function main() {
   const carNames = []
   const cars = {}
 
-  input.split(',').forEach(name => {
-    carNames.push(name)
-    cars[name] = new Car(name)
-  })
+  const game = new Game({
+    maxRound: 5,
+    setup: ()=>{
+      input.split(',').forEach(name => {
+        carNames.push(name)
+        cars[name] = new Car(name)
+      })
+    },
+    action: ()=> {
+      carNames.forEach(name => {
+        if (getRandomNumber(0, 9) >= 4) cars[name].move()
+        cars[name].show()
+      })
+      console.log('')
+    },
+    ending: () => {
+      const winnerPosition = Math.max(...carNames.map(name => cars[name].position))
+      const winners = carNames.filter(name => cars[name].position === winnerPosition)
 
-  const game = new Game(5, () => {
-    carNames.forEach(name => {
-      if (getRandomNumber(0, 9) >= 4){
-        cars[name].move()
-      }
-      cars[name].show()
-    })
-    console.log('')
-  }, 1000)
+      console.log(`${winners.join(', ')}가 최종 우승했습니다.`)
+    },
+    termTime: 1000
+  })
 
   await game.play()
 }
