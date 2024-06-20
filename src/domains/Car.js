@@ -1,15 +1,13 @@
 export default class Car{
+  #position
   constructor(name) {
     this.name = name
-    this.pos = 0
+    this.#position = 0
   }
   get position() {
-    return this.pos
+    return this.#position
   }
   move() {
-    this.pos += 1
-  }
-  show() {
-    console.log(`${this.name} : ${'_'.repeat(this.pos)}`)
+    this.#position += 1
   }
 }

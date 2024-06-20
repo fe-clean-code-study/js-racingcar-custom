@@ -4,9 +4,12 @@ export default class Game {
     this.currentRound = 0;
     this.termTime = termTime;
   }
+  showProgress(){}
+  showResult(){}
   setup(){}
   action(){}
   ending(){}
+
   playARound() {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -20,8 +23,10 @@ export default class Game {
   async play() {
     await this.setup()
     while (this.currentRound < this.maxRound) {
-      await this.playARound();
+      await this.playARound()
+      this.showProgress()
     }
     this.ending()
+    this.showResult()
   }
 }
