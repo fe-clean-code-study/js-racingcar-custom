@@ -31,5 +31,7 @@ function readLineAsync(query) {
 
 async function play() {
   const name = await readLineAsync("자동차 이름을 입력하세요 > ");
-  console.log(name);
+  const car = Car(name);
+  car.tellName();
+  car.tellNow();
 }
