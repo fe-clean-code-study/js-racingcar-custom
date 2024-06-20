@@ -29,15 +29,13 @@ class Race {
   start() {
     console.log("\n실행 결과");
     for (let i = 0; i < this.#laps; i++) {
-      this.#racers.forEach(this.#moveRacer);
+      this.#racers.forEach((racer) => {
+        this.#movementStrategy(racer);
+        Race.#showRacer(racer);
+      });
       console.log("");
     }
     this.#showResult();
-  }
-
-  #moveRacer(racer) {
-    this.#movementStrategy(racer);
-    Race.#showRacer(racer);
   }
 
   #movementStrategy(racer) {
