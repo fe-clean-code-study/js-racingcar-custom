@@ -1,6 +1,7 @@
 import readInput from "./utils/readInput.js";
 import Car from "./domains/Car.js";
 import {getRandomNumber} from "./utils/getRandomNumber.js";
+import Game from "./domains/Game.js";
 
 
 async function main() {
@@ -13,7 +14,8 @@ async function main() {
     carNames.push(name)
     cars[name] = new Car(name)
   })
-  const playOneRound = () => {
+
+  const game = new Game(5, () => {
     carNames.forEach(name => {
       if (getRandomNumber(0, 9) >= 4){
         cars[name].move()
@@ -21,13 +23,9 @@ async function main() {
       cars[name].show()
     })
     console.log('')
-  }
+  }, 1000)
 
-  playOneRound()
-  playOneRound()
-  playOneRound()
-  playOneRound()
-  playOneRound()
+  await game.play()
 }
 
 main();
