@@ -1,7 +1,7 @@
 import { getRandomNumber } from "../utils/index.js";
+import { readLineAsync } from "../service/index.js";
 
 class Race {
-  static #INPUT_SEPARATOR = ",";
   #Racer;
   #laps;
   #racers;
@@ -12,54 +12,69 @@ class Race {
     this.#racers = [];
   }
 
-  #addRacer(racer) {
-    this.#racers.push(racer);
-  }
+  async ready() {
+    const input = await readLineAsync(
+      "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).\n"
+    );
 
-  ready(input) {
     if (typeof input !== "string") {
       throw new Error("경기 준비에 적합하지 않은 입력값입니다.");
     }
 
-    input.split(Race.#INPUT_SEPARATOR).forEach((val) => {
-      this.#addRacer(new this.#Racer(val));
-    });
+    const racerNameList = input.split(",");
+    this.#addRacers(racerNameList);
   }
 
   start() {
     console.log("\n실행 결과");
-    for (let i = 0; i < this.#laps; i++) {
-      this.#racers.forEach((racer) => {
-        this.#movementStrategy(racer);
-        Race.#showRacer(racer);
-      });
-      console.log("");
-    }
-    this.#showResult();
+
+    Array.from({ length: this.#laps }).forEach(() => {
+      this.#progressRace();
+    });
+
+    Race.#showResult(this.winners);
+  }
+
+  #addRacer(racer) {
+    this.#racers.push(racer);
+  }
+
+  #addRacers(racerNameList) {
+    racerNameList.forEach((name) => {
+      this.#addRacer(new this.#Racer(name));
+    });
   }
 
   #movementStrategy(racer) {
     const number = getRandomNumber(0, 9);
 
-    if (4 <= number) {
-      racer.move();
-    }
+    if (4 <= number) racer.move();
+  }
+
+  #progressRace() {
+    this.#racers.forEach((racer) => {
+      this.#movementStrategy(racer);
+      Race.#showRacer(racer);
+    });
+    console.log("");
   }
 
   get winners() {
-    const max = Math.max(...this.#racers.map((racer) => racer.position));
-
-    return this.#racers.filter((racer) => racer.position === max);
-  }
-
-  #showResult() {
-    console.log(
-      `${this.winners.map((w) => w.name).join(",")}가 최종 우승했습니다.`
+    const maxPosition = Math.max(
+      ...this.#racers.map((racer) => racer.position)
     );
+
+    return this.#racers.filter((racer) => racer.position === maxPosition);
   }
 
   static #showRacer(racer) {
     console.log(`${racer.name} : ${"-".repeat(racer.position)}`);
+  }
+
+  static #showResult(racers) {
+    console.log(
+      `${racers.map((racer) => racer.name).join(",")}가 최종 우승했습니다.`
+    );
   }
 }
 
