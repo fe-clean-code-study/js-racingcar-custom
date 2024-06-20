@@ -3,16 +3,31 @@
   "version": "1.0.0",
   "description": "자동차 경주 미션을 통해서 학습하는 클린코드",
   "main": "./src/main.js",
-  "type":  "module",
+  "type": "module",
   "scripts": {
     "start": "node src/main.js",
     "start:watch": "node --watch src/main.js",
-    "test": "vitest"
+    "test": "vitest",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.6.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "prettier": "3.3.2",
     "vitest": "^1.6.0"
   }
 }
