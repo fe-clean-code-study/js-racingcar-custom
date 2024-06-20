@@ -7,6 +7,7 @@ export default class RacingGame extends Game {
   #cars
   carNames = []
   winners = []
+
   constructor({ maxRound, termTime }) {
     super({ maxRound, termTime });
     this.#cars = {}
@@ -19,11 +20,13 @@ export default class RacingGame extends Game {
       this.carNames.push(name)
     })
   }
+
   action() {
     this.carNames.forEach(name => {
       if (getRandomNumber(0, 9) >= 4) this.#cars[name].move()
     })
   }
+
   ending() {
     const maxPosition = Math.max(...this.carNames.map(name => this.#cars[name].position))
     this.winners = this.carNames.filter(name => this.#cars[name].position === maxPosition)

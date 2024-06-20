@@ -4,6 +4,7 @@ export default class Game {
     this.currentRound = 0;
     this.termTime = termTime;
   }
+
   showProgress(){}
   showResult(){}
   setup(){}
