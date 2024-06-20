@@ -45,15 +45,9 @@ class Race {
     });
   }
 
-  #movementStrategy(racer) {
-    const number = getRandomNumber(0, 9);
-
-    if (4 <= number) racer.move();
-  }
-
   #progressRace() {
     this.#racers.forEach((racer) => {
-      this.#movementStrategy(racer);
+      Race.#movementStrategy(racer);
       Race.#showRacer(racer);
     });
     console.log("");
@@ -65,6 +59,12 @@ class Race {
     );
 
     return this.#racers.filter((racer) => racer.position === maxPosition);
+  }
+
+  static #movementStrategy(racer) {
+    const number = getRandomNumber(0, 9);
+
+    if (4 <= number) racer.move();
   }
 
   static #showRacer(racer) {
