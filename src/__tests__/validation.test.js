@@ -1,6 +1,20 @@
 import { describe, test, expect } from 'vitest';
 import validation from '../utils/validation';
 
+describe('라운드 배열 유효성 검사', () => {
+  test.each([
+    {
+      rounds: 1,
+    },
+    { rounds: function () {} },
+    { rounds: null },
+  ])('라운드 배열($rounds)이 배열이 아니면 오류가 발생한다.', ({ rounds }) => {
+    expect(() => {
+      validation.isValidateRounds(rounds);
+    });
+  });
+});
+
 describe('라운드 유효성 검사', () => {
   test('라운드가 숫자 형태가 아니면 오류가 발생한다.', () => {
     expect(() => {
@@ -17,9 +31,14 @@ describe('라운드 유효성 검사', () => {
         validation.isValidateRound(51);
       }).toThrow();
     });
-  test.each([1, 2, 49, 50])(
-    '라운드가 1 이상 50 이하의 숫자면 에러를 발생하지 않는다.',
-    (round) => {
+  test.each([
+    {
+      round: 1,
+    },
+    { round: 50 },
+  ])(
+    '라운드($round)가 1 이상 50 이하의 숫자면 에러를 발생하지 않는다.',
+    ({ round }) => {
       expect(validation.isValidateRound(round)).toBe(true);
     }
   );
@@ -53,7 +72,7 @@ describe('자동차 배열 유효성 검사', () => {
         ]);
       }).toThrow();
     }),
-    test('자동차 이름이 중복되지 않고, 2개 이상 10개여야 한다.', () => {
+    test('자동차 이름($)이 중복되지 않고, 2개 이상 10개여야 한다.', () => {
       expect(validation.isValidateCars(['suyeon', 'hodu'])).toBe(true);
     });
 });
@@ -80,12 +99,16 @@ describe('자동차 포지션 유효성 검사', () => {
       validation.isValidatePosition(-1);
     }).toThrow();
   }),
-    test.each(['position', {}, [], null])(
-      '포지션이 숫자가 아니면 에러를 발생한다.',
-      (position) => {
-        expect(() => {
-          validation.isValidatePosition(position);
-        }).toThrow();
-      }
-    );
+    test.each([
+      {
+        position: 'position',
+      },
+      { position: {} },
+      { position: [] },
+      { position: null },
+    ])('포지션이($position) 숫자가 아니면 에러를 발생한다.', ({ position }) => {
+      expect(() => {
+        validation.isValidatePosition(position);
+      }).toThrow();
+    });
 });
