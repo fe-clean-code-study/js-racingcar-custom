@@ -1,4 +1,14 @@
 const validation = {
+  isValidateRounds: (rounds) => {
+    if (Array.isArray(rounds) === false) {
+      throw new Error('rounds 는 배열이어야 합니다.');
+    }
+    if (rounds.some((round) => typeof round !== 'number')) {
+      throw new Error('rounds 는 숫자 배열이어야 합니다.');
+    }
+
+    return true;
+  },
   isValidateRacing: (cars, round) => {
     return validation.isValidateCars(cars) && validation.isValidateRound(round);
   },
