@@ -73,7 +73,7 @@ class Race {
 
   static #showResult(racers) {
     console.log(
-      `${racers.map((racer) => racer.name).join(",")}가 최종 우승했습니다.`
+      `${racers.map((racer) => racer.name).join(", ")}가 최종 우승했습니다.`
     );
   }
 }
