@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { ERROR_MESSAGES } from '../constants/errorMessages.js';
 
 /**
  * 콜백 함수를 전달된 횟수만큼 반복 실행

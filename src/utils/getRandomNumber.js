@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from '../constants/errorMessages';
+import { ERROR_MESSAGES } from '../constants/errorMessages.js';
 
 /**
  * 주어진 범위 내에서 랜덤 숫자를 반환하는 함수
