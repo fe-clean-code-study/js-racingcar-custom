@@ -13,11 +13,31 @@
  * getRandomNumber(5, 15);
  */
 function getRandomNumber(num1, num2) {
-  if (typeof num2 === 'undefined') {
-    return Math.floor(Math.random() * (num1 + 1));
+  let random;
+
+  if (
+    typeof num1 !== 'number' ||
+    (typeof num2 !== 'undefined' && typeof num2 !== 'number')
+  ) {
+    throw new Error('숫자를 전달해야 합니다.');
   }
 
-  return Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
+  if (num1 > num2) {
+    throw new Error('첫 번째 인자가 두 번째 인자보다 작거나 같아야 합니다.');
+  }
+
+  if (typeof num2 !== 'undefined') {
+    random = Math.floor(Math.random() * (num2 - num1 + 1)) + num1;
+    return parseInt(random);
+  }
+
+  if (num1 < 0) {
+    random = Math.ceil(Math.random() * (num1 - 1));
+    return parseInt(random);
+  }
+
+  random = Math.floor(Math.random() * (num1 + 1));
+  return parseInt(random);
 }
 
 export default getRandomNumber;
