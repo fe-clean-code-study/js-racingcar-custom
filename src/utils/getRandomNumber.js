@@ -1,3 +1,5 @@
+import { ERROR_MESSAGES } from '../constants/errorMessages';
+
 /**
  * 주어진 범위 내에서 랜덤 숫자를 반환하는 함수
  *
@@ -19,11 +21,11 @@ function getRandomNumber(num1, num2) {
     typeof num1 !== 'number' ||
     (typeof num2 !== 'undefined' && typeof num2 !== 'number')
   ) {
-    throw new Error('숫자를 전달해야 합니다.');
+    throw new Error(ERROR_MESSAGES.INVALID_NUMBER);
   }
 
   if (num1 > num2) {
-    throw new Error('첫 번째 인자가 두 번째 인자보다 작거나 같아야 합니다.');
+    throw new Error(ERROR_MESSAGES.INVALID_RANGE);
   }
 
   if (typeof num2 !== 'undefined') {

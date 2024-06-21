@@ -1,3 +1,5 @@
+import { ERROR_MESSAGES } from '../constants/errorMessages';
+
 /**
  * 콜백 함수를 전달된 횟수만큼 반복 실행
  *
@@ -14,15 +16,15 @@
  */
 function repeatFn(fn, times = 1) {
   if (typeof fn !== 'function') {
-    throw new Error('함수를 전달해야 합니다.');
+    throw new Error(ERROR_MESSAGES.INVALID_FUNCTION);
   }
 
   if (typeof times !== 'number') {
-    throw new Error('숫자를 전달해야 합니다.');
+    throw new Error(ERROR_MESSAGES.INVALID_NUMBER);
   }
 
   if (times < 1) {
-    throw new Error('횟수는 1 이상이어야 합니다.');
+    throw new Error(ERROR_MESSAGES.INVALID_TIMES_RANGE);
   }
 
   for (let i = 0; i < times; i++) {
