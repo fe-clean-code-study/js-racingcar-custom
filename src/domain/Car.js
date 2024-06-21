@@ -1,51 +1,40 @@
-function makeCar(maxNameLength) {
-  if (typeof maxNameLength !== "number") {
-    throw new Error("makeCar 함수의 인수값이 숫자가 아닙니다.");
+class Car {
+  static #MAX_NAME_LENGTH = 5;
+  #name;
+  #position;
+
+  constructor(name) {
+    const trimedName = name.trim();
+    Car.#validateName(trimedName);
+    this.#name = trimedName;
+    this.#position = 0;
   }
 
-  if (maxNameLength < 1) {
-    throw new Error("makeCar 함수의 인수값이 1 이상이어야 합니다.");
+  get name() {
+    return this.#name;
   }
 
-  return class Car {
-    #name;
-    #position;
+  move() {
+    this.#position++;
+  }
 
-    constructor(name) {
-      const trimedName = name.trim();
-      Car.#validateName(trimedName);
-      this.#name = trimedName;
-      this.#position = 0;
+  get position() {
+    return this.#position;
+  }
+
+  static #validateName(name) {
+    if (typeof name !== "string") {
+      throw new Error("자동차 이름은 문자열이어야 합니다.");
     }
 
-    get name() {
-      return this.#name;
+    if (Car.#MAX_NAME_LENGTH < name.length) {
+      throw new Error("자동차 이름은 5자 이하여야 합니다.");
     }
 
-    move() {
-      this.#position++;
+    if (name.length < 1) {
+      throw new Error("자동차 이름은 1자 이상이어야 합니다.");
     }
-
-    get position() {
-      return this.#position;
-    }
-
-    static #validateName(name) {
-      if (typeof name !== "string") {
-        throw new Error("자동차 이름은 문자열이어야 합니다.");
-      }
-
-      if (maxNameLength < name.length) {
-        throw new Error("자동차 이름은 5자 이하여야 합니다.");
-      }
-
-      if (name.length < 1) {
-        throw new Error("자동차 이름은 1자 이상이어야 합니다.");
-      }
-    }
-  };
+  }
 }
-
-const Car = makeCar(5);
 
 export default Car;
