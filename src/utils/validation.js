@@ -58,6 +58,9 @@ const validation = {
     return true;
   },
   isValidateCarName: (name) => {
+    if (typeof name !== 'string') {
+      throw new Error('자동차의 이름은 문자열 형태여야 합니다.');
+    }
     name = name.trim();
 
     if (name.length === 0) {
