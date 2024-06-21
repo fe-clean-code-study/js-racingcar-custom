@@ -12,7 +12,7 @@ class Car {
   setName(name) {
     if (!validation.isValidateCarName(name)) return '';
 
-    this.#name = name;
+    this.#name = name.trim();
     return this.#name;
   }
 
