@@ -13,6 +13,18 @@
  * getRandomNumber(5, 15);
  */
 function repeatFn(fn, times = 1) {
+  if (typeof fn !== 'function') {
+    throw new Error('함수를 전달해야 합니다.');
+  }
+
+  if (typeof times !== 'number') {
+    throw new Error('숫자를 전달해야 합니다.');
+  }
+
+  if (times < 1) {
+    throw new Error('횟수는 1 이상이어야 합니다.');
+  }
+
   for (let i = 0; i < times; i++) {
     fn();
   }
