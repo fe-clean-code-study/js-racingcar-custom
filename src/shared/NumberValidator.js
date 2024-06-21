@@ -19,6 +19,9 @@ class NumberValidator extends Validator {
   }
 
   inRange(min, max) {
+    NumberValidator.from(min);
+    NumberValidator.from(max);
+
     if (this.value < min || this.value > max) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
     }
@@ -26,6 +29,8 @@ class NumberValidator extends Validator {
   }
 
   greaterThan(otherValue) {
+    NumberValidator.from(otherValue);
+
     if (this.value <= otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN);
     }
@@ -33,6 +38,8 @@ class NumberValidator extends Validator {
   }
 
   lessThan(otherValue) {
+    NumberValidator.from(otherValue);
+
     if (this.value >= otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
     }
@@ -40,14 +47,16 @@ class NumberValidator extends Validator {
   }
 
   sameAs(otherValue) {
+    NumberValidator.from(otherValue);
+
     if (this.value !== otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
     }
     return this;
   }
 
-  static #validateNumber(value) {
-    if (typeof value !== 'number' || isNaN(value)) {
+  static #validateNumber(...args) {
+    if (args.some((value) => typeof value !== 'number' || isNaN(value))) {
       NumberValidator._throwError(
         NumberValidator.#ERROR_MESSAGES.INVALID_NUMBER,
       );

@@ -17,7 +17,7 @@ class Validator {
   }
 
   static #validateValue(value) {
-    if (!value) {
+    if (value === undefined || value === null || value === '') {
       Validator._throwError(Validator.#ERROR_MESSAGES.INVALID_VALUE);
     }
   }
