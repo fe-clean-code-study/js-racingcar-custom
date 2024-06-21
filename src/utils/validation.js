@@ -13,6 +13,7 @@ const validation = {
     return true;
   },
   isValidateCars: (cars) => {
+    cars = cars.map((car) => car.trim());
     const carSet = new Set(cars);
 
     if (carSet.size !== cars.length) {
@@ -25,6 +26,9 @@ const validation = {
     return true;
   },
   isValidatePosition: (position) => {
+    if (isNaN(position) || typeof position !== 'number') {
+      throw new Error('포지션은 숫자여야 합니다');
+    }
     if (position < 0) {
       throw new Error('거리는 최소 0부터 시작해야 합니다.');
     }
