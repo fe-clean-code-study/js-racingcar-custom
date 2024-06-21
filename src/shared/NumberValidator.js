@@ -25,6 +25,7 @@ class NumberValidator extends Validator {
     if (this.value < min || this.value > max) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
     }
+
     return this;
   }
 
@@ -34,6 +35,7 @@ class NumberValidator extends Validator {
     if (this.value <= otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN);
     }
+
     return this;
   }
 
@@ -43,6 +45,7 @@ class NumberValidator extends Validator {
     if (this.value >= otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
     }
+
     return this;
   }
 
@@ -52,6 +55,7 @@ class NumberValidator extends Validator {
     if (this.value !== otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
     }
+
     return this;
   }
 
