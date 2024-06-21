@@ -1,3 +1,5 @@
+import Car from '../model/Car.js';
+
 const validation = {
   isValidateRounds: (rounds) => {
     if (Array.isArray(rounds) === false) {
@@ -10,7 +12,10 @@ const validation = {
     return true;
   },
   isValidateRacing: (cars, round) => {
-    return validation.isValidateCars(cars) && validation.isValidateRound(round);
+    return (
+      cars.every((car) => car instanceof Car) &&
+      validation.isValidateRound(round)
+    );
   },
   isValidateRound: (round) => {
     if (isNaN(round) === true || typeof round !== 'number') {
@@ -23,6 +28,13 @@ const validation = {
     return true;
   },
   isValidateCars: (cars) => {
+    if (Array.isArray(cars) === false) {
+      throw new Error('cars 는 배열이어야 합니다');
+    }
+    if (cars.some((car) => typeof car !== 'string')) {
+      throw new Error('cars 는 문자열로 이뤄져야 합니다');
+    }
+
     cars = cars.map((car) => car.trim());
     const carSet = new Set(cars);
 

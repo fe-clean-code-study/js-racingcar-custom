@@ -11,6 +11,14 @@ class Racing {
     this.#cars = this.setCars(cars);
   }
 
+  getRound() {
+    return this.#round;
+  }
+
+  getCars() {
+    return this.#cars;
+  }
+
   setRound(round) {
     if (!validation.isValidateRound(round)) {
       return 0;
