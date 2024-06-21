@@ -33,6 +33,8 @@ class Car {
 
   move(distance = 1) {
     this.setPosition(this.#position + distance);
+
+    return this.#position;
   }
 }
 
