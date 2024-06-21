@@ -5,7 +5,9 @@ class NumberValidator extends Validator {
     INVALID_NUMBER: '숫자 타입이 아닙니다.',
     INVALID_RANGE: '잘못된 숫자 범위입니다.',
     NOT_GREATER_THAN: '값이 기준 값보다 커야 합니다.',
+    NOT_GREATER_THAN_OR_EQUAL: '값이 기준 값보다 크거나 같아야 합니다.',
     NOT_LESS_THAN: '값이 기준 값보다 작아야 합니다.',
+    NOT_LESS_THAN_OR_EQUAL: '값이 기준 값보다 작거나 같아야 합니다.',
     NOT_SAME_AS: '값이 기준 값과 같아야 합니다.',
   });
 
@@ -39,11 +41,33 @@ class NumberValidator extends Validator {
     return this;
   }
 
+  greaterThanOrEqual(otherValue) {
+    NumberValidator.from(otherValue);
+
+    if (this.value < otherValue) {
+      this._throwError(
+        NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN_OR_EQUAL,
+      );
+    }
+
+    return this;
+  }
+
   lessThan(otherValue) {
     NumberValidator.from(otherValue);
 
     if (this.value >= otherValue) {
       this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
+    }
+
+    return this;
+  }
+
+  lessThanOrEqual(otherValue) {
+    NumberValidator.from(otherValue);
+
+    if (this.value > otherValue) {
+      this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL);
     }
 
     return this;
