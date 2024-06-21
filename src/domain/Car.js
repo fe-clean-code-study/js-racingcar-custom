@@ -1,25 +1,12 @@
-class Car {
+import Racer from "./Racer.js";
+
+class Car extends Racer {
   static #MAX_NAME_LENGTH = 5;
-  #name;
-  #position;
 
   constructor(name) {
-    const trimedName = name.trim();
-    Car.#validateName(trimedName);
-    this.#name = trimedName;
-    this.#position = 0;
-  }
+    super(name);
 
-  get name() {
-    return this.#name;
-  }
-
-  move() {
-    this.#position++;
-  }
-
-  get position() {
-    return this.#position;
+    Car.#validateName(this.name);
   }
 
   static #validateName(name) {
