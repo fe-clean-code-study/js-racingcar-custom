@@ -1,5 +1,6 @@
-import { getRandomNumber } from "../utils/index.js";
+import { getRandomNumber, isSubclass } from "../utils/index.js";
 import { readLineAsync } from "../service/index.js";
+import Racer from "./Racer.js";
 
 class Race {
   #Racer;
@@ -7,6 +8,8 @@ class Race {
   #racers;
 
   constructor(Racer, laps) {
+    Race.#validateRacer(Racer);
+    Race.#validateLaps(laps);
     this.#Racer = Racer;
     this.#laps = laps;
     this.#racers = [];
@@ -75,6 +78,22 @@ class Race {
     console.log(
       `${racers.map((racer) => racer.name).join(", ")}가 최종 우승했습니다.`
     );
+  }
+
+  static #validateRacer(racer) {
+    if (!isSubclass(racer, Racer)) {
+      throw new Error("레이서가 Racer 클래스를 자식 클래스가 아닙니다.");
+    }
+  }
+
+  static #validateLaps(laps) {
+    if (typeof laps !== "number") {
+      throw new Error("레이스 횟수는 숫자여야 합니다.");
+    }
+
+    if (laps < 1) {
+      throw new Error("레이스 횟수는 1이상이어야 합니다.");
+    }
   }
 }
 
