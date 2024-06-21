@@ -1,0 +1,13 @@
+import { describe, expect, test } from 'vitest';
+import Main from '../main.js';
+
+describe('Main 클래스에 대한 단위 테스트 진행', () => {
+  test.each([{ rounds: '' }, { rounds: function () {} }, { rounds: null }])(
+    'Main 클래스시 전달하는 ($rounds) 는 배열이 아니면 에러를 반환한다.',
+    ({ rounds }) => {
+      expect(() => {
+        new Main(rounds);
+      }).toThrow();
+    }
+  );
+});
