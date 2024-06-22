@@ -1,33 +1,45 @@
 export default class Game {
-  constructor({ maxRound, termTime }) {
-    this.maxRound = maxRound;
-    this.currentRound = 0;
-    this.termTime = termTime;
+  constructor({ maxRound, roundMode = 'single' }) {
+    this.currentRound = 0
+    this.maxRound = maxRound
+
+    this.roundMode = roundMode
+    if (this.roundMode === 'multiple') {
+      this.bindRounds()
+    }
   }
 
-  showProgress(){}
-  showResult(){}
-  setup(){}
-  action(){}
-  ending(){}
+  async setup() {
+  }
 
-  playARound() {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        this.action();
-        this.currentRound += 1;
-        resolve();
-      }, this.termTime);
-    });
+  rounds() {
+  }
+
+  bindRounds() {
+    const roundMethodNames = Object.getOwnPropertyNames(Object.getPrototypeOf(this))
+      .filter(prop => typeof this[prop] === 'function' && prop.startsWith('round'))
+    this.rounds = roundMethodNames.map(methodName => this[methodName].bind(this))
+  }
+
+  finish() {
+  }
+
+  playEachRounds() {
+    this.rounds.forEach(round => {
+      round()
+      this.currentRound += 1
+    })
+  }
+
+  playRepeatRounds() {
+    while (this.currentRound++ < this.maxRound) {
+      this.rounds()
+    }
   }
 
   async play() {
     await this.setup()
-    while (this.currentRound < this.maxRound) {
-      await this.playARound()
-      this.showProgress()
-    }
-    this.ending()
-    this.showResult()
+    this.roundMode === 'multiple' ? this.playEachRounds() : this.playRepeatRounds()
+    this.finish()
   }
 }
