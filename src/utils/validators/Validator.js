@@ -14,7 +14,7 @@ class Validator {
 
   static #validateValue(value) {
     if (value === undefined || value === null) {
-      throw new Error(this.#ERROR_MESSAGES.INVALID_VALUE);
+      throw new Error(`[${value}] ${this.#ERROR_MESSAGES.INVALID_VALUE}`);
     }
   }
 }

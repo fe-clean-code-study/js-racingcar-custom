@@ -19,6 +19,11 @@ class CarRacingGame {
     },
   });
 
+  static #ERROR_MESSAGES = Object.freeze({
+    NOT_COUNT: '게임을 한 번 이상 진행해야 합니다.',
+    INVALID_PLAYERS_LENGTH: '참가자는 1명 이상이어야 합니다.',
+  });
+
   #players;
   #playCount;
   #race;
@@ -108,12 +113,13 @@ class CarRacingGame {
   }
 
   static #validateCount(count) {
-    NumberValidator.from(count).greaterThan(0);
+    NumberValidator.from(count).greaterThan(0, this.#ERROR_MESSAGES.NOT_COUNT);
   }
 
   static #validatePlayers(players) {
     ArrayValidator.from(players);
-    NumberValidator.from(players.length).greaterThan(0);
+    NumberValidator.from(players.length).greaterThan(0),
+      this.#ERROR_MESSAGES.INVALID_PLAYERS_LENGTH;
   }
 }
 

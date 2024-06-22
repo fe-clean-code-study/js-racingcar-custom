@@ -19,31 +19,39 @@ class StringValidator extends Validator {
     return new StringValidator(value);
   }
 
-  matches(pattern) {
+  matches(pattern, message) {
     if (!(pattern instanceof RegExp)) {
-      throw new Error(StringValidator.#ERROR_MESSAGES.INVALID_REGEXP);
+      throw new Error(
+        `[${this.value}] ${message || StringValidator.#ERROR_MESSAGES.INVALID_REGEXP}`,
+      );
     }
 
     if (!pattern.test(this.value)) {
-      throw new Error(StringValidator.#ERROR_MESSAGES.INVALID_PATTERN);
+      throw new Error(
+        `[${this.value}] ${message || StringValidator.#ERROR_MESSAGES.INVALID_PATTERN}`,
+      );
     }
 
     return this;
   }
 
-  notEmpty() {
+  notEmpty(message) {
     if (this.value === '') {
-      throw new Error(StringValidator.#ERROR_MESSAGES.EMPTY_STRING);
+      throw new Error(
+        `[${this.value}] ${message || StringValidator.#ERROR_MESSAGES.EMPTY_STRING}`,
+      );
     }
 
     return this;
   }
 
-  maxLength(max) {
+  maxLength(max, message) {
     NumberValidator.from(max);
 
     if (this.value.length > max) {
-      throw new Error(StringValidator.#ERROR_MESSAGES.TOO_LONG);
+      throw new Error(
+        `[${this.value}] ${message || StringValidator.#ERROR_MESSAGES.TOO_LONG}`,
+      );
     }
 
     return this;

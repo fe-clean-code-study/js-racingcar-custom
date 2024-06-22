@@ -15,9 +15,11 @@ class FunctionValidator extends Validator {
     return new FunctionValidator(fn);
   }
 
-  hasInstance(instance) {
+  hasInstance(instance, message) {
     if (!(instance instanceof this.value)) {
-      throw new Error(FunctionValidator.#ERROR_MESSAGES.NOT_INSTANCE);
+      throw new Error(
+        `[${message}] ${message || FunctionValidator.#ERROR_MESSAGES.NOT_INSTANCE}`,
+      );
     }
 
     return this;

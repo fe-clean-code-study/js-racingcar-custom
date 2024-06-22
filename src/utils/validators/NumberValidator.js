@@ -26,7 +26,9 @@ class NumberValidator extends Validator {
     NumberValidator.from(max);
 
     if (this.value < min || this.value > max) {
-      throw new Error(message || NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
+      throw new Error(
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.INVALID_RANGE}`,
+      );
     }
 
     return this;
@@ -37,7 +39,7 @@ class NumberValidator extends Validator {
 
     if (this.value <= otherValue) {
       throw new Error(
-        message || NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN,
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN}`,
       );
     }
 
@@ -49,7 +51,7 @@ class NumberValidator extends Validator {
 
     if (this.value < otherValue) {
       throw new Error(
-        message || NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN_OR_EQUAL,
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN_OR_EQUAL}`,
       );
     }
 
@@ -60,7 +62,9 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value >= otherValue) {
-      throw new Error(message || NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
+      throw new Error(
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN}`,
+      );
     }
 
     return this;
@@ -71,7 +75,7 @@ class NumberValidator extends Validator {
 
     if (this.value > otherValue) {
       throw new Error(
-        message || NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL,
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL}`,
       );
     }
 
@@ -82,7 +86,9 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value !== otherValue) {
-      throw new Error(message || NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
+      throw new Error(
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS}`,
+      );
     }
 
     return this;
@@ -90,7 +96,9 @@ class NumberValidator extends Validator {
 
   assertInteger(message) {
     if (!Number.isInteger(this.value)) {
-      throw new Error(message || NumberValidator.#ERROR_MESSAGES.NOT_INTEGER);
+      throw new Error(
+        `[${message}] ${message || NumberValidator.#ERROR_MESSAGES.NOT_INTEGER}`,
+      );
     }
 
     return this;
