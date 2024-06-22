@@ -33,7 +33,7 @@ class Car extends Vehicle {
 
     // 이름 길이 유효성 검사
     NumberValidator.from(nameSize).assertInteger();
-    NumberValidator.from(name.length)
+    NumberValidator.from(name.trim().length)
       .lessThanOrEqual(nameSize, this.#ERROR_MESSAGES.INVALID_NAME_SIZE)
       .greaterThan(0, this.#ERROR_MESSAGES.EMPTY_NAME);
   }
