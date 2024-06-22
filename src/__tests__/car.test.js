@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { Car, ERROR_NAME_LABEL } from "../domain/car.js";
+import { ERROR_NAME_LABEL } from "../util/validation.js";
+import { Car } from "../domain/car.js";
 
 describe("Car", () => {
   it("이름이 5자 이하이면 정상적으로 호출됩니다.", () => {

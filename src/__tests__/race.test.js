@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
-import { ERROR_COUNT_LABEL, Race } from "../domain/race";
-import { Car } from "../domain/car";
+import { Race } from "../domain/race.js";
+import { Car } from "../domain/car.js";
+import { ERROR_COUNT_LABEL } from "../util/validation.js";
 
 const fn = vi.fn();
 

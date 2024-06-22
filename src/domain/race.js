@@ -1,4 +1,4 @@
-export const ERROR_COUNT_LABEL = "횟수는 양의 정수만 가능합니다.";
+import { ERROR_COUNT_LABEL } from "../util/validation.js";
 
 /**
  * @callback Target 참가 대상

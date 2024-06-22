@@ -1,7 +1,7 @@
+import { ERROR_NAME_LABEL } from "../util/validation.js";
+
 const VALID_NAME_LENGTH = 5;
 const DEFAULT_CAR_NOW = 0;
-
-export const ERROR_NAME_LABEL = "이름은 5자 이하만 가능합니다.";
 
 /**
  * @type {import("./race").Target}
