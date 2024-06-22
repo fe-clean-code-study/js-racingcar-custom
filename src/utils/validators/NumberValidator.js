@@ -25,7 +25,7 @@ class NumberValidator extends Validator {
     NumberValidator.from(max);
 
     if (this.value < min || this.value > max) {
-      this._throwError(NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
+      throw new Error(NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
     }
 
     return this;
@@ -35,7 +35,7 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value <= otherValue) {
-      this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN);
+      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN);
     }
 
     return this;
@@ -45,7 +45,7 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value < otherValue) {
-      this._throwError(
+      throw new Error(
         NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN_OR_EQUAL,
       );
     }
@@ -57,7 +57,7 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value >= otherValue) {
-      this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
+      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
     }
 
     return this;
@@ -67,7 +67,7 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value > otherValue) {
-      this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL);
+      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL);
     }
 
     return this;
@@ -77,7 +77,7 @@ class NumberValidator extends Validator {
     NumberValidator.from(otherValue);
 
     if (this.value !== otherValue) {
-      this._throwError(NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
+      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
     }
 
     return this;
@@ -85,7 +85,7 @@ class NumberValidator extends Validator {
 
   static #validateNumber(...args) {
     if (args.some((value) => typeof value !== 'number' || isNaN(value))) {
-      this._throwError(this.#ERROR_MESSAGES.INVALID_NUMBER);
+      throw new Error(this.#ERROR_MESSAGES.INVALID_NUMBER);
     }
   }
 }

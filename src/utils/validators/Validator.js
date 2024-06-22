@@ -12,13 +12,9 @@ class Validator {
     return new Validator(value);
   }
 
-  _throwError(message) {
-    throw new Error(message);
-  }
-
   static #validateValue(value) {
     if (value === undefined || value === null) {
-      this._throwError(this.#ERROR_MESSAGES.INVALID_VALUE);
+      throw new Error(this.#ERROR_MESSAGES.INVALID_VALUE);
     }
   }
 }

@@ -21,11 +21,11 @@ class StringValidator extends Validator {
 
   matches(pattern) {
     if (!(pattern instanceof RegExp)) {
-      this._throwError(StringValidator.#ERROR_MESSAGES.INVALID_REGEXP);
+      throw new Error(StringValidator.#ERROR_MESSAGES.INVALID_REGEXP);
     }
 
     if (!pattern.test(this.value)) {
-      this._throwError(StringValidator.#ERROR_MESSAGES.INVALID_PATTERN);
+      throw new Error(StringValidator.#ERROR_MESSAGES.INVALID_PATTERN);
     }
 
     return this;
@@ -33,7 +33,7 @@ class StringValidator extends Validator {
 
   notEmpty() {
     if (this.value === '') {
-      this._throwError(StringValidator.#ERROR_MESSAGES.EMPTY_STRING);
+      throw new Error(StringValidator.#ERROR_MESSAGES.EMPTY_STRING);
     }
 
     return this;
@@ -43,7 +43,7 @@ class StringValidator extends Validator {
     NumberValidator.from(max);
 
     if (this.value.length > max) {
-      this._throwError(StringValidator.#ERROR_MESSAGES.TOO_LONG);
+      throw new Error(StringValidator.#ERROR_MESSAGES.TOO_LONG);
     }
 
     return this;
@@ -51,7 +51,7 @@ class StringValidator extends Validator {
 
   static #validateString(...args) {
     if (args.some((value) => typeof value !== 'string')) {
-      this._throwError(this.#ERROR_MESSAGES.INVALID_STRING);
+      throw new Error(this.#ERROR_MESSAGES.INVALID_STRING);
     }
   }
 }
