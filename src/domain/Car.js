@@ -24,8 +24,7 @@ class Car extends Vehicle {
     StringValidator.from(name).notEmpty().matches(this.#NAME_PATTERN);
 
     // 이름 길이 유효성 검사
-    NumberValidator.from(nameSize);
-    NumberValidator.from(nameSize % 1).sameAs(0);
+    NumberValidator.from(nameSize).assertInteger();
     NumberValidator.from(name.length).lessThanOrEqual(nameSize).greaterThan(0);
   }
 }

@@ -32,8 +32,12 @@ describe('getRandomNumber >', () => {
 
 describe('repeatFn >', () => {
   test('반복 횟수가 1보다 작으면 오류가 발생한다.', () => {
-    expect(() => repeatFn(-1, () => {})).toThrow();
-    expect(() => repeatFn(0, () => {})).toThrow();
+    expect(() => repeatFn(() => {}, -1)).toThrow();
+    expect(() => repeatFn(() => {}, 0)).toThrow();
+  });
+
+  test('반복 횟수가 정수가 아니라면 오류가 발생한다.', () => {
+    expect(() => repeatFn(() => {}, 1.5)).toThrow();
   });
 
   test('함수가 반복 횟수만큼 실행된다.', () => {

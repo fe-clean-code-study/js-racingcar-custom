@@ -9,6 +9,7 @@ class NumberValidator extends Validator {
     NOT_LESS_THAN: '값이 기준 값보다 작아야 합니다.',
     NOT_LESS_THAN_OR_EQUAL: '값이 기준 값보다 작거나 같아야 합니다.',
     NOT_SAME_AS: '값이 기준 값과 같아야 합니다.',
+    NOT_INTEGER: '정수가 아닙니다.',
   });
 
   constructor(value) {
@@ -20,64 +21,76 @@ class NumberValidator extends Validator {
     return new NumberValidator(value);
   }
 
-  inRange(min, max) {
+  inRange(min, max, message) {
     NumberValidator.from(min);
     NumberValidator.from(max);
 
     if (this.value < min || this.value > max) {
-      throw new Error(NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
+      throw new Error(message || NumberValidator.#ERROR_MESSAGES.INVALID_RANGE);
     }
 
     return this;
   }
 
-  greaterThan(otherValue) {
+  greaterThan(otherValue, message) {
     NumberValidator.from(otherValue);
 
     if (this.value <= otherValue) {
-      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN);
-    }
-
-    return this;
-  }
-
-  greaterThanOrEqual(otherValue) {
-    NumberValidator.from(otherValue);
-
-    if (this.value < otherValue) {
       throw new Error(
-        NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN_OR_EQUAL,
+        message || NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN,
       );
     }
 
     return this;
   }
 
-  lessThan(otherValue) {
+  greaterThanOrEqual(otherValue, message) {
+    NumberValidator.from(otherValue);
+
+    if (this.value < otherValue) {
+      throw new Error(
+        message || NumberValidator.#ERROR_MESSAGES.NOT_GREATER_THAN_OR_EQUAL,
+      );
+    }
+
+    return this;
+  }
+
+  lessThan(otherValue, message) {
     NumberValidator.from(otherValue);
 
     if (this.value >= otherValue) {
-      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
+      throw new Error(message || NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN);
     }
 
     return this;
   }
 
-  lessThanOrEqual(otherValue) {
+  lessThanOrEqual(otherValue, message) {
     NumberValidator.from(otherValue);
 
     if (this.value > otherValue) {
-      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL);
+      throw new Error(
+        message || NumberValidator.#ERROR_MESSAGES.NOT_LESS_THAN_OR_EQUAL,
+      );
     }
 
     return this;
   }
 
-  sameAs(otherValue) {
+  sameAs(otherValue, message) {
     NumberValidator.from(otherValue);
 
     if (this.value !== otherValue) {
-      throw new Error(NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
+      throw new Error(message || NumberValidator.#ERROR_MESSAGES.NOT_SAME_AS);
+    }
+
+    return this;
+  }
+
+  assertInteger(message) {
+    if (!Number.isInteger(this.value)) {
+      throw new Error(message || NumberValidator.#ERROR_MESSAGES.NOT_INTEGER);
     }
 
     return this;
