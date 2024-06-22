@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import Validator from '../shared/Validator.js';
+import Validator from '../utils/validators/Validator.js';
 
 describe('Validator >', () => {
   test('값이 없으면 오류가 발생한다.', () => {
