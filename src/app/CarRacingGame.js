@@ -10,9 +10,9 @@ class CarRacingGame {
   static #RANDOM_NUMBER_MIN = 0;
   static #RANDOM_NUMBER_MAX = 9;
   static #RANDOM_NUMBER_CONDITION = 4;
-  static #CONSOLE_MESSAGE = Object.freeze({
-    PROMPT_CAR_NAMES: `경주할 자동차 이름을 입력하세요. (이름은 쉼표(,) 기준으로 구분).
-    `,
+
+  static CONSOLE_MESSAGE = Object.freeze({
+    PROMPT_CAR_NAMES: `경주할 자동차 이름을 입력하세요. (이름은 쉼표(,) 기준으로 구분).\n`,
     RESULT_HEADER: '실행 결과',
     FINAL_WINNER(winners) {
       return `${winners}(이)가 최종 우승했습니다.`;
@@ -50,6 +50,12 @@ class CarRacingGame {
     return this;
   }
 
+  #printHeader() {
+    console.log(CarRacingGame.CONSOLE_MESSAGE.RESULT_HEADER);
+
+    return this;
+  }
+
   printCurrentPositions() {
     CarRacingGame.#validatePlayers(this.#players);
 
@@ -58,6 +64,7 @@ class CarRacingGame {
         `${player.name}: ${CarRacingGame.#MOVEMENT_SYMBOL.repeat(player.position)}`,
       );
     });
+    console.log();
 
     return this;
   }
@@ -75,13 +82,14 @@ class CarRacingGame {
       .map((player) => player.name)
       .join(', ');
 
-    console.log(CarRacingGame.#CONSOLE_MESSAGE.FINAL_WINNER(winners));
+    console.log(CarRacingGame.CONSOLE_MESSAGE.FINAL_WINNER(winners));
 
     return this;
   }
 
   play(count = 1) {
     CarRacingGame.#validatePlayers(this.#players);
+    this.#printHeader();
 
     repeatFn(() => {
       this.#playCount += 1;
@@ -100,7 +108,7 @@ class CarRacingGame {
   }
 
   static #validateCount(count) {
-    NumberValidator.from(count).greaterThanOrEqual(1);
+    NumberValidator.from(count).greaterThan(0);
   }
 
   static #validatePlayers(players) {
