@@ -1,15 +1,16 @@
 import readline from "readline";
 import { Car } from "./domain/car.js";
 import { Race } from "./domain/race.js";
+import { RaceView } from "./view/race.js";
 
 const INPUT_NAME_LABEL =
   "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분). ";
 const INPUT_COUNT_LABEL = "시도할 회수는 몇회인가요? ";
 const ALLOWED_MOVE_NUMBER = 4;
 
-play();
+main();
 
-async function play() {
+async function main() {
   try {
     const names = await readLineAsync(INPUT_NAME_LABEL);
     const count = await readLineAsync(INPUT_COUNT_LABEL);
@@ -21,11 +22,15 @@ async function play() {
       count: Number(count),
     });
 
-    race.start();
-    race.end();
+    const { moveView, moveResultView, result } = RaceView();
+
+    race.play({ moveView, moveResultView });
+
+    const winners = race.getWinners();
+    result(winners);
   } catch (err) {
     console.log(err.message);
-    play();
+    main();
   }
 }
 

@@ -1,4 +1,4 @@
-const ERROR_COUNT_LABEL = "횟수는 양의 정수만 가능합니다.";
+export const ERROR_COUNT_LABEL = "횟수는 양의 정수만 가능합니다.";
 
 /**
  * @callback Target 참가 대상
@@ -22,38 +22,29 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
 
   const targets = names.split(",").map((name) => Target(name));
 
-  function moveOrStop({ target, distance = 1, rule }) {
+  function moveOrStop({ target, distance = 1, rule, moveView }) {
     if (rule()) {
       const name = target.getName();
 
       target.setMovement(distance);
 
-      tellMove(name);
+      moveView(name);
     }
-
-    tellTargetsNow();
   }
 
-  function start() {
+  function play({ distance = 1, moveView, moveResultView }) {
     for (let i = 0; i < count; i++) {
-      targets.forEach((target) => moveOrStop({ target, rule: isValidMove }));
+      targets.forEach((target) =>
+        moveOrStop({ target, distance, rule: isValidMove, moveView })
+      );
+
+      const targetInfomationList = targets.map(makeTargetsNowList);
+      moveResultView(targetInfomationList);
     }
   }
 
-  function end() {
-    const winners = getWinners();
-
-    console.log(`${winners}가 최종 우승했습니다.`);
-  }
-
-  function tellMove(name) {
-    console.log(`꽁꽁 얼어붙은 한강 위로 ${name}가 전진합니다`);
-  }
-
-  function tellTargetsNow() {
-    const tellTargetsNowList = targets.map(makeTargetsNowList);
-
-    console.log(tellTargetsNowList.join("\n") + "\n");
+  function getTargetsNow() {
+    return targets.map((target) => target.getNow());
   }
 
   function getWinners() {
@@ -62,7 +53,7 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
     return makeWinners(targets, winnerNow);
   }
 
-  return { start, end };
+  return { play, getWinners, getTargetsNow };
 }
 
 function isVaildCount(count) {
@@ -72,9 +63,8 @@ function isVaildCount(count) {
 function makeTargetsNowList(target) {
   const name = target.getName();
   const now = target.getNow();
-  const nowLabel = "-".repeat(now);
 
-  return `${name}: ${nowLabel}`;
+  return { name, now };
 }
 
 function makewinnerNow(acc, target) {
@@ -84,6 +74,5 @@ function makewinnerNow(acc, target) {
 function makeWinners(targets, max) {
   return targets
     .filter((target) => target.getNow() === max)
-    .map((target) => target.getName())
-    .join(",");
+    .map((target) => target.getName());
 }
