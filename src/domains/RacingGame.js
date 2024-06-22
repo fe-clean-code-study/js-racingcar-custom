@@ -24,8 +24,9 @@ export default class RacingGame extends Game {
   }
 
   rounds() {
+    const { min, max, threshold } = this.config
     this.carNames.forEach(name => {
-      if (getRandomNumber(0, 9) > 4) this.cars[name].move()
+      if (getRandomNumber(min, max) > threshold) this.cars[name].move()
       console.log(`${name} : ${'_'.repeat(this.cars[name].position)}`)
     })
     console.log('')

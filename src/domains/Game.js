@@ -1,12 +1,10 @@
 export default class Game {
-  constructor({ maxRound, roundMode = 'single' }) {
+  constructor({ maxRound, config }) {
     this.currentRound = 0
     this.maxRound = maxRound
+    this.config = config
 
-    this.roundMode = roundMode
-    if (this.roundMode === 'multiple') {
-      this.bindRounds()
-    }
+    this.bindRounds()
   }
 
   async setup() {
@@ -17,8 +15,10 @@ export default class Game {
 
   bindRounds() {
     const roundMethodNames = Object.getOwnPropertyNames(Object.getPrototypeOf(this))
-      .filter(prop => typeof this[prop] === 'function' && prop.startsWith('round'))
-    this.rounds = roundMethodNames.map(methodName => this[methodName].bind(this))
+      .filter(prop => prop.startsWith('round') && prop !== 'rounds')
+    if (roundMethodNames.length > 0) {
+      this.rounds = roundMethodNames.map(methodName => this[methodName].bind(this))
+    }
   }
 
   finish() {
@@ -39,7 +39,7 @@ export default class Game {
 
   async play() {
     await this.setup()
-    this.roundMode === 'multiple' ? this.playEachRounds() : this.playRepeatRounds()
+    Array.isArray(this.rounds) ? this.playEachRounds() : this.playRepeatRounds()
     this.finish()
   }
 }
