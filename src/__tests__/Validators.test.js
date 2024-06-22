@@ -4,6 +4,7 @@ import {
   StringValidator,
   NumberValidator,
   FunctionValidator,
+  ArrayValidator,
 } from '../utils/validators';
 
 describe('Validator >', () => {
@@ -123,5 +124,28 @@ describe('FunctionValidator >', () => {
 
   test('함수인 경우 오류가 발생하지 않는다.', () => {
     expect(() => FunctionValidator.from(() => {})).not.toThrow();
+  });
+
+  test('A가 B의 인스턴스가 아닌 경우 오류가 발생한다.', () => {
+    class B {}
+    class C {}
+    const A = new C();
+    expect(() => FunctionValidator.from(B).hasInstance(A)).toThrow();
+  });
+
+  test('A가 B의 인스턴스인 경우 오류가 발생하지 않는다.', () => {
+    class B {}
+    const A = new B();
+    expect(() => FunctionValidator.from(B).hasInstance(A)).not.toThrow();
+  });
+});
+
+describe('ArrayValidator >', () => {
+  test('배열이 아닌 경우 오류가 발생한다.', () => {
+    expect(() => ArrayValidator.from(123)).toThrow();
+  });
+
+  test('배열인 경우 오류가 발생하지 않는다.', () => {
+    expect(() => ArrayValidator.from([])).not.toThrow();
   });
 });
