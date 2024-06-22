@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import StringValidator from '../shared/StringValidator.js';
+import { StringValidator } from '../utils/validators';
 
 describe('StringValidator >', () => {
   test('문자열이 아닌 경우 오류가 발생한다.', () => {

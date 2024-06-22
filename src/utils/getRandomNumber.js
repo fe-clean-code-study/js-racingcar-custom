@@ -1,4 +1,4 @@
-import NumberValidator from './validators/NumberValidator.js';
+import { NumberValidator } from './validators';
 
 /**
  * 주어진 범위 내에서 랜덤 숫자를 반환하는 함수

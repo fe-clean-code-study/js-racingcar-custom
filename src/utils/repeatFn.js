@@ -1,5 +1,4 @@
-import FunctionValidator from './validators/FunctionValidator.js';
-import NumberValidator from './validators/NumberValidator.js';
+import { FunctionValidator, NumberValidator } from './validators';
 
 /**
  * 콜백 함수를 전달된 횟수만큼 반복 실행

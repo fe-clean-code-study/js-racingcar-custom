@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import NumberValidator from '../shared/NumberValidator.js';
+import { NumberValidator } from '../utils/validators';
 
 describe('NumberValidator >', () => {
   test('숫자 타입이 아닌 경우 오류가 발생한다.', () => {
