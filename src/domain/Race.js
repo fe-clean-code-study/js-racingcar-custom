@@ -1,5 +1,4 @@
 import { getRandomNumber, isSubclass } from "../utils/index.js";
-import { readLineAsync } from "../service/index.js";
 import Racer from "./Racer.js";
 
 class Race {
@@ -15,16 +14,12 @@ class Race {
     this.#racers = [];
   }
 
-  async ready() {
-    const input = await readLineAsync(
-      "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).\n"
-    );
-
-    if (typeof input !== "string") {
+  ready(inputValue) {
+    if (typeof inputValue !== "string") {
       throw new Error("경기 준비에 적합하지 않은 입력값입니다.");
     }
 
-    const racerNameList = input.split(",");
+    const racerNameList = inputValue.split(",");
     this.#addRacers(racerNameList);
   }
 
