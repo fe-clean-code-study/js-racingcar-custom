@@ -17,7 +17,8 @@ import NumberValidator from './validators/NumberValidator.js';
  */
 function repeatFn(fn, times = 1) {
   FunctionValidator.from(fn);
-  NumberValidator.from(times).greaterThanOrEqual(1);
+  NumberValidator.from(times).greaterThan(0);
+  NumberValidator.from(times % 1).sameAs(0);
 
   for (let i = 0; i < times; i++) {
     fn();

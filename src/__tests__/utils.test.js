@@ -1,5 +1,6 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import getRandomNumber from '../utils/getRandomNumber.js';
+import repeatFn from '../utils/repeatFn.js';
 
 describe('getRandomNumber >', () => {
   test('시작 숫자보다 끝 숫자가 작으면 오류가 발생한다.', () => {
@@ -26,5 +27,19 @@ describe('getRandomNumber >', () => {
     const randomNumber = getRandomNumber(-5, -3);
     expect(randomNumber).toBeGreaterThanOrEqual(-5);
     expect(randomNumber).toBeLessThanOrEqual(-3);
+  });
+});
+
+describe('repeatFn >', () => {
+  test('반복 횟수가 1보다 작으면 오류가 발생한다.', () => {
+    expect(() => repeatFn(-1, () => {})).toThrow();
+    expect(() => repeatFn(0, () => {})).toThrow();
+  });
+
+  test('함수가 반복 횟수만큼 실행된다.', () => {
+    const mockFn = vi.fn();
+    repeatFn(mockFn, 5);
+
+    expect(mockFn).toHaveBeenCalledTimes(5);
   });
 });
