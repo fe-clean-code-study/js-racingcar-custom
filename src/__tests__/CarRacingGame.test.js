@@ -8,6 +8,13 @@ describe('CarRacingGame >', () => {
     ).toBeGreaterThan(0);
   });
 
+  test('참가자를 중간에 추가할 수 있다.', () => {
+    expect(
+      new CarRacingGame().register(['A', 'B', 'C']).register(['D']).players
+        .length,
+    ).toBe(4);
+  });
+
   test('참가자를 등록하지 않으면 게임을 진행할 수 없다.', () => {
     expect(() => new CarRacingGame().play()).toThrow();
   });
