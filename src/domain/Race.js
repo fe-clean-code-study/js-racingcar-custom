@@ -23,12 +23,15 @@ class Race {
         runner.move();
       }
     });
+
+    return this;
   }
 
   sortRunners(victoryCondition) {
     FunctionValidator.from(victoryCondition);
+    this.#runners.sort(victoryCondition);
 
-    return this.#runners.sort(victoryCondition);
+    return this;
   }
 
   static #validateRunners(runners) {

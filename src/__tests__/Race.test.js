@@ -42,8 +42,9 @@ describe('Race >', () => {
 
     expect(race.runners.indexOf(A) < race.runners.indexOf(B)).toBe(true);
 
-    race.moveRunners((runner) => runner.name === 'B');
-    race.sortRunners((runner1, runner2) => runner2.position - runner1.position);
+    race
+      .moveRunners((runner) => runner.name === 'B')
+      .sortRunners((runner1, runner2) => runner2.position - runner1.position);
 
     expect(race.runners.indexOf(A) > race.runners.indexOf(B)).toBe(true);
   });
@@ -55,8 +56,9 @@ describe('Race >', () => {
 
     expect(race.runners.indexOf(A) < race.runners.indexOf(B)).toBe(true);
 
-    race.moveRunners((runner) => runner.name === 'A');
-    race.sortRunners((runner1, runner2) => runner2.position - runner1.position);
+    race
+      .moveRunners((runner) => runner.name === 'A')
+      .sortRunners((runner1, runner2) => runner2.position - runner1.position);
 
     expect(race.runners.indexOf(A) > race.runners.indexOf(B)).toBe(false);
   });
