@@ -19,6 +19,10 @@ class Race {
       throw new Error("경기 준비에 적합하지 않은 입력값입니다.");
     }
 
+    if (inputValue.length < 1) {
+      throw new Error("경기 준비의 입력값은 1자 이상이어야 합니다.");
+    }
+
     const racerNameList = inputValue.split(",");
     this.#addRacers(racerNameList);
   }
