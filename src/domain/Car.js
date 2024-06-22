@@ -1,5 +1,4 @@
-import NumberValidator from '../utils/validators/NumberValidator';
-import StringValidator from '../utils/validators/StringValidator';
+import { NumberValidator, StringValidator } from '../utils/validators';
 
 class Car {
   static #NAME_SIZE_LIMIT = 5;
