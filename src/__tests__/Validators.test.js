@@ -1,11 +1,9 @@
 import { describe, test, expect } from 'vitest';
-import {
-  Validator,
-  StringValidator,
-  NumberValidator,
-  FunctionValidator,
-  ArrayValidator,
-} from '../utils/validators';
+import Validator from '../utils/validators/Validator.js';
+import NumberValidator from '../utils/validators/NumberValidator';
+import StringValidator from '../utils/validators/StringValidator';
+import FunctionValidator from '../utils/validators/FunctionValidator';
+import ArrayValidator from '../utils/validators/ArrayValidator';
 
 describe('Validator >', () => {
   test('값이 없으면 오류가 발생한다.', () => {
