@@ -51,9 +51,7 @@ class StringValidator extends Validator {
 
   static #validateString(...args) {
     if (args.some((value) => typeof value !== 'string')) {
-      StringValidator._throwError(
-        StringValidator.#ERROR_MESSAGES.INVALID_STRING,
-      );
+      this._throwError(this.#ERROR_MESSAGES.INVALID_STRING);
     }
   }
 }

@@ -85,9 +85,7 @@ class NumberValidator extends Validator {
 
   static #validateNumber(...args) {
     if (args.some((value) => typeof value !== 'number' || isNaN(value))) {
-      NumberValidator._throwError(
-        NumberValidator.#ERROR_MESSAGES.INVALID_NUMBER,
-      );
+      this._throwError(this.#ERROR_MESSAGES.INVALID_NUMBER);
     }
   }
 }

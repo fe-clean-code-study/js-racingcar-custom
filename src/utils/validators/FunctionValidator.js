@@ -16,9 +16,7 @@ class FunctionValidator extends Validator {
 
   static #validateFunction(...args) {
     if (args.some((value) => typeof value !== 'function')) {
-      FunctionValidator._throwError(
-        FunctionValidator.#ERROR_MESSAGES.INVALID_FUNCTION,
-      );
+      this._throwError(this.#ERROR_MESSAGES.INVALID_FUNCTION);
     }
   }
 }
