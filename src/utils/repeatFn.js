@@ -1,4 +1,5 @@
-import { ERROR_MESSAGES } from '../constants/errorMessages.js';
+import FunctionValidator from './validators/FunctionValidator.js';
+import NumberValidator from './validators/NumberValidator.js';
 
 /**
  * 콜백 함수를 전달된 횟수만큼 반복 실행
@@ -15,17 +16,8 @@ import { ERROR_MESSAGES } from '../constants/errorMessages.js';
  * getRandomNumber(5, 15);
  */
 function repeatFn(fn, times = 1) {
-  if (typeof fn !== 'function') {
-    throw new Error(ERROR_MESSAGES.INVALID_FUNCTION);
-  }
-
-  if (typeof times !== 'number') {
-    throw new Error(ERROR_MESSAGES.INVALID_NUMBER);
-  }
-
-  if (times < 1) {
-    throw new Error(ERROR_MESSAGES.INVALID_TIMES_RANGE);
-  }
+  FunctionValidator.from(fn);
+  NumberValidator.from(times).greaterThanOrEqual(1);
 
   for (let i = 0; i < times; i++) {
     fn();
