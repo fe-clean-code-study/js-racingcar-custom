@@ -1,5 +1,5 @@
-import { beforeAll, describe, expect, test } from "vitest";
-import { getRandomNumber, isSubclass } from "../utils/index.js";
+import { describe, expect, test } from "vitest";
+import { deepCopy, getRandomNumber, isSubclass } from "../utils/index.js";
 
 describe("getRandomNumber 함수 테스트", () => {
   test.each([
@@ -45,5 +45,25 @@ describe("isSubclass 함수 테스트", () => {
     class Dog {}
 
     expect(isSubclass(Cat, Dog)).toBe(false);
+  });
+});
+
+describe("deepCopy 함수 테스트", () => {
+  test("기존 값을 수정하면 복사한 값과 일치하지 않는다.", () => {
+    const originalValue = [
+      [
+        { a: 1, b: 2 },
+        { c: 3, d: 4 },
+      ],
+      [
+        { e: 5, f: 6 },
+        { g: 7, h: 8 },
+      ],
+    ];
+    const copiedValue = deepCopy(originalValue);
+
+    originalValue[0][0].b = 20;
+
+    expect(originalValue).not.toEqual(copiedValue);
   });
 });
