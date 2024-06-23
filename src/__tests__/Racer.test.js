@@ -21,4 +21,24 @@ describe("Racer 클래스 테스트", () => {
 
     expect(racer.position).toBe(1);
   });
+
+  test("레이서의 이름을 수정하려고 하면 오류가 발생한다.", () => {
+    const racer = createRacerWithName();
+
+    expect(() => {
+      racer.name = "CAR";
+    }).toThrowError();
+  });
+
+  test("레이서의 위치를 수정하려고 하면 오류가 발생한다.", () => {
+    const racer = createRacerWithName();
+
+    expect(() => {
+      racer.position = 2;
+    }).toThrowError();
+  });
 });
+
+function createRacerWithName() {
+  return new Racer("jeong");
+}
