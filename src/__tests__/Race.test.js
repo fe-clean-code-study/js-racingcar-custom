@@ -47,7 +47,7 @@ describe("Race 클래스 테스트", () => {
   ])(
     "레이스 준비시 문자열이 아닌 값($value)을 할당하면 오류가 발생한다.",
     ({ value }) => {
-      const race = raceWithCarAndLaps();
+      const race = createRaceWithCarAndLaps();
 
       expect(() => race.ready(value)).toThrowError(
         "경기 준비에 적합하지 않은 입력값입니다."
@@ -56,13 +56,13 @@ describe("Race 클래스 테스트", () => {
   );
 
   test("레이스 준비시 문자열을 할당하면 오류가 발생하지 않는다.", () => {
-    const race = raceWithCarAndLaps();
+    const race = createRaceWithCarAndLaps();
 
     expect(() => race.ready("123")).not.toThrowError();
   });
 
   test("레이스 준비의 입력값으로 0자 이하면 오류가 발생한다.", () => {
-    const race = raceWithCarAndLaps();
+    const race = createRaceWithCarAndLaps();
 
     expect(() => race.ready("")).toThrowError(
       "경기 준비의 입력값은 1자 이상이어야 합니다."
@@ -70,12 +70,12 @@ describe("Race 클래스 테스트", () => {
   });
 
   test("레이스 준비의 입력값으로 1자 이상이면 오류가 발생하지 않는다.", () => {
-    const race = raceWithCarAndLaps();
+    const race = createRaceWithCarAndLaps();
 
     expect(() => race.ready("123")).not.toThrowError();
   });
 });
 
-function raceWithCarAndLaps() {
+function createRaceWithCarAndLaps() {
   return new Race(Car, 1);
 }
