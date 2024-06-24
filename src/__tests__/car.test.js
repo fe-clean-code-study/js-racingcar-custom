@@ -11,7 +11,7 @@ describe("Car", () => {
     expect(() => Car("람보르기니니")).toThrowError(ERROR_NAME_LABEL);
   });
 
-  it("현재 위치를 수정할 수 있습니다.", () => {
+  it("초기 위치를 지정할 수 있습니다.", () => {
     const car = Car("제네시스", 3);
 
     expect(car.now).toBe(3);
