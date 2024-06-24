@@ -1,4 +1,4 @@
-import createReadline from "../utils/createReadline.js";
+import createReadline from '../utils/createReadline.js'
 
 
 export default class Printer {
@@ -7,7 +7,12 @@ export default class Printer {
   }
 
   print(message) {
-    console.log(message);
+    console.log(message)
+  }
+
+
+  printError(error) {
+    console.log(`\n⚠️ ${error.message}\n`)
   }
 
   async read(message) {
@@ -15,7 +20,7 @@ export default class Printer {
       this.rl = createReadline()
     }
     return new Promise((resolve) => {
-      this.rl.question(`${message}\n`, (input) => {
+      this.rl.question(`⬇️ ${message}\n\n`, (input) => {
         resolve(input)
         this.rl.close()
       })
