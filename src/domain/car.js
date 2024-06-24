@@ -1,4 +1,4 @@
-import { ERROR_NAME_LABEL } from "../util/validation.js";
+import { ERROR_NAME_LABEL } from "./validation.js";
 
 const VALID_NAME_LENGTH = 5;
 const DEFAULT_CAR_NOW = 0;

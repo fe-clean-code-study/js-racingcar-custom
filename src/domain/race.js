@@ -1,4 +1,4 @@
-import { ERROR_COUNT_LABEL } from "../util/validation.js";
+import { ERROR_COUNT_LABEL } from "./validation.js";
 
 /**
  * @callback Target 참가 대상
