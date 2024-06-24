@@ -1,6 +1,6 @@
 export default class Game {
-  constructor({ printer, maxRound, config }) {
-    this.display = printer
+  constructor({ display, maxRound, config }) {
+    this.display = display
     this.currentRound = 0
     this.maxRound = maxRound
     this.config = config
