@@ -49,7 +49,7 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
     get winners() {
       const winnerNow = targets.reduce(makeWinnerNow, 0);
 
-      return makeWinners(targets, winnerNow);
+      return findWinners(targets, winnerNow);
     },
 
     get targetNow() {
@@ -73,8 +73,8 @@ function makeWinnerNow(acc, target) {
   return Math.max(acc, target.now);
 }
 
-function makeWinners(targets, max) {
+function findWinners(targets, winnerMovement) {
   return targets
-    .filter((target) => target.now === max)
+    .filter((target) => target.now === winnerMovement)
     .map((target) => target.name);
 }
