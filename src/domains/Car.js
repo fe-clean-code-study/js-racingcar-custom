@@ -21,4 +21,4 @@ export const moveCar = (car) => {
   }
 }
 
-// export const getPosition = (car) => car.position
+export const getCarPosition = (car) => car.position
