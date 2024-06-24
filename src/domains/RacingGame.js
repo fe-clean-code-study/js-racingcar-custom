@@ -8,34 +8,47 @@ export default class RacingGame extends Game {
     super(props)
     this.cars = {}
     this.carNames = []
-    this.winners = []
   }
 
   async setup() {
     const { input } = await readInput(
-      '경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).',
-      [],
-      'repeat',
+        '경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).',
+        [],
+        'repeat',
     )
-    input.split(',').forEach(name => {
-      this.cars[name] = new Car(name)
-      this.carNames.push(name)
-    })
+    input.split(',').forEach(name => this.register(name.trim()))
   }
 
-  rounds() {
-    const { min, max, threshold } = this.config
-    this.carNames.forEach(name => {
-      if (getRandomNumber(min, max) > threshold) this.cars[name].move()
-      console.log(`${name} : ${'_'.repeat(this.cars[name].position)}`)
-    })
+  eachRound() {
+    this.carNames.forEach(name => this.moveCarByRandomNumber(name))
+    this.carNames.forEach(name => this.showCarPosition(name))
     console.log('')
   }
 
   finish() {
-    const maxPosition = Math.max(...this.carNames.map(name => this.cars[name].position))
-    this.winners = this.carNames.filter(name => this.cars[name].position === maxPosition)
-    console.log(`${this.winners.join(', ')}가 최종 우승했습니다.`)
+    this.showWinners()
+  }
 
+  register(name) {
+    this.cars[name] = new Car(name)
+    this.carNames.push(name)
+  }
+
+  moveCarByRandomNumber(name) {
+    const { min, max, threshold } = this.config
+    if (getRandomNumber(min, max) > threshold) this.cars[name].move()
+  }
+
+  showCarPosition(name) {
+    console.log(`${name} : ${'_'.repeat(this.cars[name].position)}`)
+  }
+
+  showWinners() {
+    console.log(`${this.winners.join(', ')}가 최종 우승했습니다.`)
+  }
+
+  get winners() {
+    const maxPosition = Math.max(...this.carNames.map(name => this.cars[name].position))
+    return this.carNames.filter(name => this.cars[name].position === maxPosition)
   }
 }
