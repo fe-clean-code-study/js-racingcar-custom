@@ -19,7 +19,7 @@ describe("Car", () => {
 
   it("이동한 값만큼 현재 위치가 변경됩니다.", () => {
     const car = Car("제네시스");
-    car.setMovement(100);
+    car.incrementMovement(100);
 
     expect(car.now).toBe(100);
   });

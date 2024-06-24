@@ -12,12 +12,12 @@ export function Car(name, now = DEFAULT_CAR_NOW) {
     throw new Error(ERROR_NAME_LABEL);
   }
 
-  function setMovement(distance) {
+  function incrementMovement(distance) {
     now += distance;
   }
 
   return {
-    setMovement,
+    incrementMovement,
 
     get now() {
       return now;

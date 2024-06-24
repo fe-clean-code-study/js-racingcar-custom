@@ -4,7 +4,7 @@ import { ERROR_COUNT_LABEL } from "./validation.js";
  * @callback Target 참가 대상
  * @param {string} name 이름
  * @param {number} [now] 위치
- * @returns {{setMovement: (distance: number) => void, now: number, name: any}}
+ * @returns {{incrementMovement: (distance: number) => void, now: number, name: any}}
  */
 
 /**
@@ -26,7 +26,7 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
     if (rule()) {
       const name = target.name;
 
-      target.setMovement(distance);
+      target.incrementMovement(distance);
 
       moveView(name);
     }
