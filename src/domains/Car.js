@@ -4,7 +4,7 @@ export default class Car{
   #position
 
   constructor(name) {
-    this.name = name.trim();
+    this.name = name.replaceAll(' ', '');
 
     this.validate()
     this.#position = 0

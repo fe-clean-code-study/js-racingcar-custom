@@ -41,7 +41,6 @@ export default class RacingGame extends Game {
 
   registerCar(name) {
     const registeredCar = new Car(name)
-
     this.cars[registeredCar.name] = registeredCar
     this.carNames.push(registeredCar.name)
   }
