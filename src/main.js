@@ -5,7 +5,7 @@ async function main() {
   const printer = new Printer()
 
   const racingGame = new RacingGame({
-    printer,
+    display: printer,
     maxRound: 5, config: {
       min: 0,
       max: 9,

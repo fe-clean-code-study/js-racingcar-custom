@@ -20,7 +20,7 @@ export default class RacingGame extends Game {
   }
 
   eachRound() {
-    this.printer.print('')
+    this.display.print('')
     this.carNames.forEach(name => this.moveCarByRandomNumber(name))
     this.carNames.forEach(name => this.showCarPosition(name))
   }
@@ -36,7 +36,7 @@ export default class RacingGame extends Game {
   }
 
   async readCarNames() {
-    return (await this.printer.read('경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).')).split(',')
+    return (await this.display.read('경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).')).split(',')
   }
 
   registerCar(name) {
@@ -61,10 +61,10 @@ export default class RacingGame extends Game {
   }
 
   showCarPosition(name) {
-    this.printer.print(`${name} : ${'_'.repeat(this.cars[name].position)}`)
+    this.display.print(`${name} : ${'_'.repeat(this.cars[name].position)}`)
   }
 
   showWinners() {
-    this.printer.print(`\n🎉 우승자 : ${this.winners.join(', ')} 🎉\n`)
+    this.display.print(`\n🎉 우승자 : ${this.winners.join(', ')} 🎉\n`)
   }
 }

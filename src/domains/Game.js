@@ -1,6 +1,6 @@
 export default class Game {
   constructor({ printer, maxRound, config }) {
-    this.printer = printer
+    this.display = printer
     this.currentRound = 0
     this.maxRound = maxRound
     this.config = config
@@ -35,7 +35,7 @@ export default class Game {
     try {
       await this.setup()
     } catch (error) {
-      this.printer.printError(error)
+      this.display.printError(error)
       return this.play()
     }
 
