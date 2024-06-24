@@ -22,7 +22,7 @@ async function main() {
       return movedCar
     })
 
-    console.log() // 여백 역할
+    console.log()
   }
 
   const winners = getWinners(cars)
