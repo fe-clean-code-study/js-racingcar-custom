@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { Race } from "../domain/race.js";
 import { Car } from "../domain/car.js";
-import { ERROR_COUNT_LABEL } from "../util/validation.js";
+import { ERROR_COUNT_LABEL } from "../domain/validation.js";
 
 const fn = vi.fn();
 
@@ -45,7 +45,7 @@ describe("Race", () => {
     const race = Race(mockRace);
     race.play({ moveView: fn, moveResultView: fn });
 
-    const result = race.getTargetsNow();
+    const result = race.targetNow;
 
     expect(result).toEqual([count]);
   });
@@ -59,7 +59,7 @@ describe("Race", () => {
     const race = Race(mockRace);
     race.play({ moveView: fn, moveResultView: fn });
 
-    const result = race.getTargetsNow();
+    const result = race.targetNow;
 
     expect(result).toEqual([0]);
   });
@@ -75,7 +75,7 @@ describe("Race", () => {
       const race = Race(mockRace);
       race.play({ distance, moveView: fn, moveResultView: fn });
 
-      const result = race.getTargetsNow();
+      const result = race.targetNow;
 
       expect(result).toEqual([distance * count]);
     }
@@ -90,7 +90,7 @@ describe("Race", () => {
     const race = Race(mockRace);
     race.play({ moveView: fn, moveResultView: fn });
 
-    const result = race.getWinners();
+    const result = race.winners;
     expect(result).toEqual(["람보르기니", "포르쉐"]);
   });
 });

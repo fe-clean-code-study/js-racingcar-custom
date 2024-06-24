@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { ERROR_NAME_LABEL } from "../util/validation.js";
 import { Car } from "../domain/car.js";
+import { ERROR_NAME_LABEL } from "../domain/validation.js";
 
 describe("Car", () => {
   it("이름이 5자 이하이면 정상적으로 호출됩니다.", () => {
@@ -14,13 +14,13 @@ describe("Car", () => {
   it("현재 위치를 수정할 수 있습니다.", () => {
     const car = Car("제네시스", 3);
 
-    expect(car.getNow()).toBe(3);
+    expect(car.now).toBe(3);
   });
 
   it("이동한 값만큼 현재 위치가 변경됩니다.", () => {
     const car = Car("제네시스");
     car.setMovement(100);
 
-    expect(car.getNow()).toBe(100);
+    expect(car.now).toBe(100);
   });
 });

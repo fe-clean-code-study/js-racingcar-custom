@@ -16,15 +16,17 @@ export function Car(name, now = DEFAULT_CAR_NOW) {
     now += distance;
   }
 
-  function getNow() {
-    return now;
-  }
+  return {
+    setMovement,
 
-  function getName() {
-    return name;
-  }
+    get now() {
+      return now;
+    },
 
-  return { setMovement, getNow, getName };
+    get name() {
+      return name;
+    },
+  };
 }
 
 function isVaildName(name) {

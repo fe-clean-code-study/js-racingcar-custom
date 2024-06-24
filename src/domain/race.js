@@ -4,7 +4,7 @@ import { ERROR_COUNT_LABEL } from "./validation.js";
  * @callback Target 참가 대상
  * @param {string} name 이름
  * @param {number} [now] 위치
- * @returns {{setMovement: (distance: number) => void, getNow: () => number, getName: () => string}}
+ * @returns {{setMovement: (distance: number) => void, now: number, name: any}}
  */
 
 /**
@@ -24,7 +24,7 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
 
   function moveOrStop({ target, distance = 1, rule, moveView }) {
     if (rule()) {
-      const name = target.getName();
+      const name = target.name;
 
       target.setMovement(distance);
 
@@ -43,17 +43,19 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
     }
   }
 
-  function getTargetsNow() {
-    return targets.map((target) => target.getNow());
-  }
+  return {
+    play,
 
-  function getWinners() {
-    const winnerNow = targets.reduce(makewinnerNow, 0);
+    get winners() {
+      const winnerNow = targets.reduce(makewinnerNow, 0);
 
-    return makeWinners(targets, winnerNow);
-  }
+      return makeWinners(targets, winnerNow);
+    },
 
-  return { play, getWinners, getTargetsNow };
+    get targetNow() {
+      return targets.map((target) => target.now);
+    },
+  };
 }
 
 function isVaildCount(count) {
@@ -61,18 +63,18 @@ function isVaildCount(count) {
 }
 
 function makeTargetsNowList(target) {
-  const name = target.getName();
-  const now = target.getNow();
+  const name = target.name;
+  const now = target.now;
 
   return { name, now };
 }
 
 function makewinnerNow(acc, target) {
-  return Math.max(acc, target.getNow());
+  return Math.max(acc, target.now);
 }
 
 function makeWinners(targets, max) {
   return targets
-    .filter((target) => target.getNow() === max)
-    .map((target) => target.getName());
+    .filter((target) => target.now === max)
+    .map((target) => target.name);
 }

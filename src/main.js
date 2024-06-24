@@ -26,7 +26,7 @@ async function main() {
 
     race.play({ moveView, moveResultView });
 
-    const winners = race.getWinners();
+    const winners = race.winners;
     result(winners);
   } catch (err) {
     console.log(err.message);
