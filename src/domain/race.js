@@ -47,7 +47,7 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
     play,
 
     get winners() {
-      const winnerNow = targets.reduce(makewinnerNow, 0);
+      const winnerNow = targets.reduce(makeWinnerNow, 0);
 
       return makeWinners(targets, winnerNow);
     },
@@ -69,7 +69,7 @@ function makeTargetsNowList(target) {
   return { name, now };
 }
 
-function makewinnerNow(acc, target) {
+function makeWinnerNow(acc, target) {
   return Math.max(acc, target.now);
 }
 
