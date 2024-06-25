@@ -25,7 +25,7 @@ describe('Racing 클래스에 대한 단위 테스트', () => {
 
   test('dice 메서드는 0 ~ 9 사이의 값을 반환한다.', () => {
     const diceResult = [...new Array(10)].fill(Racing.dice());
-    const isCollectNum = diceResult.every((dice) => dice <= 9 && dice >= 0);
+    const isCollectNum = diceResult.every((dice) => 0 <= dice && dice <= 9);
 
     expect(isCollectNum).toBe(true);
   });
