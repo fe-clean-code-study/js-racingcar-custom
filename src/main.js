@@ -1,13 +1,10 @@
-import { Car, Race, RaceScoreboard } from "./domain/index.js";
-import { inputManager } from "./service/index.js";
+import { Car, Race, RaceScoreboard, RacerRegistry } from "./domain/index.js";
 
 async function main() {
-  const carRace = new Race(Car, 5);
+  const carRacerRegistry = new RacerRegistry("자동차", ",");
+  const racerNameList = await carRacerRegistry.register();
 
-  const inputValue = await inputManager.scan(
-    "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).\n"
-  );
-  const racerNameList = inputValue.split(",");
+  const carRace = new Race(Car, 5);
 
   carRace.ready(racerNameList);
   carRace.start();
