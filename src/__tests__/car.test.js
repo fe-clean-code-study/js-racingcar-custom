@@ -5,7 +5,7 @@ const spacedCarNameCases = ['  ab', 'a   b', '  ab  ', 'a b ']
 const invalidCarNameCases = ['', 'abcdef', '    ']
 
 
-describe('Car', () => {
+describe('Car Test', () => {
     test.each(invalidCarNameCases)('자동차 이름은 공백 제외 1자 이상 5자 이하여야 한다.', (name) => {
         expect(() => new Car(name)).toThrow('자동차 이름은 1자 이상 5자 이하여야 합니다.')
     })
