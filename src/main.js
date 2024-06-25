@@ -1,5 +1,5 @@
-import { Car, Race } from "./domain/index.js";
-import { inputManager, outputManager } from "./service/index.js";
+import { Car, Race, RaceScoreboard } from "./domain/index.js";
+import { inputManager } from "./service/index.js";
 
 async function main() {
   const carRace = new Race(Car, 5);
@@ -12,22 +12,10 @@ async function main() {
   carRace.ready(racerNameList);
   carRace.start();
 
-  outputManager.linebreak();
-  outputManager.print("실행 결과");
-  carRace.records.forEach((record) => {
-    outputManager.printAll(
-      record,
-      (racer) => `${racer.name} : ${"-".repeat(racer.position)}`
-    );
+  const carRaceScoreboard = new RaceScoreboard(carRace);
 
-    outputManager.linebreak();
-  });
-
-  outputManager.print(
-    `${carRace.winners
-      .map((racer) => racer.name)
-      .join(", ")}가 최종 우승했습니다.`
-  );
+  carRaceScoreboard.displayRecords();
+  carRaceScoreboard.displayWinners();
 }
 
 main();
