@@ -63,6 +63,9 @@ class Race {
 
   get winners() {
     const finalLapRecord = deepCopy(this.#records.at(-1));
+
+    if (!finalLapRecord) return [];
+
     const maxPosition = Math.max(
       ...finalLapRecord.map((racer) => racer.position)
     );
