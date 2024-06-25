@@ -1,4 +1,5 @@
 import { GAME } from '../constants/index.js';
+import { dice } from '../utils/gameSupport.js';
 import validation from '../utils/validation.js';
 import Car from './Car.js';
 
@@ -53,12 +54,8 @@ class Racing {
 
   proceedRound() {
     this.#cars.forEach((car) => {
-      Racing.dice() >= 4 ? car.move(1) : car.move(0);
+      dice(9, 0) >= 4 ? car.move(1) : car.move(0);
     });
-  }
-
-  static dice() {
-    return Math.floor(Math.random() * 10);
   }
 
   getWinners() {
