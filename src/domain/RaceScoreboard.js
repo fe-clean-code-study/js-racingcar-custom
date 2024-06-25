@@ -1,9 +1,11 @@
 import { outputManager } from "../service/index.js";
+import Race from "./Race.js";
 
 class RaceScoreboard {
   #race;
 
   constructor(race) {
+    RaceScoreboard.#validateRace(race);
     this.#race = race;
   }
 
@@ -27,6 +29,12 @@ class RaceScoreboard {
         .map((racer) => racer.name)
         .join(", ")}가 최종 우승했습니다.`
     );
+  }
+
+  static #validateRace(race) {
+    if (!(race instanceof Race)) {
+      throw new Error("Race 클래스의 인스턴스가 아닙니다.");
+    }
   }
 }
 
