@@ -85,6 +85,25 @@ describe("isSubclass 함수 테스트", () => {
 });
 
 describe("deepCopy 함수 테스트", () => {
+  test("Map을 인수로 할당하면 오류가 발생한다.", () => {
+    expect(() => deepCopy(new Map())).toThrowError();
+  });
+
+  test("Set을 인수로 할당하면 오류가 발생한다.", () => {
+    expect(() => deepCopy(new Set())).toThrowError();
+  });
+
+  test.each([
+    { value: 1 },
+    { value: true },
+    { value: undefined },
+    { value: null },
+    { value: {} },
+    { value: [] },
+  ])("$value을(를) 인수로 할당하면 오류가 발생하지 않는다.", ({ value }) => {
+    expect(() => deepCopy(value)).not.toThrowError();
+  });
+
   test("기존 값을 수정하면 복사한 값과 일치하지 않는다.", () => {
     const originalValue = [
       [
