@@ -5,7 +5,7 @@ describe('car 클래스에 대한 단위 테스트.', () => {
   const car = new Car('meca');
   const position = 4;
 
-  test('setName 에 올바른 문자열을 할당하면 해당 문자열을 반환한다.', () => {
+  test('setName 에 1~10자 사이의 문자열을 할당하면 해당 문자열을 반환한다.', () => {
     const nextName = car.setName('Dva');
 
     expect(nextName).toBe('Dva');
@@ -37,7 +37,7 @@ describe('car 클래스에 대한 단위 테스트.', () => {
     expect(currName).toBe('Dva');
   });
 
-  test('setPosition 에 올바른 숫자를 할당하면 해당 숫자를 반환한다.', () => {
+  test('setPosition 에 0 이상의 숫자를 할당하면 해당 숫자를 반환한다.', () => {
     const nextPosition = car.setPosition(position);
 
     expect(nextPosition).toBe(position);
