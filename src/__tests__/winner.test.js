@@ -1,4 +1,4 @@
-import { getMaxPosition, getWinners } from '../domains/winner.js'
+import { getMaxPosition, getWinners } from '../domains/Winner.js'
 
 describe('winner >', () => {
   test('가장 높은 위치 값을 반환해야 한다.', () => {

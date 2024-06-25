@@ -1,4 +1,4 @@
-import { createCar, getCarPosition, moveCar } from '../domains/car.js'
+import { createCar, getCarPosition, moveCar } from '../domains/Car.js'
 import { getRandomNum } from '../utils/getRandomNum.js'
 import { validateRandomNum } from '../validations/validateRandomNum.js'
 
