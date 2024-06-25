@@ -39,13 +39,13 @@ describe("Race 클래스 테스트", () => {
 
   test.each([
     { value: 1 },
+    { value: "str" },
     { value: true },
     { value: undefined },
     { value: null },
     { value: {} },
-    { value: [] },
   ])(
-    "레이스 준비시 문자열이 아닌 값($value)을 할당하면 오류가 발생한다.",
+    "레이스 준비시 배열이 아닌 값($value)을 할당하면 오류가 발생한다.",
     ({ value }) => {
       const race = createRaceWithCarAndLaps();
 
@@ -55,24 +55,24 @@ describe("Race 클래스 테스트", () => {
     }
   );
 
-  test("레이스 준비시 문자열을 할당하면 오류가 발생하지 않는다.", () => {
+  test("레이스 준비시 배열을 할당하면 오류가 발생하지 않는다.", () => {
     const race = createRaceWithCarAndLaps();
 
-    expect(() => race.ready("123")).not.toThrowError();
+    expect(() => race.ready(["1", "2"])).not.toThrowError();
   });
 
-  test("레이스 준비의 입력값으로 0자 이하면 오류가 발생한다.", () => {
+  test("레이스 준비의 입력값이 0개 이하면 오류가 발생한다.", () => {
     const race = createRaceWithCarAndLaps();
 
-    expect(() => race.ready("")).toThrowError(
-      "경기 준비의 입력값은 1자 이상이어야 합니다."
+    expect(() => race.ready([])).toThrowError(
+      "경기를 준비하기엔 레이서가 부족합니다."
     );
   });
 
-  test("레이스 준비의 입력값으로 1자 이상이면 오류가 발생하지 않는다.", () => {
+  test("레이스 준비의 입력값이 1개 이상이면 오류가 발생하지 않는다.", () => {
     const race = createRaceWithCarAndLaps();
 
-    expect(() => race.ready("123")).not.toThrowError();
+    expect(() => race.ready(["1"])).not.toThrowError();
   });
 });
 
