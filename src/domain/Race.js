@@ -1,10 +1,11 @@
-import { getRandomNumber, isSubclass } from "../utils/index.js";
+import { deepCopy, getRandomNumber, isSubclass } from "../utils/index.js";
 import Racer from "./Racer.js";
 
 class Race {
   #Racer;
   #laps;
   #racers;
+  #records;
 
   constructor(Racer, laps) {
     Race.#validateRacer(Racer);
@@ -12,6 +13,7 @@ class Race {
     this.#Racer = Racer;
     this.#laps = laps;
     this.#racers = [];
+    this.#records = [];
   }
 
   ready(inputValue) {
@@ -42,19 +44,25 @@ class Race {
   }
 
   #progressRace() {
+    let recordPerLap = [];
+
     this.#racers.forEach((racer) => {
       Race.#movementStrategy(racer);
+      recordPerLap.push({ name: racer.name, position: racer.position });
       Race.#showRacer(racer);
     });
+
+    this.#records.push(recordPerLap);
     console.log("");
   }
 
   get winners() {
+    const finalLapRecord = deepCopy(this.#records.at(-1));
     const maxPosition = Math.max(
-      ...this.#racers.map((racer) => racer.position)
+      ...finalLapRecord.map((racer) => racer.position)
     );
 
-    return this.#racers.filter((racer) => racer.position === maxPosition);
+    return finalLapRecord.filter((racer) => racer.position === maxPosition);
   }
 
   static #movementStrategy(racer) {
