@@ -10,7 +10,7 @@ const testRacingConfig = {
   threshold: 50,
 }
 
-describe('RacingGame', () => {
+describe('RacingGame Test', () => {
   let display
   let racingGame
 
