@@ -1,5 +1,5 @@
 import { Car, Race } from "./domain/index.js";
-import { readLineAsync } from "./service/index.js";
+import { OutputManager, readLineAsync } from "./service/index.js";
 
 async function main() {
   const carRace = new Race(Car, 5);
@@ -12,15 +12,20 @@ async function main() {
   carRace.ready(racerNameList);
   carRace.start();
 
-  console.log("\n실행 결과");
+  const output = new OutputManager(console.log);
+
+  output.linebreak();
+  output.print("실행 결과");
   carRace.records.forEach((record) => {
-    record.forEach((racer) => {
-      console.log(`${racer.name} : ${"-".repeat(racer.position)}`);
-    });
-    console.log("");
+    output.printAll(
+      record,
+      (racer) => `${racer.name} : ${"-".repeat(racer.position)}`
+    );
+
+    output.linebreak();
   });
 
-  console.log(
+  output.print(
     `${carRace.winners
       .map((racer) => racer.name)
       .join(", ")}가 최종 우승했습니다.`
