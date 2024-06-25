@@ -1,5 +1,6 @@
 import { describe, test, expect } from "vitest";
 import Car from "../domains/Car.js";
+import {carValidations} from "../validations/car.js";
 
 const spacedCarNameCases = ['  ab', 'a   b', '  ab  ', 'a b ']
 const invalidCarNameCases = ['', 'abcdef', '    ']
@@ -7,7 +8,7 @@ const invalidCarNameCases = ['', 'abcdef', '    ']
 
 describe('Car Test', () => {
     test.each(invalidCarNameCases)('자동차 이름은 공백 제외 1자 이상 5자 이하여야 한다.', (name) => {
-        expect(() => new Car(name)).toThrow('자동차 이름은 1자 이상 5자 이하여야 합니다.')
+        expect(() => new Car(name)).toThrow(carValidations.carNameLength.errorMessage)
     })
 
     test.each(spacedCarNameCases)('생성된 자동차 이름에는 공백이 없어야 한다.', (name) => {

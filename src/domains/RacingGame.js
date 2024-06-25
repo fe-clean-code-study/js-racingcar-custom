@@ -47,7 +47,7 @@ export default class RacingGame extends Game {
 
 
   validate() {
-    racingValidations.forEach(({ check, errorMessage }) => {
+    Object.values(racingValidations).forEach(({ check, errorMessage }) => {
       if (!check(this.carNames)) {
         throw new Error(errorMessage)
       }

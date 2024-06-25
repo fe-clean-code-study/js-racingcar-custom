@@ -19,7 +19,7 @@ export default class Car{
   }
 
   validate() {
-    carValidations.forEach(({ check, errorMessage }) => {
+    Object.values(carValidations).forEach(({ check, errorMessage }) => {
       if (!check(this.name)) {
         throw new Error(errorMessage)
       }

@@ -2,6 +2,7 @@ import { describe, test, expect, beforeEach, vi, } from "vitest";
 import RacingGame from "../domains/RacingGame.js";
 import Car from "../domains/Car.js";
 import * as randomNumberModule from "../utils/getRandomNumber.js";
+import {racingValidations} from "../validations/racing.js";
 
 const testRacingConfig = {
     min: 0,
@@ -37,7 +38,7 @@ describe("RacingGame", () => {
         try {
             await racingGame.setup()
         }catch (error) {
-            expect(error.message).toBe('경주할 자동차 이름은 각각 달라야 합니다.')
+            expect(error.message).toBe(racingValidations.uniqueCarName.errorMessage)
         }
     })
 
@@ -48,7 +49,7 @@ describe("RacingGame", () => {
         try {
             await racingGame.setup()
         }catch (error) {
-            expect(error.message).toBe('최소 2대의 자동차가 참가해야 합니다.')
+            expect(error.message).toBe(racingValidations.leastCarCount.errorMessage)
         }
     })
 
