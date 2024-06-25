@@ -1,3 +1,5 @@
+import { readLineAsync } from "../utils/index.js";
+
 class InputManager {
   #inputFn;
 
@@ -12,4 +14,6 @@ class InputManager {
   }
 }
 
-export default InputManager;
+const inputManager = new InputManager(readLineAsync);
+
+export default inputManager;

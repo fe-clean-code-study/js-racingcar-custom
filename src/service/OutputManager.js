@@ -22,4 +22,6 @@ class OutputManager {
   }
 }
 
-export default OutputManager;
+const outputManager = new OutputManager(console.log);
+
+export default outputManager;

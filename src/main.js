@@ -1,12 +1,10 @@
 import { Car, Race } from "./domain/index.js";
-import { InputManager, OutputManager, readLineAsync } from "./service/index.js";
+import { inputManager, outputManager } from "./service/index.js";
 
 async function main() {
   const carRace = new Race(Car, 5);
 
-  const input = new InputManager(readLineAsync);
-
-  const inputValue = await input.scan(
+  const inputValue = await inputManager.scan(
     "경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).\n"
   );
   const racerNameList = inputValue.split(",");
@@ -14,20 +12,18 @@ async function main() {
   carRace.ready(racerNameList);
   carRace.start();
 
-  const output = new OutputManager(console.log);
-
-  output.linebreak();
-  output.print("실행 결과");
+  outputManager.linebreak();
+  outputManager.print("실행 결과");
   carRace.records.forEach((record) => {
-    output.printAll(
+    outputManager.printAll(
       record,
       (racer) => `${racer.name} : ${"-".repeat(racer.position)}`
     );
 
-    output.linebreak();
+    outputManager.linebreak();
   });
 
-  output.print(
+  outputManager.print(
     `${carRace.winners
       .map((racer) => racer.name)
       .join(", ")}가 최종 우승했습니다.`
