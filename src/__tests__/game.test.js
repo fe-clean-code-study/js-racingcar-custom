@@ -49,7 +49,7 @@ describe("Game Test", () => {
         }
 
         const extendedGame = new ExtendedGame({
-            display: display,
+            display,
             maxRound: 2,
             config: {},
         });
