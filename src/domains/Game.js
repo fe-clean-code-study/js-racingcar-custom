@@ -8,28 +8,26 @@ export default class Game {
     this.bindRounds()
   }
 
-  async setup() {
-  }
+  async setup() {}
 
+  eachRound() {}
 
-  eachRound() {
-  }
-
-
-  finish() {
-  }
-
+  finish() {}
 
   bindRounds() {
     if (Object.getPrototypeOf(this).hasOwnProperty('eachRound')) {
-      this.rounds = Array.from({ length: this.maxRound }, (_) => this.eachRound.bind(this))
+      this.rounds = Array.from({ length: this.maxRound }, _ =>
+        this.eachRound.bind(this)
+      )
     } else {
-      const roundMethodNames = Object.getOwnPropertyNames(Object.getPrototypeOf(this))
-        .filter(prop => prop.startsWith('round') && prop !== 'rounds')
-      this.rounds = roundMethodNames.map(methodName => this[methodName].bind(this))
+      const roundMethodNames = Object.getOwnPropertyNames(
+        Object.getPrototypeOf(this)
+      ).filter(prop => prop.startsWith('round') && prop !== 'rounds')
+      this.rounds = roundMethodNames.map(methodName =>
+        this[methodName].bind(this)
+      )
     }
   }
-
 
   async play() {
     try {

@@ -8,14 +8,18 @@ export default class RacingGame extends Game {
   carNames = []
 
   get winners() {
-    const maxPosition = Math.max(...this.carNames.map(name => this.cars[name].position))
-    return this.carNames.filter(name => this.cars[name].position === maxPosition)
+    const maxPosition = Math.max(
+      ...this.carNames.map(name => this.cars[name].position)
+    )
+    return this.carNames.filter(
+      name => this.cars[name].position === maxPosition
+    )
   }
 
   async setup() {
     this.initializeCars()
     const carNames = await this.readCarNames()
-    carNames.forEach((name) => this.registerCar(name))
+    carNames.forEach(name => this.registerCar(name))
     this.validate()
   }
 
@@ -29,14 +33,17 @@ export default class RacingGame extends Game {
     this.showWinners()
   }
 
-
   initializeCars() {
     this.cars = {}
     this.carNames = []
   }
 
   async readCarNames() {
-    return (await this.display.read('경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).')).split(',')
+    return (
+      await this.display.read(
+        '경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).'
+      )
+    ).split(',')
   }
 
   registerCar(name) {
@@ -44,7 +51,6 @@ export default class RacingGame extends Game {
     this.cars[registeredCar.name] = registeredCar
     this.carNames.push(registeredCar.name)
   }
-
 
   validate() {
     Object.values(racingValidations).forEach(({ check, errorMessage }) => {

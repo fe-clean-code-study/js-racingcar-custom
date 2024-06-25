@@ -1,10 +1,10 @@
-import { carValidations } from "../validations/car.js";
+import { carValidations } from '../validations/car.js'
 
-export default class Car{
+export default class Car {
   #position
 
   constructor(name) {
-    this.name = name.replaceAll(' ', '');
+    this.name = name.replaceAll(' ', '')
 
     this.validate()
     this.#position = 0
@@ -26,4 +26,3 @@ export default class Car{
     })
   }
 }
-
