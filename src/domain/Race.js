@@ -55,6 +55,12 @@ class Race {
     console.log("");
   }
 
+  get records() {
+    const copiedRecords = deepCopy(this.#records);
+
+    return copiedRecords;
+  }
+
   get winners() {
     const finalLapRecord = deepCopy(this.#records.at(-1));
     const maxPosition = Math.max(
