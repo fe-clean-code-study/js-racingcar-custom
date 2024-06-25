@@ -6,7 +6,8 @@ async function main() {
 
   const racingGame = new RacingGame({
     display: printer,
-    maxRound: 5, config: {
+    maxRound: 5,
+    config: {
       min: 0,
       max: 9,
       threshold: 4,
