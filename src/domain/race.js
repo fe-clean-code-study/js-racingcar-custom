@@ -22,25 +22,26 @@ export function Race({ names, Target, isValidMove, count = 5 }) {
 
   const targets = names.split(",").map((name) => Target(name));
 
-  function moveOrStop({ target, distance = 1, rule, moveView }) {
-    if (rule()) {
-      const name = target.name;
+  function play(distance = 1) {
+    const playResult = [];
 
-      target.incrementMovement(distance);
-
-      moveView(name);
-    }
-  }
-
-  function play({ distance = 1, moveView, moveResultView }) {
     for (let i = 0; i < count; i++) {
-      targets.forEach((target) =>
-        moveOrStop({ target, distance, rule: isValidMove, moveView })
-      );
+      const movingTargetList = targets.reduce((acc, target) => {
+        if (isValidMove()) {
+          const name = target.name;
+          target.incrementMovement(distance);
 
-      const targetInfomationList = targets.map(makeTargetsNowList);
-      moveResultView(targetInfomationList);
+          acc.push(name);
+        }
+
+        return acc;
+      }, []);
+
+      const targetsNowList = targets.map(makeTargetsNowList);
+      playResult.push({ targetsNowList, movingTargetList });
     }
+
+    return playResult;
   }
 
   return {

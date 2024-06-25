@@ -28,12 +28,11 @@ describe("Race", () => {
     const names = "제네시스";
     const validMove = fn.mockReturnValue(true);
     const mockRace = { count, isValidMove: validMove, names, Target: Car };
-    const moveResultViewFn = vi.fn();
 
     const race = Race(mockRace);
-    race.play({ moveView: fn, moveResultView: moveResultViewFn });
+    const playResult = race.play();
 
-    expect(moveResultViewFn).toHaveBeenCalledTimes(count);
+    expect(playResult.length).toBe(count);
   });
 
   it("참가 대상이 움직이는 조건을 만족하면 전진해야 합니다.", () => {
@@ -43,7 +42,7 @@ describe("Race", () => {
     const mockRace = { count, isValidMove: validMove, names, Target: Car };
 
     const race = Race(mockRace);
-    race.play({ moveView: fn, moveResultView: fn });
+    race.play();
 
     const result = race.targetNow;
 
@@ -57,7 +56,7 @@ describe("Race", () => {
     const mockRace = { count, isValidMove: notValidMove, names, Target: Car };
 
     const race = Race(mockRace);
-    race.play({ moveView: fn, moveResultView: fn });
+    race.play();
 
     const result = race.targetNow;
 
@@ -73,7 +72,7 @@ describe("Race", () => {
       const mockRace = { count, isValidMove: validMove, names, Target: Car };
 
       const race = Race(mockRace);
-      race.play({ distance, moveView: fn, moveResultView: fn });
+      race.play(distance);
 
       const result = race.targetNow;
 
@@ -88,7 +87,7 @@ describe("Race", () => {
     const mockRace = { count, isValidMove, names, Target: Car };
 
     const race = Race(mockRace);
-    race.play({ moveView: fn, moveResultView: fn });
+    race.play();
 
     const result = race.winners;
     expect(result).toEqual(["람보르기니", "포르쉐"]);

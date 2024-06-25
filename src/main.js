@@ -22,9 +22,10 @@ async function main() {
       count: Number(count),
     });
 
-    const { moveView, moveResultView, result } = RaceView();
+    const { playResultView, result } = RaceView();
 
-    race.play({ moveView, moveResultView });
+    const playResult = race.play();
+    playResultView(playResult);
 
     const winners = race.winners;
     result(winners);

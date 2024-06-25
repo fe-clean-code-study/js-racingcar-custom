@@ -3,10 +3,13 @@ export function RaceView() {
     console.log(`꽁꽁 얼어붙은 한강 위로 ${name}가 전진합니다`);
   }
 
-  function moveResultView(targetInfomationList) {
-    const moveResultList = targetInfomationList.map(makeTargetsNowList);
+  function playResultView(targetInfomationList) {
+    targetInfomationList.forEach(({ targetsNowList, movingTargetList }) => {
+      const targetsNowViewList = targetsNowList.map(makeTargetsNowViewList);
 
-    console.log(moveResultList.join("\n") + "\n");
+      movingTargetList.forEach(moveView);
+      console.log(targetsNowViewList.join("\n") + "\n");
+    });
   }
 
   function result(winners) {
@@ -15,10 +18,10 @@ export function RaceView() {
     console.log(`${winnersLabel}가 최종 우승했습니다.`);
   }
 
-  return { moveView, moveResultView, result };
+  return { moveView, playResultView, result };
 }
 
-function makeTargetsNowList({ name, now }) {
+function makeTargetsNowViewList({ name, now }) {
   const nowLabel = "-".repeat(now);
 
   return `${name}: ${nowLabel}`;
