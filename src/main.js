@@ -1,5 +1,5 @@
-import { createCar, moveCar } from './domains/Car.js'
-import { getWinners } from './domains/Winner.js'
+import { createCar, moveCar } from './domains/car.js'
+import { getWinners } from './domains/winner.js'
 import { inputCarNames } from './views/inputs.js'
 import { printCar, printWinners } from './views/outputs.js'
 
