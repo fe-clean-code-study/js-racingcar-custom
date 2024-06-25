@@ -11,6 +11,20 @@ async function main() {
 
   carRace.ready(racerNameList);
   carRace.start();
+
+  console.log("\n실행 결과");
+  carRace.records.forEach((record) => {
+    record.forEach((racer) => {
+      console.log(`${racer.name} : ${"-".repeat(racer.position)}`);
+    });
+    console.log("");
+  });
+
+  console.log(
+    `${carRace.winners
+      .map((racer) => racer.name)
+      .join(", ")}가 최종 우승했습니다.`
+  );
 }
 
 main();

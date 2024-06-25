@@ -23,13 +23,9 @@ class Race {
   }
 
   start() {
-    console.log("\n실행 결과");
-
     Array.from({ length: this.#laps }).forEach(() => {
       this.#progressRace();
     });
-
-    Race.#showResult(this.winners);
   }
 
   #addRacer(racer) {
@@ -48,11 +44,9 @@ class Race {
     this.#racers.forEach((racer) => {
       Race.#movementStrategy(racer);
       recordPerLap.push({ name: racer.name, position: racer.position });
-      Race.#showRacer(racer);
     });
 
     this.#records.push(recordPerLap);
-    console.log("");
   }
 
   get records() {
@@ -77,16 +71,6 @@ class Race {
     const number = getRandomNumber(0, 9);
 
     if (4 <= number) racer.move();
-  }
-
-  static #showRacer(racer) {
-    console.log(`${racer.name} : ${"-".repeat(racer.position)}`);
-  }
-
-  static #showResult(racers) {
-    console.log(
-      `${racers.map((racer) => racer.name).join(", ")}가 최종 우승했습니다.`
-    );
   }
 
   static #validateRacer(racer) {
