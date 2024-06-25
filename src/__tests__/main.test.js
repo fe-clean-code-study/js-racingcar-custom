@@ -14,14 +14,15 @@ describe('Main 클래스에 대한 단위 테스트 진행', () => {
         new Main(rounds);
       }).toThrow();
     }
-  ),
-    test('setRounds 에 올바른 값을 넣으면 해당 값을 다시 반환한다.', () => {
-      const rounds = [3, 4, 5];
-      const main = new Main([5]);
-      const nextRounds = main.setRounds(rounds);
+  );
 
-      expect(nextRounds.every((value, index) => value === rounds[index])).toBe(
-        true
-      );
-    });
+  test('setRounds 에 올바른 값을 넣으면 해당 값을 다시 반환한다.', () => {
+    const rounds = [3, 4, 5];
+    const main = new Main([5]);
+    const nextRounds = main.setRounds(rounds);
+
+    expect(nextRounds.every((value, index) => value === rounds[index])).toBe(
+      true
+    );
+  });
 });
