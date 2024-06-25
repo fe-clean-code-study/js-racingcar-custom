@@ -1,4 +1,12 @@
 function deepCopy(value) {
+  if (value instanceof Map) {
+    throw new Error("The value must not be Map");
+  }
+
+  if (value instanceof Set) {
+    throw new Error("The value must not be Set");
+  }
+
   if (Array.isArray(value)) {
     return value.map((v) => deepCopy(v));
   } else if (value === null) {

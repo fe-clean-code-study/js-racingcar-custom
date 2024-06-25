@@ -3,6 +3,42 @@ import { deepCopy, getRandomNumber, isSubclass } from "../utils/index.js";
 
 describe("getRandomNumber 함수 테스트", () => {
   test.each([
+    { value: "1" },
+    { value: true },
+    { value: undefined },
+    { value: null },
+    { value: {} },
+    { value: [] },
+  ])(
+    "최솟값으로 숫자가 아닌 값($value)을 할당하면 오류가 발생한다.",
+    ({ value }) => {
+      expect(() => getRandomNumber(value, 10)).toThrowError();
+    }
+  );
+
+  test("최솟값으로 숫자를 할당하면 오류가 발생하지 않는다.", () => {
+    expect(() => getRandomNumber(1, 10)).not.toThrowError();
+  });
+
+  test.each([
+    { value: "1" },
+    { value: true },
+    { value: undefined },
+    { value: null },
+    { value: {} },
+    { value: [] },
+  ])(
+    "최댓값으로 숫자가 아닌 값($value)을 할당하면 오류가 발생한다.",
+    ({ value }) => {
+      expect(() => getRandomNumber(1, value)).toThrowError();
+    }
+  );
+
+  test("최댓값으로 숫자를 할당하면 오류가 발생하지 않는다.", () => {
+    expect(() => getRandomNumber(1, 10)).not.toThrowError();
+  });
+
+  test.each([
     [0, 10],
     [1, 11],
     [2, 12],
@@ -49,6 +85,25 @@ describe("isSubclass 함수 테스트", () => {
 });
 
 describe("deepCopy 함수 테스트", () => {
+  test("Map을 인수로 할당하면 오류가 발생한다.", () => {
+    expect(() => deepCopy(new Map())).toThrowError();
+  });
+
+  test("Set을 인수로 할당하면 오류가 발생한다.", () => {
+    expect(() => deepCopy(new Set())).toThrowError();
+  });
+
+  test.each([
+    { value: 1 },
+    { value: true },
+    { value: undefined },
+    { value: null },
+    { value: {} },
+    { value: [] },
+  ])("$value을(를) 인수로 할당하면 오류가 발생하지 않는다.", ({ value }) => {
+    expect(() => deepCopy(value)).not.toThrowError();
+  });
+
   test("기존 값을 수정하면 복사한 값과 일치하지 않는다.", () => {
     const originalValue = [
       [

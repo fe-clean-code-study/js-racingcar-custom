@@ -1,1 +1,2 @@
-export { default as readLineAsync } from "./readLineAsync.js";
+export { default as outputManager } from "./outputManager.js";
+export { default as inputManager } from "./inputManager.js";
