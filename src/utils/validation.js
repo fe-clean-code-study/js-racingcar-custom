@@ -63,11 +63,6 @@ const validation = {
     }
     name = name.trim();
 
-    if (name.length === 0) {
-      throw new Error(
-        '자동차의 이름은 공백을 제외한 한 글자 이상이어야 합니다.'
-      );
-    }
     if (name.length < 1 || name.length > 10) {
       throw new Error('자동차 이름은 한 글자 이상 열글자 이하여야 합니다.');
     }
