@@ -45,62 +45,58 @@ describe("Race 클래스 테스트", () => {
     { value: null },
     { value: {} },
   ])(
-    "레이스 준비시 배열이 아닌 값($value)을 할당하면 오류가 발생한다.",
+    "레이스 시작시 배열이 아닌 값($value)을 할당하면 오류가 발생한다.",
     ({ value }) => {
       const race = createCarRaceWith5Laps();
 
-      expect(() => race.ready(value)).toThrowError(
-        "경기 준비에 적합하지 않은 입력값입니다."
+      expect(() => race.start(value)).toThrowError(
+        "경기 시작에 적합하지 않은 입력값입니다."
       );
     }
   );
 
-  test("레이스 준비시 배열을 할당하면 오류가 발생하지 않는다.", () => {
+  test("레이스 시작시 배열을 할당하면 오류가 발생하지 않는다.", () => {
     const race = createCarRaceWith5Laps();
 
-    expect(() => race.ready(["1", "2"])).not.toThrowError();
+    expect(() => race.start(["1", "2"])).not.toThrowError();
   });
 
-  test("레이스 준비의 입력값이 0개 이하면 오류가 발생한다.", () => {
+  test("레이스 시작의 입력값이 0개 이하면 오류가 발생한다.", () => {
     const race = createCarRaceWith5Laps();
 
-    expect(() => race.ready([])).toThrowError(
-      "경기를 준비하기엔 레이서가 부족합니다."
+    expect(() => race.start([])).toThrowError(
+      "경기를 시작하기엔 레이서가 부족합니다."
     );
   });
 
-  test("레이스 준비의 입력값이 1개 이상이면 오류가 발생하지 않는다.", () => {
+  test("레이스 시작의 입력값이 1개 이상이면 오류가 발생하지 않는다.", () => {
     const race = createCarRaceWith5Laps();
 
-    expect(() => race.ready(["1"])).not.toThrowError();
+    expect(() => race.start(["1"])).not.toThrowError();
   });
 
   test("레이스 시작전에 기록을 가져오면 빈배열입니다.", () => {
     const race = createCarRaceWith5Laps();
-    race.ready(["1", "2"]);
 
     expect(race.records).toEqual([]);
   });
 
   test("레이스 시작후에 기록을 알 수 있습니다.", () => {
     const race = createCarRaceWith5Laps();
-    race.ready(["1", "2"]);
-    race.start();
+    race.start(["1", "2"]);
 
     expect(race.records).toHaveLength(5);
   });
 
   test("레이스 시작전에 우승자를 가져오면 빈배열입니다.", () => {
     const race = createCarRaceWith5Laps();
-    race.ready(["1", "2"]);
 
     expect(race.winners).toEqual([]);
   });
 
   test("레이스 우승자는 1이상입니다..", () => {
     const race = createCarRaceWith5Laps();
-    race.ready(["1", "2"]);
-    race.start();
+    race.start(["1", "2"]);
 
     expect(race.winners.length).toBeGreaterThanOrEqual(1);
   });
