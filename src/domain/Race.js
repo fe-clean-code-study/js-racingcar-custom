@@ -16,13 +16,11 @@ class Race {
     this.#records = [];
   }
 
-  ready(racerNameList) {
+  start(racerNameList) {
     Race.#validateRacerNameList(racerNameList);
 
     this.#addRacers(racerNameList);
-  }
 
-  start() {
     Array.from({ length: this.#laps }).forEach(() => {
       this.#progressRace();
     });
@@ -91,11 +89,11 @@ class Race {
 
   static #validateRacerNameList(racerNameList) {
     if (!Array.isArray(racerNameList)) {
-      throw new Error("경기 준비에 적합하지 않은 입력값입니다.");
+      throw new Error("경기 시작에 적합하지 않은 입력값입니다.");
     }
 
     if (racerNameList.length < 1) {
-      throw new Error("경기를 준비하기엔 레이서가 부족합니다.");
+      throw new Error("경기를 시작하기엔 레이서가 부족합니다.");
     }
   }
 }

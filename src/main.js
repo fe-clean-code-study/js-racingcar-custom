@@ -5,9 +5,7 @@ async function main() {
   const racerNameList = await carRacerRegistry.register();
 
   const carRace = new Race(Car, 5);
-
-  carRace.ready(racerNameList);
-  carRace.start();
+  carRace.start(racerNameList);
 
   const carRaceScoreboard = new RaceScoreboard(carRace);
 
