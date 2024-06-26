@@ -1,5 +1,19 @@
-function main() {
-  console.log('main의 내용을 채워주세요');
+import RacingGame from './domains/RacingGame.js'
+import Printer from './service/Printer.js'
+
+async function main() {
+  const printer = new Printer()
+
+  const racingGame = new RacingGame({
+    display: printer,
+    maxRound: 5,
+    config: {
+      min: 0,
+      max: 9,
+      threshold: 4,
+    },
+  })
+  await racingGame.play()
 }
 
-main();
+main()
