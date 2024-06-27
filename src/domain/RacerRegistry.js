@@ -1,14 +1,25 @@
+import { RACER_ENTITY_TYPES } from "../constants/index.js";
 import { inputManager } from "../service/index.js";
 
 class RacerRegistry {
   #entityType;
   #separator;
 
-  constructor(entityType, separator) {
-    RacerRegistry.#validateEntityType(entityType);
+  constructor(separator) {
     RacerRegistry.#validateSeparator(separator);
-    this.#entityType = entityType;
     this.#separator = separator;
+  }
+
+  async selectEntityType() {
+    const typeNumber = await inputManager.scan(
+      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${Object.entries(
+        RACER_ENTITY_TYPES
+      )
+        .map(([number, type]) => `${number}. ${type}`)
+        .join("\n")}\n`
+    );
+
+    this.#entityType = RACER_ENTITY_TYPES[typeNumber];
   }
 
   async register() {
@@ -20,16 +31,6 @@ class RacerRegistry {
     const racerNameList = inputValue.split(this.#separator);
 
     return racerNameList;
-  }
-
-  static #validateEntityType(entityType) {
-    if (typeof entityType !== "string") {
-      throw new Error("개체 유형은 문자열이어야 합니다.");
-    }
-
-    if (entityType.length < 1) {
-      throw new Error("개체 유형은 1자 이상이어야 합니다.");
-    }
   }
 
   static #validateSeparator(separator) {
