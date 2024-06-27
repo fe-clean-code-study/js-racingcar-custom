@@ -22,6 +22,40 @@ describe("Racer 클래스 테스트", () => {
     expect(racer.position).toBe(1);
   });
 
+  test.each([
+    { value: 1.1 },
+    { value: "1" },
+    { value: true },
+    { value: null },
+    { value: {} },
+  ])(
+    "레이서의 이동 거리로 정수가 아닌 값($value)을 할당하면 오류가 발생한다.",
+    ({ value }) => {
+      const racer = createRacerWithName();
+
+      expect(() => racer.move(value)).toThrowError();
+    }
+  );
+
+  test.each([2, 3, 4, 5])(
+    "레이서의 이동 거리(%i)를 지정할 수 있다.",
+    (distance) => {
+      const racer = createRacerWithName();
+
+      racer.move(distance);
+
+      expect(racer.position).toBe(distance);
+    }
+  );
+
+  test("레이서의 위치는 0미만이 될 수 없다.", () => {
+    const racer = createRacerWithName();
+
+    racer.move(-1);
+
+    expect(racer.position).toBe(0);
+  });
+
   test("레이서의 이름을 수정하려고 하면 오류가 발생한다.", () => {
     const racer = createRacerWithName();
 
