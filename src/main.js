@@ -1,39 +1,16 @@
-import Racing from './model/Racing.js';
-import { GAME } from './constants/index.js';
-import InputView from './view/InputView.js';
-import OutputView from './view/OutputView.js';
-import validation from './utils/validation.js';
+import GameController from './controller/GameController.js';
 
 class Main {
-  #rounds;
-  constructor(rounds) {
-    this.#rounds = this.setRounds(rounds);
+  constructor(round) {
+    this.gameController = new GameController(round);
   }
 
-  setRounds(rounds) {
-    if (!validation.isValidateRounds(rounds)) {
-      return [];
-    }
-
-    this.#rounds = rounds;
-    return this.#rounds;
-  }
-
-  async play() {
-    const result = this.#rounds.map(async (round) => {
-      const cars = await InputView.getCarName();
-      const racing = new Racing(round, cars);
-      const winners = racing.startRacing(cars);
-
-      OutputView.printWinners(winners);
-      return winners;
-    });
-
-    return result;
+  play() {
+    this.gameController.startGame();
   }
 }
 
-const main = new Main([GAME.ROUND]);
+const main = new Main(5);
 main.play();
 
-export default Main;
+export default main;
