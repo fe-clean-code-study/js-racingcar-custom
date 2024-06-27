@@ -1,16 +1,16 @@
 import GameController from './controller/GameController.js';
 
 class Main {
-  constructor(round) {
-    this.gameController = new GameController(round);
+  constructor() {
+    this.gameController = new GameController();
   }
 
   play() {
-    this.gameController.startGame();
+    this.gameController.start();
   }
 }
 
-const main = new Main(5);
+const main = new Main();
 main.play();
 
 export default main;

@@ -5,6 +5,12 @@ export default class CarView {
     this.rl = readLineAsync;
   }
 
+  async inputRound() {
+    return await this.rl(
+      '몇번의 라운드를 진행할지 1 ~ 10 사이의 숫자를 입력해주세요! > ',
+    );
+  }
+
   async inputCarName() {
     return await this.rl(
       '🏎️ 자동차 이름을 쉼표로 구분지어 입력해주세요! 🏎️ > ',
