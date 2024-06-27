@@ -19,18 +19,22 @@ export default class GameController {
     this.#cars = carNames.split(',').map((name) => new Car(name));
 
     for (let currRound = 0; currRound < this.round; currRound++) {
-      const movedCars = this.#proceedRound();
-      movedCars.forEach((movedCar) => this.#carView.printMovedCar(movedCar));
+      this.#proceedRound();
+      const carInfo = this.#cars.map((car) => ({
+        name: car.name,
+        position: car.position,
+      }));
+      this.#carView.printMovedCar(carInfo);
     }
 
-    const winnersName = this.#getWinnersName().join(', ');
-    this.#carView.printWinners(winnersName);
+    const winners = this.#getWinnersName();
+    this.#carView.printWinners(winners);
 
-    return winnersName;
+    return winners;
   }
 
   #proceedRound() {
-    const movedCars = this.#cars.filter((car) => {
+    this.#cars.filter((car) => {
       return (
         car.move(1, [
           () => {
@@ -40,8 +44,6 @@ export default class GameController {
         ]) === true
       );
     });
-
-    return movedCars.map((car) => car.name);
   }
 
   #getWinnersName() {
