@@ -10,7 +10,7 @@ class InputManager {
   async scan(query) {
     const inputValue = await this.#inputFn(query);
 
-    return inputValue;
+    return inputValue.trim();
   }
 }
 
