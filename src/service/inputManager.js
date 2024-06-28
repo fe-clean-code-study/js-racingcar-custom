@@ -12,6 +12,22 @@ class InputManager {
 
     return inputValue.trim();
   }
+
+  async retryScan(query, validateFn, errorMessageQuery = "") {
+    try {
+      const inputValue = await this.scan(query);
+
+      validateFn(inputValue);
+
+      return inputValue;
+    } catch (error) {
+      return await this.retryScan(
+        `${error.message} ${errorMessageQuery}`,
+        validateFn,
+        errorMessageQuery
+      );
+    }
+  }
 }
 
 const inputManager = new InputManager(readLineAsync);

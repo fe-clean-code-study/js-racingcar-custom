@@ -6,15 +6,11 @@ class RacerRegistry {
   #entityType;
 
   async selectEntityType() {
-    let typeNumber = await inputManager.scan(
-      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${RacerRegistry.#stringifyRacerEntityTypes()}\n`
+    const typeNumber = await inputManager.retryScan(
+      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${RacerRegistry.#stringifyRacerEntityTypes()}\n`,
+      RacerRegistry.#validateTypeNumber,
+      "다시 입력해주세요.\n"
     );
-
-    while (!RacerRegistry.#isCorrectTypeNumber(typeNumber)) {
-      typeNumber = await inputManager.scan(
-        "올바른 유형의 번호가 아닙니다. 다시 입력해주세요.\n"
-      );
-    }
 
     this.#entityType = RACER_ENTITY_TYPES[typeNumber];
   }
@@ -38,6 +34,12 @@ class RacerRegistry {
 
   static #isCorrectTypeNumber(typeNumber) {
     return typeNumber in RACER_ENTITY_TYPES;
+  }
+
+  static #validateTypeNumber(typeNumber) {
+    if (!RacerRegistry.#isCorrectTypeNumber(typeNumber)) {
+      throw new Error("올바른 유형의 번호가 아닙니다.");
+    }
   }
 }
 
