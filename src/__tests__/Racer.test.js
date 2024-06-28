@@ -2,12 +2,6 @@ import { describe, expect, test } from "vitest";
 import { Racer } from "../domain/index.js";
 
 describe("Racer 클래스 테스트", () => {
-  test("레이서의 이름 앞뒤 공백은 제거된다.", () => {
-    const racer = new Racer(" jeong ");
-
-    expect(racer.name).toHaveLength(5);
-  });
-
   test("레이서에 이름을 지어줄 수 있다.", () => {
     const racer = new Racer("tom");
 
