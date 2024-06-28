@@ -1,6 +1,6 @@
 import readLineAsync from '../utils/readLine.js';
 
-export default class CarView {
+export default class RaceView {
   constructor() {
     this.rl = readLineAsync;
   }
@@ -11,7 +11,7 @@ export default class CarView {
     );
   }
 
-  async inputCarName() {
+  async inputRacerNames() {
     return await this.rl(
       '🏎️ 자동차 이름을 쉼표로 구분지어 입력해주세요! 🏎️ > ',
     );
@@ -26,5 +26,9 @@ export default class CarView {
 
   printWinners(winners) {
     console.log(`✨우승자 ✨: ${winners.join(', ')}`);
+  }
+
+  printError(message) {
+    console.log(`🚨 ${message} 🚨`);
   }
 }
