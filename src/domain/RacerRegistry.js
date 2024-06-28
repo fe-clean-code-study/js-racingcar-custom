@@ -31,7 +31,7 @@ class RacerRegistry {
         processFn: (inputValue) => {
           const racerNameList = inputValue.split(RacerRegistry.#SEPARATOR);
 
-          return racerNameList.map((name) => new Racer(name));
+          return racerNameList.map((name) => new Racer(name.trim()));
         },
         errorMessageQuery: "다시 입력해주세요.\n",
       }
