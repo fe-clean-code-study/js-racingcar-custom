@@ -1,17 +1,17 @@
-import { Car, Race, RaceScoreboard, RacerRegistry } from "./domain/index.js";
+import { Race, RaceScoreboard, RacerRegistry } from "./domain/index.js";
 
 async function main() {
-  const carRacerRegistry = new RacerRegistry();
-  await carRacerRegistry.selectEntityType();
-  const racerNameList = await carRacerRegistry.register();
+  const racerRegistry = new RacerRegistry();
+  await racerRegistry.selectEntityType();
+  const racers = await racerRegistry.register();
 
-  const carRace = new Race(Car, 5);
-  carRace.start(racerNameList);
+  const race = new Race(5);
+  race.start(racers);
 
-  const carRaceScoreboard = new RaceScoreboard(carRace);
+  const raceScoreboard = new RaceScoreboard(race);
 
-  carRaceScoreboard.displayRecords();
-  carRaceScoreboard.displayWinners();
+  raceScoreboard.displayRecords();
+  raceScoreboard.displayWinners();
 }
 
 main();
