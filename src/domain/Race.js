@@ -1,25 +1,22 @@
-import { deepCopy, getRandomNumber, isSubclass } from "../utils/index.js";
+import { deepCopy, getRandomNumber } from "../utils/index.js";
 import Racer from "./Racer.js";
 
 class Race {
-  #Racer;
   #laps;
   #racers;
   #records;
 
-  constructor(Racer, laps) {
-    Race.#validateRacer(Racer);
+  constructor(laps) {
     Race.#validateLaps(laps);
-    this.#Racer = Racer;
     this.#laps = laps;
     this.#racers = [];
     this.#records = [];
   }
 
-  start(racerNameList) {
-    Race.#validateRacerNameList(racerNameList);
+  start(racers) {
+    Race.#validateRacers(racers);
 
-    this.#addRacers(racerNameList);
+    this.#addRacers(racers);
 
     Array.from({ length: this.#laps }).forEach(() => {
       this.#progressRace();
@@ -27,12 +24,14 @@ class Race {
   }
 
   #addRacer(racer) {
+    Race.#validateRacer(racer);
+
     this.#racers.push(racer);
   }
 
-  #addRacers(racerNameList) {
-    racerNameList.forEach((name) => {
-      this.#addRacer(new this.#Racer(name));
+  #addRacers(racers) {
+    racers.forEach((racer) => {
+      this.#addRacer(racer);
     });
   }
 
@@ -72,8 +71,8 @@ class Race {
   }
 
   static #validateRacer(racer) {
-    if (!isSubclass(racer, Racer)) {
-      throw new Error("레이서가 Racer 클래스를 자식 클래스가 아닙니다.");
+    if (!(racer instanceof Racer)) {
+      throw new Error("레이스에 적합하지 않은 레이서입니다.");
     }
   }
 
@@ -87,12 +86,12 @@ class Race {
     }
   }
 
-  static #validateRacerNameList(racerNameList) {
-    if (!Array.isArray(racerNameList)) {
+  static #validateRacers(racers) {
+    if (!Array.isArray(racers)) {
       throw new Error("경기 시작에 적합하지 않은 입력값입니다.");
     }
 
-    if (racerNameList.length < 1) {
+    if (racers.length < 1) {
       throw new Error("경기를 시작하기엔 레이서가 부족합니다.");
     }
   }
