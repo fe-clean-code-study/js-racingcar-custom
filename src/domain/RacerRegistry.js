@@ -2,13 +2,8 @@ import { RACER_ENTITY_TYPES } from "../constants/index.js";
 import { inputManager } from "../service/index.js";
 
 class RacerRegistry {
+  static #SEPARATOR = ",";
   #entityType;
-  #separator;
-
-  constructor(separator) {
-    RacerRegistry.#validateSeparator(separator);
-    this.#separator = separator;
-  }
 
   async selectEntityType() {
     const typeNumber = await inputManager.scan(
@@ -24,23 +19,13 @@ class RacerRegistry {
 
   async register() {
     const inputValue = await inputManager.scan(
-      `경주할 ${this.#entityType} 이름을 입력하세요(이름은 ${
-        this.#separator
-      }를 기준으로 구분).\n`
+      `경주할 ${this.#entityType} 이름을 입력하세요(이름은 쉼표(${
+        RacerRegistry.#SEPARATOR
+      })를 기준으로 구분).\n`
     );
-    const racerNameList = inputValue.split(this.#separator);
+    const racerNameList = inputValue.split(RacerRegistry.#SEPARATOR);
 
     return racerNameList;
-  }
-
-  static #validateSeparator(separator) {
-    if (typeof separator !== "string") {
-      throw new Error("분리 문자는 문자열이어야 합니다.");
-    }
-
-    if (separator.length < 1) {
-      throw new Error("분리 문자는 1자 이상이어야 합니다.");
-    }
   }
 }
 

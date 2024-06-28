@@ -1,7 +1,7 @@
 import { Car, Race, RaceScoreboard, RacerRegistry } from "./domain/index.js";
 
 async function main() {
-  const carRacerRegistry = new RacerRegistry(",");
+  const carRacerRegistry = new RacerRegistry();
   await carRacerRegistry.selectEntityType();
   const racerNameList = await carRacerRegistry.register();
 
