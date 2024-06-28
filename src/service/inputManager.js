@@ -13,19 +13,16 @@ class InputManager {
     return inputValue.trim();
   }
 
-  async retryScan(query, validateFn, errorMessageQuery = "") {
+  async retryScan(query, { processFn, errorMessageQuery = "" }) {
     try {
       const inputValue = await this.scan(query);
 
-      validateFn(inputValue);
-
-      return inputValue;
+      return processFn ? processFn(inputValue) : inputValue;
     } catch (error) {
-      return await this.retryScan(
-        `${error.message} ${errorMessageQuery}`,
-        validateFn,
-        errorMessageQuery
-      );
+      return await this.retryScan(`${error.message} ${errorMessageQuery}`, {
+        processFn,
+        errorMessageQuery,
+      });
     }
   }
 }
