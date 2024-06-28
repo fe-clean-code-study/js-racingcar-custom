@@ -6,13 +6,15 @@ class RacerRegistry {
   #entityType;
 
   async selectEntityType() {
-    const typeNumber = await inputManager.scan(
-      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${Object.entries(
-        RACER_ENTITY_TYPES
-      )
-        .map(([number, type]) => `${number}. ${type}`)
-        .join("\n")}\n`
+    let typeNumber = await inputManager.scan(
+      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${RacerRegistry.#stringifyRacerEntityTypes()}\n`
     );
+
+    while (!RacerRegistry.#isCorrectTypeNumber(typeNumber)) {
+      typeNumber = await inputManager.scan(
+        "올바른 유형의 번호가 아닙니다. 다시 입력해주세요.\n"
+      );
+    }
 
     this.#entityType = RACER_ENTITY_TYPES[typeNumber];
   }
@@ -26,6 +28,16 @@ class RacerRegistry {
     const racerNameList = inputValue.split(RacerRegistry.#SEPARATOR);
 
     return racerNameList;
+  }
+
+  static #stringifyRacerEntityTypes() {
+    return Object.entries(RACER_ENTITY_TYPES)
+      .map(([number, type]) => `${number}. ${type}`)
+      .join("\n");
+  }
+
+  static #isCorrectTypeNumber(typeNumber) {
+    return typeNumber in RACER_ENTITY_TYPES;
   }
 }
 
