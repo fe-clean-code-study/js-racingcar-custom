@@ -4,7 +4,7 @@ import inputManager from "./service/inputManager.js";
 async function main() {
   const raceEntry = new RaceEntry();
   await raceEntry.selectEntityType();
-  const racers = await raceEntry.register();
+  const racers = await raceEntry.registerRacers();
 
   const laps = await inputManager.retryScan("시도할 횟수는 몇회인가요?\n", {
     processFn: (inputValue) => {

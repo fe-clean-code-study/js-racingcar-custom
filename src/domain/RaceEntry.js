@@ -22,7 +22,7 @@ class RaceEntry {
     this.#entityType = RACER_ENTITY_TYPES[typeNumber];
   }
 
-  async register() {
+  async registerRacers() {
     const racers = await inputManager.retryScan(
       `경주할 ${this.#entityType} 이름을 입력하세요(이름은 쉼표(${
         RaceEntry.#SEPARATOR
