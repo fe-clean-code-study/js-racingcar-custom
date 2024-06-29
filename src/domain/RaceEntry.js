@@ -1,5 +1,6 @@
 import { RACER_ENTITY_TYPES } from "../constants/index.js";
 import { inputManager } from "../service/index.js";
+import Race from "./Race.js";
 import Racer from "./Racer.js";
 
 class RaceEntry {
@@ -40,6 +41,21 @@ class RaceEntry {
     return racers;
   }
 
+  async setRaceLaps() {
+    const laps = await inputManager.retryScan("시도할 횟수는 몇회인가요?\n", {
+      processFn: (inputValue) => {
+        const numValue = Number(inputValue);
+
+        RaceEntry.#validateRaceLaps(numValue);
+
+        return numValue;
+      },
+      errorMessageQuery: "다시 입력해주세요.\n",
+    });
+
+    return new Race(laps);
+  }
+
   static #stringifyRacerEntityTypes() {
     return Object.entries(RACER_ENTITY_TYPES)
       .map(([number, type]) => `${number}. ${type}`)
@@ -53,6 +69,16 @@ class RaceEntry {
   static #validateTypeNumber(typeNumber) {
     if (!RaceEntry.#isCorrectTypeNumber(typeNumber)) {
       throw new Error("올바른 유형의 번호가 아닙니다.");
+    }
+  }
+
+  static #validateRaceLaps(numValue) {
+    if (Number.isNaN(numValue) || !Number.isInteger(numValue)) {
+      throw new Error("시도할 횟수로 정수를 입력해야 합니다.");
+    }
+
+    if (numValue < 1) {
+      throw new Error("시도할 횟수는 1이상이어야 합니다.");
     }
   }
 }
