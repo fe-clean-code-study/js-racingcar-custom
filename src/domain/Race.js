@@ -13,12 +13,12 @@ class Race {
     this.#records = [];
   }
 
-  start(racers) {
+  start(racers, rules = [() => 4 <= getRandomNumber(0, 9)]) {
     Race.#validateRacers(racers);
 
     this.#addRacers(racers);
 
-    this.#progressRace();
+    this.#progressRace(rules);
   }
 
   #addRacer(racer) {
@@ -33,20 +33,21 @@ class Race {
     });
   }
 
-  #progressRacePerLap() {
+  #progressRacePerLap(rule) {
     let recordPerLap = [];
 
     this.#racers.forEach((racer) => {
-      Race.#movementStrategy(racer);
+      Race.#moveByRule(racer, rule);
       recordPerLap.push({ name: racer.name, position: racer.position });
     });
 
     this.#records.push(recordPerLap);
   }
 
-  #progressRace() {
+  #progressRace(rules) {
     Array.from({ length: this.#laps }).forEach(() => {
-      this.#progressRacePerLap();
+      const rule = rules.length === 1 ? rules[0] : rule.shift();
+      this.#progressRacePerLap(rule);
     });
   }
 
@@ -68,10 +69,8 @@ class Race {
     return finalLapRecord.filter((racer) => racer.position === maxPosition);
   }
 
-  static #movementStrategy(racer) {
-    const number = getRandomNumber(0, 9);
-
-    if (4 <= number) racer.move();
+  static #moveByRule(racer, rule) {
+    if (rule()) racer.move();
   }
 
   static #validateRacer(racer) {
