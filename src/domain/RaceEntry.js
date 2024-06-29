@@ -62,12 +62,8 @@ class RaceEntry {
       .join("\n");
   }
 
-  static #isCorrectTypeNumber(typeNumber) {
-    return typeNumber in RACER_ENTITY_TYPES;
-  }
-
   static #validateTypeNumber(typeNumber) {
-    if (!RaceEntry.#isCorrectTypeNumber(typeNumber)) {
+    if (!(typeNumber in RACER_ENTITY_TYPES)) {
       throw new Error("올바른 유형의 번호가 아닙니다.");
     }
   }
