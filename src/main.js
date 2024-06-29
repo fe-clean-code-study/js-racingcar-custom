@@ -1,10 +1,10 @@
-import { Race, RaceScoreboard, RacerRegistry } from "./domain/index.js";
+import { Race, RaceScoreboard, RaceEntry } from "./domain/index.js";
 import inputManager from "./service/inputManager.js";
 
 async function main() {
-  const racerRegistry = new RacerRegistry();
-  await racerRegistry.selectEntityType();
-  const racers = await racerRegistry.register();
+  const raceEntry = new RaceEntry();
+  await raceEntry.selectEntityType();
+  const racers = await raceEntry.register();
 
   const laps = await inputManager.retryScan("시도할 횟수는 몇회인가요?\n", {
     processFn: (inputValue) => {

@@ -2,16 +2,16 @@ import { RACER_ENTITY_TYPES } from "../constants/index.js";
 import { inputManager } from "../service/index.js";
 import Racer from "./Racer.js";
 
-class RacerRegistry {
+class RaceEntry {
   static #SEPARATOR = ",";
   #entityType;
 
   async selectEntityType() {
     const typeNumber = await inputManager.retryScan(
-      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${RacerRegistry.#stringifyRacerEntityTypes()}\n`,
+      `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${RaceEntry.#stringifyRacerEntityTypes()}\n`,
       {
         processFn: (inputValue) => {
-          RacerRegistry.#validateTypeNumber(inputValue);
+          RaceEntry.#validateTypeNumber(inputValue);
 
           return inputValue;
         },
@@ -25,11 +25,11 @@ class RacerRegistry {
   async register() {
     const racers = await inputManager.retryScan(
       `경주할 ${this.#entityType} 이름을 입력하세요(이름은 쉼표(${
-        RacerRegistry.#SEPARATOR
+        RaceEntry.#SEPARATOR
       })를 기준으로 구분).\n`,
       {
         processFn: (inputValue) => {
-          const racerNameList = inputValue.split(RacerRegistry.#SEPARATOR);
+          const racerNameList = inputValue.split(RaceEntry.#SEPARATOR);
 
           return racerNameList.map((name) => new Racer(name.trim()));
         },
@@ -51,10 +51,10 @@ class RacerRegistry {
   }
 
   static #validateTypeNumber(typeNumber) {
-    if (!RacerRegistry.#isCorrectTypeNumber(typeNumber)) {
+    if (!RaceEntry.#isCorrectTypeNumber(typeNumber)) {
       throw new Error("올바른 유형의 번호가 아닙니다.");
     }
   }
 }
 
-export default RacerRegistry;
+export default RaceEntry;
