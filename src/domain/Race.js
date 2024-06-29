@@ -18,9 +18,7 @@ class Race {
 
     this.#addRacers(racers);
 
-    Array.from({ length: this.#laps }).forEach(() => {
-      this.#progressRace();
-    });
+    this.#progressRace();
   }
 
   #addRacer(racer) {
@@ -35,7 +33,7 @@ class Race {
     });
   }
 
-  #progressRace() {
+  #progressRacePerLap() {
     let recordPerLap = [];
 
     this.#racers.forEach((racer) => {
@@ -44,6 +42,12 @@ class Race {
     });
 
     this.#records.push(recordPerLap);
+  }
+
+  #progressRace() {
+    Array.from({ length: this.#laps }).forEach(() => {
+      this.#progressRacePerLap();
+    });
   }
 
   get records() {
