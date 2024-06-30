@@ -2,6 +2,7 @@ import { deepCopy, getRandomNumber } from "../utils/index.js";
 import Racer from "./Racer.js";
 
 class Race {
+  static #DEFAULT_RULES = [() => 4 <= getRandomNumber(0, 9)];
   #laps;
   #racers;
   #records;
@@ -13,7 +14,7 @@ class Race {
     this.#records = [];
   }
 
-  start(racers, rules = [() => 4 <= getRandomNumber(0, 9)]) {
+  start(racers, rules = Race.#DEFAULT_RULES) {
     Race.#validateRacers(racers);
 
     this.#addRacers(racers);
