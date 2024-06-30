@@ -14,8 +14,8 @@ export default class Car {
     return this.#position
   }
 
-  move() {
-    this.#position += 1
+  move(diff) {
+    this.#position += diff
   }
 
   validate() {
