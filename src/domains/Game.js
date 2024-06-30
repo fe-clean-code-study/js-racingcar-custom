@@ -1,46 +1,39 @@
+import { getRandomNumber } from '../utils/getRandomNumber.js'
+
 export default class Game {
-  constructor({ display, maxRound, config }) {
-    this.display = display
-    this.currentRound = 0
+  #results
+
+  constructor({ maxRound, rules }) {
     this.maxRound = maxRound
-    this.config = config
-    this.rounds = []
-    this.bindRounds()
+    this.rules = rules
+    this.#results = []
+    this.currentRound = 0
   }
 
-  async setup() {}
-
-  eachRound() {}
-
-  finish() {}
-
-  bindRounds() {
-    if (Object.getPrototypeOf(this).hasOwnProperty('eachRound')) {
-      this.rounds = Array.from({ length: this.maxRound }, _ =>
-        this.eachRound.bind(this)
-      )
-    } else {
-      const roundMethodNames = Object.getOwnPropertyNames(
-        Object.getPrototypeOf(this)
-      ).filter(prop => prop.startsWith('round') && prop !== 'rounds')
-      this.rounds = roundMethodNames.map(methodName =>
-        this[methodName].bind(this)
-      )
-    }
+  get results() {
+    return this.#results
   }
 
-  async play() {
-    try {
-      await this.setup()
-    } catch (error) {
-      this.display.printError(error)
-      return this.play()
-    }
+  get lastResult() {
+    return this.#results.at(-1)
+  }
 
+  get randomRule() {
+    const ruleNames = Object.keys(this.rules)
+    return ruleNames[getRandomNumber(0, ruleNames.length - 1)]
+  }
+
+  addResult(resultAfterRound) {
+    this.#results.push(resultAfterRound)
+  }
+
+  doRound() {
+  }
+
+  play() {
     while (this.currentRound < this.maxRound) {
-      this.rounds[this.currentRound++]()
+      this.doRound()
+      this.currentRound += 1
     }
-
-    this.finish()
   }
 }
