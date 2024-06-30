@@ -4,9 +4,9 @@ export default class Game {
   #results
   #rules
 
-  constructor({ startRound = 1, maxRound, rules }) {
+  constructor({ maxRound, rules }) {
     this.maxRound = maxRound
-    this.currentRound = startRound - 1
+    this.currentRound = 1
 
     this.#rules = rules
     this.currentRule = ''
@@ -39,8 +39,9 @@ export default class Game {
   doRound() {
   }
 
-  play() {
-    while (this.currentRound < this.maxRound) {
+  play(startRound = this.currentRound, endRound = this.maxRound) {
+    this.currentRound = startRound
+    while (this.currentRound <= endRound) {
       this.doRound()
       this.currentRound += 1
     }
