@@ -1,5 +1,6 @@
 import { RACER_ENTITY_TYPES } from "../constants/index.js";
 import { inputManager } from "../service/index.js";
+import { validate } from "../utils/index.js";
 import Race from "./Race.js";
 import Racer from "./Racer.js";
 
@@ -57,19 +58,16 @@ class RaceEntry {
   }
 
   static #validateTypeNumber(typeNumber) {
-    if (!(typeNumber in RACER_ENTITY_TYPES)) {
-      throw new Error("올바른 유형의 번호가 아닙니다.");
-    }
+    validate.property(
+      typeNumber,
+      RACER_ENTITY_TYPES,
+      "올바른 유형의 번호가 아닙니다."
+    );
   }
 
   static #validateRaceLaps(numValue) {
-    if (Number.isNaN(numValue) || !Number.isInteger(numValue)) {
-      throw new Error("시도할 횟수로 정수를 입력해야 합니다.");
-    }
-
-    if (numValue < 1) {
-      throw new Error("시도할 횟수는 1이상이어야 합니다.");
-    }
+    validate.integer(numValue, "시도할 횟수로 정수를 입력해야 합니다.");
+    validate.lessThan(numValue, 1, "시도할 횟수는 1이상이어야 합니다.");
   }
 }
 

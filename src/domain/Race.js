@@ -1,4 +1,4 @@
-import { deepCopy, getRandomNumber } from "../utils/index.js";
+import { deepCopy, getRandomNumber, validate } from "../utils/index.js";
 import Racer from "./Racer.js";
 
 class Race {
@@ -75,29 +75,21 @@ class Race {
   }
 
   static #validateRacer(racer) {
-    if (!(racer instanceof Racer)) {
-      throw new Error("레이스에 적합하지 않은 레이서입니다.");
-    }
+    validate.instance(racer, Racer, "레이스에 적합하지 않은 레이서입니다.");
   }
 
   static #validateLaps(laps) {
-    if (typeof laps !== "number") {
-      throw new Error("레이스 횟수는 숫자여야 합니다.");
-    }
-
-    if (laps < 1) {
-      throw new Error("레이스 횟수는 1이상이어야 합니다.");
-    }
+    validate.integer(laps, "레이스 횟수는 숫자여야 합니다.");
+    validate.lessThan(laps, 1, "레이스 횟수는 1이상이어야 합니다.");
   }
 
   static #validateRacers(racers) {
-    if (!Array.isArray(racers)) {
-      throw new Error("경기 시작에 적합하지 않은 입력값입니다.");
-    }
-
-    if (racers.length < 1) {
-      throw new Error("경기를 시작하기엔 레이서가 부족합니다.");
-    }
+    validate.array(racers, "경기 시작에 적합하지 않은 입력값입니다.");
+    validate.lessThan(
+      racers.length,
+      1,
+      "경기를 시작하기엔 레이서가 부족합니다."
+    );
   }
 }
 
