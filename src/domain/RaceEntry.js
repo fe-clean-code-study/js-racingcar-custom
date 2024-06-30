@@ -10,13 +10,10 @@ class RaceEntry {
   async selectEntityType() {
     const typeNumber = await inputManager.retryScan(
       `원하시는 레이서의 유형을 선택해서 번호를 입력해주세요.\n${RaceEntry.#stringifyRacerEntityTypes()}\n`,
-      {
-        processFn: (inputValue) => {
-          RaceEntry.#validateTypeNumber(inputValue);
+      (inputValue) => {
+        RaceEntry.#validateTypeNumber(inputValue);
 
-          return inputValue;
-        },
-        errorMessageQuery: "다시 입력해주세요.\n",
+        return inputValue;
       }
     );
 
@@ -28,13 +25,10 @@ class RaceEntry {
       `경주할 ${this.#entityType} 이름을 입력하세요(이름은 쉼표(${
         RaceEntry.#SEPARATOR
       })를 기준으로 구분).\n`,
-      {
-        processFn: (inputValue) => {
-          const racerNameList = inputValue.split(RaceEntry.#SEPARATOR);
+      (inputValue) => {
+        const racerNameList = inputValue.split(RaceEntry.#SEPARATOR);
 
-          return racerNameList.map((name) => new Racer(name.trim()));
-        },
-        errorMessageQuery: "다시 입력해주세요.\n",
+        return racerNameList.map((name) => new Racer(name.trim()));
       }
     );
 
@@ -42,16 +36,16 @@ class RaceEntry {
   }
 
   async setRaceLaps() {
-    const laps = await inputManager.retryScan("시도할 횟수는 몇회인가요?\n", {
-      processFn: (inputValue) => {
+    const laps = await inputManager.retryScan(
+      "시도할 횟수는 몇회인가요?\n",
+      (inputValue) => {
         const numValue = Number(inputValue);
 
         RaceEntry.#validateRaceLaps(numValue);
 
         return numValue;
-      },
-      errorMessageQuery: "다시 입력해주세요.\n",
-    });
+      }
+    );
 
     return new Race(laps);
   }
