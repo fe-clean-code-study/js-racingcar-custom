@@ -6,7 +6,7 @@ vi.mock("../service/index.js");
 
 describe("RaceEntry 클래스 테스트", () => {
   test("올바른 유형을 선택하지 않으면 오류가 발생한다.", async () => {
-    inputManager.retryScan.mockImplementationOnce(async (_, { processFn }) => {
+    inputManager.retryScan.mockImplementationOnce(async (_, processFn) => {
       return processFn("5");
     });
 
