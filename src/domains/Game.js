@@ -2,26 +2,35 @@ import { getRandomNumber } from '../utils/getRandomNumber.js'
 
 export default class Game {
   #results
+  #rules
 
-  constructor({ maxRound, rules }) {
+  constructor({ startRound = 1, maxRound, rules }) {
     this.maxRound = maxRound
-    this.rules = rules
+    this.currentRound = startRound - 1
+
+    this.#rules = rules
+    this.currentRule = ''
+
     this.#results = []
-    this.currentRound = 0
   }
 
   get results() {
     return this.#results
   }
 
+  get rules() {
+    return this.#rules
+  }
+
   get lastResult() {
     return this.#results.at(-1)
   }
 
-  get randomRule() {
+  selectRandomRule() {
     const ruleNames = Object.keys(this.rules)
-    return ruleNames[getRandomNumber(0, ruleNames.length - 1)]
+    this.currentRule = ruleNames[getRandomNumber(0, ruleNames.length - 1)]
   }
+
 
   addResult(resultAfterRound) {
     this.#results.push(resultAfterRound)

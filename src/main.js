@@ -7,9 +7,9 @@ async function main() {
     config: {
       maxRound: 5,
       rules: {
-        randomNumberMove: () => getRandomNumber(0, 5),
-        randomNumberOver40: () => getRandomNumber(0, 100) > 40,
-        randomNumberOver3: () => getRandomNumber(1, 4) > 3,
+        ruleName1: () => getRandomNumber(0, 5),
+        ruleName2: () => getRandomNumber(0, 100) > 40,
+        ruleName3: () => getRandomNumber(1, 4) > 3,
       },
     },
   })
