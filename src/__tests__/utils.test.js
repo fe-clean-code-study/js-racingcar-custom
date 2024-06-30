@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { deepCopy, getRandomNumber, isSubclass } from "../utils/index.js";
+import { deepCopy, getRandomNumber } from "../utils/index.js";
 
 describe("getRandomNumber 함수 테스트", () => {
   test.each([
@@ -63,24 +63,6 @@ describe("getRandomNumber 함수 테스트", () => {
 
   test("두번째 인수보다 첫번째 인수가 크면 오류가 발생한다.", () => {
     expect(() => getRandomNumber(4, 2)).toThrowError();
-  });
-});
-
-describe("isSubclass 함수 테스트", () => {
-  test("자식 클래스면 true를 반환한다.", () => {
-    class Parent {}
-
-    class Child extends Parent {}
-
-    expect(isSubclass(Child, Parent)).toBe(true);
-  });
-
-  test("자식 클래스가 아니면 false를 반환한다.", () => {
-    class Cat {}
-
-    class Dog {}
-
-    expect(isSubclass(Cat, Dog)).toBe(false);
   });
 });
 
