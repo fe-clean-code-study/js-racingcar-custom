@@ -47,6 +47,10 @@ export default class Rule {
     });
   }
 
+  getKeys() {
+    return Object.keys(this.#rules);
+  }
+
   run() {
     const rules = Object.values(this.#rules);
 
