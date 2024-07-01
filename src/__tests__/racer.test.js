@@ -102,12 +102,11 @@ describe('Racer 클래스에 대한 단위 테스트', () => {
   );
 });
 
-function makeRacerMockData(initializer, useDefault = true) {
-  const { name, position } = initializer ? initializer : {};
-
+function makeRacerMockData(raceProperty) {
   const racer = new Racer({
-    name: useDefault && name === undefined ? '수연' : name,
-    position: useDefault && position === undefined ? 0 : position,
+    name: '수연',
+    position: 0,
+    ...raceProperty,
   });
 
   return racer;
