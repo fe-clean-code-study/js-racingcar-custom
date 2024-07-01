@@ -14,30 +14,37 @@ export default class Rule {
     const ruleKeys = Object.keys(rules);
 
     for (const key of ruleKeys) {
-      let _value = rules[key];
+      const keyError = Rule.getKeyError(key);
+      const valueError = Rule.getValueError(rules[key]);
 
-      Object.defineProperty(rules, key, {
-        get() {
-          return _value;
-        },
-        set(value) {
-          const keyError = Rule.getKeyError(key);
-          const valueError = Rule.getValueError(value);
+      if (keyError !== undefined || valueError !== undefined) {
+        throw new Error(keyError && valueError);
+      }
 
-          if (keyError !== undefined) {
-            throw new Error(keyError);
-          }
-
-          if (valueError !== undefined) {
-            throw new Error(valueError);
-          }
-
-          _value = value;
-        },
-      });
+      this.#definePropertyRule(rules, key);
     }
 
     this.#rules = rules;
+  }
+
+  #definePropertyRule(obj, key) {
+    let _value = obj[key];
+
+    Object.defineProperty(obj, key, {
+      get() {
+        return _value;
+      },
+      set(value) {
+        const keyError = Rule.getKeyError(key);
+        const valueError = Rule.getValueError(value);
+
+        if (keyError !== undefined || valueError !== undefined) {
+          throw new Error(keyError && valueError);
+        }
+
+        _value = value;
+      },
+    });
   }
 
   run() {
@@ -59,7 +66,10 @@ export default class Rule {
       throw new Error('이미 같은 이름의 룰이 존재합니다.');
     }
 
-    this.#rules[key] = value;
+    const nextRule = { ...this.#rules };
+    nextRule[key] = value;
+
+    this.#initRules(nextRule);
   }
 
   remove(removeKey) {
@@ -74,7 +84,7 @@ export default class Rule {
       nextRules[key] = this.#rules[key];
     }
 
-    this.#rules = nextRules;
+    this.#initRules(nextRules);
   }
 
   removeAll() {
