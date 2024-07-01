@@ -2,9 +2,9 @@ import Car from './Car.js'
 import Game from './Game.js'
 
 export default class RacingGame extends Game {
-  constructor({ carNames, playerName, config }) {
+  constructor({ carNames, playerNames, config }) {
     super(config)
-    this.player = playerName
+    this.players = playerNames
     this.cars = this.createCars(carNames)
     this.gameLogs = []
   }
@@ -44,7 +44,8 @@ export default class RacingGame extends Game {
 
   async doMiniGame(car) {
     const miniGame = this.miniGames[this.currentMiniGame]
-    if (car.name === this.player) {
+    if (this.players.includes(car.name)) {
+      console.log(`${car.name} TURN`)
       return await miniGame.PvC(car.name)
     }
     return miniGame.CvC(car.name)
@@ -52,7 +53,6 @@ export default class RacingGame extends Game {
 
   async race(car) {
     const result = await this.doMiniGame(car)
-
     if (result.hasOwnProperty('score')) {
       car.move(result.score)
     }

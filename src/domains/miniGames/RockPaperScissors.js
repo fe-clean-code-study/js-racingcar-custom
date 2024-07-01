@@ -1,4 +1,3 @@
-import MiniGame from './MiniGame.js'
 import { getRandomNumber } from '../../utils/getRandomNumber.js'
 import readInput from '../../utils/readInput.js'
 import { rockPaperScissorsValidations } from '../../validations/miniGames.js'
@@ -17,7 +16,7 @@ const rockScissorPaperMap = {
     icon: '✋',
   },
 }
-export default class RockPaperScissors extends MiniGame {
+export default class RockPaperScissors {
 
   static get answerList() {
     return Object.keys(rockScissorPaperMap)
@@ -26,7 +25,6 @@ export default class RockPaperScissors extends MiniGame {
   static get randomAnswer() {
     return this.answerList[getRandomNumber(0, 2)].padEnd(2, ' ')
   }
-
 
   static getIcon(answer) {
     return rockScissorPaperMap[answer].icon.padEnd(3, ' ')
@@ -44,7 +42,7 @@ export default class RockPaperScissors extends MiniGame {
     }
     return {
       score,
-      log: `${playerName}:${this.getIcon(playerAnswer)}VS computer:${this.getIcon(opponentAnswer)} ➡️ ${status}`,
+      log: `${playerName}:${this.getIcon(playerAnswer)}VS computer:${this.getIcon(opponentAnswer)} ➡➡ ${status}`,
     }
   }
 
@@ -53,7 +51,7 @@ export default class RockPaperScissors extends MiniGame {
   }
 
   static async PvC(playerName) {
-    const answerIndex = await readInput('가위바위보 대결 : 1.바위 2.가위 3.보', rockPaperScissorsValidations)
+    const answerIndex = await readInput('가위바위보 대결 : 1.바위 2.가위 3.보\n', rockPaperScissorsValidations)
     const playerAnswer = this.answerList[Number(answerIndex) - 1]
     return this.getPlayerResult(`*${playerName}`, playerAnswer, this.randomAnswer)
   }

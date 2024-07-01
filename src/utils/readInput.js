@@ -2,7 +2,7 @@ import createReadline from './createReadline.js'
 
 const askQuestion = (rl, message) => {
   return new Promise((resolve) => {
-    rl.question(`${message}\n`, input => {
+    rl.question(message, input => {
       resolve(input)
     })
   })
