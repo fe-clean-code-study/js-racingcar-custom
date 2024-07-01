@@ -21,15 +21,15 @@ export default class Rule {
           return _value;
         },
         set(value) {
-          const keyValidation = Rule.getKeyError(key);
-          const valueValidation = Rule.getValueError(value);
+          const keyError = Rule.getKeyError(key);
+          const valueError = Rule.getValueError(value);
 
-          if (keyValidation.isValid === false) {
-            throw new Error(keyValidation.message);
+          if (keyError !== undefined) {
+            throw new Error(keyError);
           }
 
-          if (valueValidation.isValid === false) {
-            throw new Error(valueValidation.message);
+          if (valueError !== undefined) {
+            throw new Error(valueError);
           }
 
           _value = value;
@@ -51,7 +51,7 @@ export default class Rule {
       throw new Error('해당 이름의 룰이 존재하지 않습니다.');
     }
 
-    this.rules[key] = value;
+    this.#rules[key] = value;
   }
 
   add(key, value) {
@@ -59,7 +59,7 @@ export default class Rule {
       throw new Error('이미 같은 이름의 룰이 존재합니다.');
     }
 
-    this.rules[key] = value;
+    this.#rules[key] = value;
   }
 
   remove(removeKey) {
@@ -74,11 +74,11 @@ export default class Rule {
       nextRules[key] = this.#rules[key];
     }
 
-    this.rules = nextRules;
+    this.#rules = nextRules;
   }
 
   removeAll() {
-    this.rules = {};
+    this.#rules = {};
   }
 
   isExist(key) {
@@ -98,11 +98,11 @@ export default class Rule {
       return '룰은 1 ~ 10 개여야 합니다.';
     }
 
-    if (keys.some((key) => Rule.getKeyError(key).isValid === false)) {
+    if (keys.some((key) => Rule.getKeyError(key) !== undefined)) {
       return '룰의 키는 문자열이어야 합니다.';
     }
 
-    if (values.some((value) => Rule.getValueError(value).isValid === false)) {
+    if (values.some((value) => Rule.getValueError(value) !== undefined)) {
       return '룰의 값은 불리언을 반환하는 함수여야 합니다.';
     }
 
