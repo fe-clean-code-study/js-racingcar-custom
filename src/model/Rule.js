@@ -6,9 +6,10 @@ export default class Rule {
   }
 
   #initRules(rules) {
-    if (rules === undefined) {
-      this.#rules = {};
-      return;
+    const rulesError = Rule.getRulesError(rules);
+
+    if (rulesError !== undefined) {
+      throw new Error(rulesError);
     }
 
     const ruleKeys = Object.keys(rules);
@@ -100,7 +101,7 @@ export default class Rule {
   }
 
   static getRulesError(rules) {
-    if (typeof rules !== 'object') {
+    if (rules !== undefined && typeof rules !== 'object') {
       return '룰은 객체여야 합니다.';
     }
 
