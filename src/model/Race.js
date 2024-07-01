@@ -3,12 +3,14 @@ import Rule from './Rule.js';
 import RacerClass from './Racer.js';
 
 export default class Race {
+  _Racer;
+  _round;
   #rule;
   #racers;
 
   constructor({ Racer, rules, names, round, onProceed }) {
-    this._Racer = Racer;
-    this._round = round;
+    this.Racer = Racer;
+    this.round = round;
     this.#rule = new Rule(rules);
     this.#racers = this.#makeRacers(names);
     this.onProceed = onProceed;
@@ -121,7 +123,7 @@ export default class Race {
 
     const namesArr = names.split(',');
 
-    if (namesArr.length < 1 || namesArr > 10) {
+    if (namesArr.length < 1 || namesArr.length > 10) {
       return '레이서의 개수는 1 ~ 10 개여야 합니다';
     }
 
