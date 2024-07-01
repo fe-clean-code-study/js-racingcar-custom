@@ -18,7 +18,7 @@ export default class Printer {
       this.rl = createReadline()
     }
     return new Promise(resolve => {
-      this.rl.question(`⬇️ ${message}\n\n`, input => {
+      this.rl.question(`${message}\n`, input => {
         resolve(input)
         this.rl.close()
       })

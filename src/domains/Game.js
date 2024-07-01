@@ -2,14 +2,14 @@ import { getRandomNumber } from '../utils/getRandomNumber.js'
 
 export default class Game {
   #results
-  #rules
+  #miniGames
 
-  constructor({ maxRound, rules }) {
+  constructor({ maxRound, miniGames }) {
     this.maxRound = maxRound
     this.currentRound = 1
 
-    this.#rules = rules
-    this.currentRule = ''
+    this.#miniGames = miniGames
+    this.currentMiniGame = ''
 
     this.#results = []
   }
@@ -18,17 +18,17 @@ export default class Game {
     return this.#results
   }
 
-  get rules() {
-    return this.#rules
+  get miniGames() {
+    return this.#miniGames
   }
 
   get lastResult() {
     return this.#results.at(-1)
   }
 
-  selectRandomRule() {
-    const ruleNames = Object.keys(this.rules)
-    this.currentRule = ruleNames[getRandomNumber(0, ruleNames.length - 1)]
+  selectRandomMiniGame() {
+    const miniGameNames = Object.keys(this.miniGames)
+    this.currentMiniGame = miniGameNames[getRandomNumber(0, miniGameNames.length - 1)]
   }
 
 
@@ -39,10 +39,10 @@ export default class Game {
   doRound() {
   }
 
-  play(startRound = this.currentRound, endRound = this.maxRound) {
+  async play(startRound = this.currentRound, endRound = this.maxRound) {
     this.currentRound = startRound
     while (this.currentRound <= endRound) {
-      this.doRound()
+      await this.doRound()
       this.currentRound += 1
     }
   }

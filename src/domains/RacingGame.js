@@ -2,9 +2,11 @@ import Car from './Car.js'
 import Game from './Game.js'
 
 export default class RacingGame extends Game {
-  constructor({ carNames, config }) {
+  constructor({ carNames, playerName, config }) {
     super(config)
+    this.player = playerName
     this.cars = this.createCars(carNames)
+    this.gameLogs = []
   }
 
   get winner() {
@@ -20,28 +22,43 @@ export default class RacingGame extends Game {
 
   createResult() {
     return {
-      ruleName: this.currentRule,
+      ruleName: this.currentMiniGame,
       cars: this.cars.reduce((acc, car) => ({
         ...acc,
         [car.name]: car.position,
       }), {}),
+      gameLogs: this.gameLogs,
     }
   }
 
-  doRound() {
-    this.selectRandomRule()
-    this.cars.forEach(car => {
-      this.race(car)
-    })
+
+  async doRound() {
+    this.selectRandomMiniGame()
+
+    for (const car of this.cars) {
+      await this.race(car)
+    }
     this.addResult(this.createResult())
+    this.gameLogs = []
   }
 
-  race(car) {
-    const moveCommand = this.rules[this.currentRule]()
-    if (typeof moveCommand === 'number') {
-      car.move(moveCommand)
-    } else if (moveCommand) {
-      car.move(1)
+  async doMiniGame(car) {
+    const miniGame = this.miniGames[this.currentMiniGame]
+    if (car.name === this.player) {
+      return await miniGame.PvC(car.name)
     }
+    return miniGame.CvC(car.name)
+  }
+
+  async race(car) {
+    const result = await this.doMiniGame(car)
+
+    if (result.hasOwnProperty('score')) {
+      car.move(result.score)
+    }
+    if (result.hasOwnProperty('win')) {
+      car.move(result.win ? 1 : 0)
+    }
+    this.gameLogs.push(result.log)
   }
 }
