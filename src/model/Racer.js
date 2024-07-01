@@ -44,7 +44,7 @@ export default class Racer {
   move(distance = 1) {
     this.position = this.position + distance;
 
-    return true;
+    return this.position;
   }
 
   static getNameError(name) {
