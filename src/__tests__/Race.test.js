@@ -80,11 +80,78 @@ describe("Race 클래스 테스트", () => {
     expect(race.winners).toEqual([]);
   });
 
-  test("레이스 우승자는 1이상입니다..", () => {
+  test("레이스 우승자는 1이상입니다.", () => {
     const race = createRaceWith5Laps();
     race.start([new Racer("1"), new Racer("2")]);
 
     expect(race.winners.length).toBeGreaterThanOrEqual(1);
+  });
+
+  test.each([
+    { value: 1 },
+    { value: "str" },
+    { value: true },
+    { value: null },
+    { value: {} },
+  ])(
+    "레이스 규칙에 적합하지 않은 입력값($value)이면 오류가 발생합니다.",
+    ({ value }) => {
+      const race = createRaceWith5Laps();
+
+      expect(() =>
+        race.start([new Racer("1"), new Racer("2")], value)
+      ).toThrowError("레이스 규칙에 적합하지 않은 입력값입니다.");
+    }
+  );
+
+  test("레이스 규칙이 1개미만이면 오류가 발생한다.", () => {
+    const race = createRaceWith5Laps();
+
+    expect(() => race.start([new Racer("1"), new Racer("2")], [])).toThrowError(
+      "레이스를 시작하기엔 규칙이 부족합니다."
+    );
+  });
+
+  test.each([
+    { value: 1 },
+    { value: "str" },
+    { value: true },
+    { value: undefined },
+    { value: null },
+    { value: [] },
+    { value: {} },
+  ])(
+    "레이스 규칙이 함수가 아닌 값($value)이면 오류가 발생한다.",
+    ({ value }) => {
+      const race = createRaceWith5Laps();
+
+      expect(() =>
+        race.start([new Racer("1"), new Racer("2")], [value])
+      ).toThrowError("레이스 규칙은 함수여야 합니다.");
+    }
+  );
+
+  test.each([
+    { fn: () => 1 },
+    { fn: () => "str" },
+    { fn: () => undefined },
+    { fn: () => null },
+    { fn: () => [] },
+    { fn: () => {} },
+  ])("레이스 규칙의 반환값이 불린값이 아니면 오류가 발생한다.", ({ fn }) => {
+    const race = createRaceWith5Laps();
+
+    expect(() =>
+      race.start([new Racer("1"), new Racer("2")], [fn])
+    ).toThrowError("레이스 규칙의 반환값으로 적합하지 않습니다.");
+  });
+
+  test("레이스 규칙이 불린값을 반환하는 함수이면 오류가 발생하지 않는다.", () => {
+    const race = createRaceWith5Laps();
+
+    expect(() =>
+      race.start([new Racer("1"), new Racer("2")], [() => true])
+    ).not.toThrowError();
   });
 });
 
