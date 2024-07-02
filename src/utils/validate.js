@@ -34,6 +34,17 @@ class Validator {
   static property(value, objectValue, errorMessage) {
     Validator.throwErrorWithCondition(!(value in objectValue), errorMessage);
   }
+
+  static function(value, errorMessage) {
+    Validator.throwErrorWithCondition(
+      typeof value !== "function",
+      errorMessage
+    );
+  }
+
+  static boolean(value, errorMessage) {
+    Validator.throwErrorWithCondition(typeof value !== "boolean", errorMessage);
+  }
 }
 
 export default Validator;
