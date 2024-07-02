@@ -1,39 +1,55 @@
-import Racing from './model/Racing.js';
-import { GAME } from './constants/index.js';
-import InputView from './view/InputView.js';
-import OutputView from './view/OutputView.js';
-import validation from './utils/validation.js';
+import { GAME } from './constants/game.js';
+import Race from './model/Race.js';
+import Car from './model/Car.js';
+import GameView from './view/RaceView.js';
+import gameSupport from './utils/gameSupport.js';
 
-class Main {
-  #rounds;
-  constructor(rounds) {
-    this.#rounds = this.setRounds(rounds);
-  }
+async function main() {
+  const view = new GameView();
+  let roundInput = undefined;
+  let namesInput = undefined;
 
-  setRounds(rounds) {
-    if (!validation.isValidateRounds(rounds)) {
-      return [];
+  while (true) {
+    roundInput = await view.inputRound();
+    const error = Race.getRoundError(roundInput);
+
+    if (error === undefined) {
+      break;
     }
-
-    this.#rounds = rounds;
-    return this.#rounds;
+    view.printError(error);
   }
 
-  async play() {
-    const result = this.#rounds.map(async (round) => {
-      const cars = await InputView.getCarName();
-      const racing = new Racing(round, cars);
-      const winners = racing.startRacing(cars);
+  while (true) {
+    namesInput = await view.inputRacerNames();
+    const error = Race.getNamesError(namesInput);
 
-      OutputView.printWinners(winners);
-      return winners;
-    });
-
-    return result;
+    if (error === undefined) {
+      break;
+    }
+    view.printError(error);
   }
+
+  const race = new Race({
+    Racer: Car,
+    round: Number(roundInput),
+    names: namesInput,
+    rules: {
+      diceRule: () => {
+        return (
+          gameSupport.dice(GAME.RULE.MAX_DICE, GAME.RULE.MIN_DICE) >=
+          GAME.RULE.DICE_CONDITION
+        );
+      },
+    },
+    onProceed: () => {
+      view.printMovedCar(race.getRacerStatus());
+    },
+  });
+
+  const winners = race.startRace();
+  view.printWinners(winners);
 }
 
-const main = new Main([GAME.ROUND]);
-main.play();
+main();
 
-export default Main;
+export default main;
