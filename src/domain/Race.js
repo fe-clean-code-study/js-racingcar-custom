@@ -85,21 +85,25 @@ class Race {
   }
 
   static #validateRacers(racers) {
-    validate.array(racers, "경기 시작에 적합하지 않은 입력값입니다.");
+    validate.array(racers, "레이스 시작에 적합하지 않은 입력값입니다.");
     validate.lessThan(
       racers.length,
       1,
-      "경기를 시작하기엔 레이서가 부족합니다."
+      "레이스를 시작하기엔 레이서가 부족합니다."
     );
   }
 
   static #validateRules(rules) {
-    validate.array(rules, "경기 규칙에 적합하지 않은 입력값입니다.");
-    validate.lessThan(rules.length, 1, "경기를 시작하기엔 규칙이 부족합니다.");
+    validate.array(rules, "레이스 규칙에 적합하지 않은 입력값입니다.");
+    validate.lessThan(
+      rules.length,
+      1,
+      "레이스를 시작하기엔 규칙이 부족합니다."
+    );
 
     rules.forEach((rule) => {
-      validate.function(rule, "경기 규칙은 함수여야 합니다.");
-      validate.boolean(rule(), "경기 규칙의 반환값으로 적합하지 않습니다.");
+      validate.function(rule, "레이스 규칙은 함수여야 합니다.");
+      validate.boolean(rule(), "레이스 규칙의 반환값으로 적합하지 않습니다.");
     });
   }
 }
