@@ -42,7 +42,7 @@ describe("Race 클래스 테스트", () => {
       const race = createRaceWith5Laps();
 
       expect(() => race.start(value)).toThrowError(
-        "경기 시작에 적합하지 않은 입력값입니다."
+        "레이스 시작에 적합하지 않은 입력값입니다."
       );
     }
   );
@@ -51,7 +51,7 @@ describe("Race 클래스 테스트", () => {
     const race = createRaceWith5Laps();
 
     expect(() => race.start([])).toThrowError(
-      "경기를 시작하기엔 레이서가 부족합니다."
+      "레이스를 시작하기엔 레이서가 부족합니다."
     );
   });
 
