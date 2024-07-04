@@ -32,17 +32,21 @@ export default class RockPaperScissors {
 
   static getPlayerResult(playerName, playerAnswer, opponentAnswer) {
     let score = 0
-    let status = 'draw'
+    let result = 'draw'
     if (rockScissorPaperMap[playerAnswer].win === opponentAnswer) {
       score = 1
-      status = 'win'
+      result = 'win'
     } else if (rockScissorPaperMap[opponentAnswer].win === playerAnswer) {
       score = -1
-      status = 'lose'
+      result = 'lose'
     }
     return {
       score,
-      log: `${playerName}:${this.getIcon(playerAnswer)}VS computer:${this.getIcon(opponentAnswer)} ➡➡ ${status}`,
+      log: {
+        player: this.getIcon(playerAnswer),
+        computer: this.getIcon(opponentAnswer),
+        result,
+      },
     }
   }
 

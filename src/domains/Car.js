@@ -15,7 +15,11 @@ export default class Car {
   }
 
   move(diff) {
-    this.#position += diff
+    if (this.#position + diff < 0) {
+      this.#position = 0
+    } else {
+      this.#position += diff
+    }
   }
 
   validate() {

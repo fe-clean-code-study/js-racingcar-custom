@@ -19,7 +19,11 @@ export default class GuessTimeOut {
     const win = difference < 0.5
     return {
       win,
-      log: `${playerName}:${playerTime.toFixed(2)}s VS computer:${opponentTime.toFixed(2)}s  ➡➡ ${win ? 'win' : 'lose'}`,
+      log: {
+        player: playerTime.toFixed(2),
+        computer: opponentTime.toFixed(2),
+        result: win ? 'win' : 'lose',
+      },
     }
   }
 

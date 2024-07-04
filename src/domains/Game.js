@@ -1,17 +1,19 @@
 import { getRandomNumber } from '../utils/getRandomNumber.js'
+import { EventEmitter } from 'events'
 
 export default class Game {
   #results
   #miniGames
 
-  constructor({ maxRound, miniGames }) {
-    this.maxRound = maxRound
+  constructor({ miniGames }) {
+    this.maxRound = 1
     this.currentRound = 1
 
     this.#miniGames = miniGames
     this.currentMiniGame = ''
 
     this.#results = []
+    this.eventEmitter = new EventEmitter()
   }
 
   get results() {
@@ -31,6 +33,10 @@ export default class Game {
     this.currentMiniGame = miniGameNames[getRandomNumber(0, miniGameNames.length - 1)]
   }
 
+  emitEvent(eventName, ...args) {
+    this.eventEmitter.emit(eventName, ...args)
+  }
+
 
   addResult(resultAfterRound) {
     this.#results.push(resultAfterRound)
@@ -38,6 +44,7 @@ export default class Game {
 
   doRound() {
   }
+
 
   async play(startRound = this.currentRound, endRound = this.maxRound) {
     this.currentRound = startRound

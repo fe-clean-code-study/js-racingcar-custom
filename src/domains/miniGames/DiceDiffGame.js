@@ -10,7 +10,11 @@ export default class DiceDiffGame {
     const diff = opponentAnswer - playerAnswer
     return {
       score: diff,
-      log: `${playerName}:${playerAnswer} VS computer:${opponentAnswer} ➡➡ ${diff}`,
+      log: {
+        player: playerAnswer,
+        computer: opponentAnswer,
+        result: diff,
+      },
     }
   }
 

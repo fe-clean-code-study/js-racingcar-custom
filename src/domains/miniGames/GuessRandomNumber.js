@@ -11,7 +11,11 @@ export default class GuessRandomNumber {
     const win = playerAnswer === opponentAnswer
     return {
       win,
-      log: `${playerName}:${playerAnswer} VS computer:${opponentAnswer} ➡➡ ${win ? 'win' : 'lose'}`,
+      log: {
+        player: playerAnswer,
+        computer: opponentAnswer,
+        result: win ? 'win' : 'lose',
+      },
     }
   }
 

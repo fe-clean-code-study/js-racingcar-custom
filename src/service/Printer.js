@@ -1,27 +1,31 @@
-import createReadline from '../utils/createReadline.js'
-
-export default class Printer {
-  constructor() {
-    this.rl = createReadline()
+export default class ConsolePrinter {
+  constructor(template) {
+    this.template = template
   }
 
-  print(message) {
-    console.log(message)
-  }
-
-  printError(error) {
-    console.log(`\n⚠️ ${error.message}\n`)
-  }
-
-  async read(message) {
-    if (!this.rl.isOpened) {
-      this.rl = createReadline()
-    }
-    return new Promise(resolve => {
-      this.rl.question(`${message}\n`, input => {
-        resolve(input)
-        this.rl.close()
-      })
+  format(templateKey, messages) {
+    let result = this.template[templateKey]
+    messages.forEach((message, index) => {
+      result = result.replaceAll(`%{${index + 1}}`, message)
     })
+    return result
   }
+
+  print(...messages) {
+    console.log(...messages)
+  }
+
+  printWithTemplate(templateKey, messages) {
+    if (this.template.hasOwnProperty(templateKey)) {
+      console.log(this.format(templateKey, messages))
+    } else {
+      console.log(...messages)
+    }
+  }
+
+  lineBreak() {
+    console.log('')
+  }
+
+
 }
