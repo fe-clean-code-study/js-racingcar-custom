@@ -21,10 +21,8 @@ export default class RacingGame extends Game {
     this.maxRound = maxRound
   }
 
-
   addPlayer(name) {
     const newPlayerCar = new Car(name)
-
     this.players.push(newPlayerCar.name)
     this.cars.push(newPlayerCar)
   }
@@ -32,6 +30,18 @@ export default class RacingGame extends Game {
   addCar(name) {
     const newCar = new Car(name)
     this.cars.push(newCar)
+  }
+
+  async doRound() {
+    this.selectRandomMiniGame()
+    this.emitEvent('roundStart')
+
+    for (const car of this.cars) {
+      await this.race(car)
+    }
+
+    this.addResult(this.createResult())
+    this.emitEvent('roundEnd')
   }
 
   createResult() {
@@ -47,19 +57,16 @@ export default class RacingGame extends Game {
     return result
   }
 
-
-  async doRound() {
-    this.selectRandomMiniGame()
-    this.emitEvent('roundStart')
-
-    for (const car of this.cars) {
-      await this.race(car)
+  async race(car) {
+    const miniGameResult = await this.doMiniGame(car)
+    if (miniGameResult.hasOwnProperty('score')) {
+      car.move(miniGameResult.score)
     }
-
-    this.addResult(this.createResult())
-    this.emitEvent('roundEnd')
+    if (miniGameResult.hasOwnProperty('win')) {
+      car.move(miniGameResult.win ? 1 : 0)
+    }
+    this.gameLogs = { ...this.gameLogs, [car.name]: miniGameResult.log }
   }
-
 
   async doMiniGame(car) {
     const miniGame = this.miniGames[this.currentMiniGame]
@@ -70,16 +77,5 @@ export default class RacingGame extends Game {
     }
 
     return miniGame.CvC(car.name)
-  }
-
-  async race(car) {
-    const miniGameResult = await this.doMiniGame(car)
-    if (miniGameResult.hasOwnProperty('score')) {
-      car.move(miniGameResult.score)
-    }
-    if (miniGameResult.hasOwnProperty('win')) {
-      car.move(miniGameResult.win ? 1 : 0)
-    }
-    this.gameLogs = { ...this.gameLogs, [car.name]: miniGameResult.log }
   }
 }

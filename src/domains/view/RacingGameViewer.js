@@ -12,58 +12,44 @@ export default class RacingGameViewer {
     })
   }
 
-  displayStartRound({ currentRound }) {
-    this.printer.printWithTemplate('roundStart', [currentRound])
-  }
-
-  displayRoundResult({ results, maxPosition, currentRound }) {
-    const { positions } = results[currentRound - 1]
-    const prevPositions = currentRound > 1 ? results[currentRound - 2].positions : {}
-
-    Object.entries(positions).forEach(([name, position]) => {
-      const positionString = this.formatPositionString(position, maxPosition)
-      const positionDiffArgs = this.getPositionDiffArgs(position, prevPositions[name] || 0)
-
-      this.printer.printWithTemplate(
-        'carPosition',
-        [name.padEnd(6, ' '), positionString, ...positionDiffArgs],
-      )
-    })
-    this.printer.lineBreak()
-  }
-
-  formatPositionString(position, maxPosition) {
-    return '⛳️'.padStart((position + 1) * 2, '__').padEnd((maxPosition + 1) * 2, '__')
-  }
-
-  getPositionDiffArgs(position, prevPosition) {
-    const positionDiff = position - prevPosition
-    return [positionDiff < 0 ? '' : '+', positionDiff, position]
-  }
-
-  displayGameLogs({ results }) {
-    const { gameLogs } = results.at(-1)
-    this.printer.lineBreak()
-
-    Object.entries(gameLogs).forEach(([name, log]) => {
-      this.printer.printWithTemplate('gameLog', [
-        name.padEnd(6, ' '),
-        ...Object.values(log),
-      ])
-    })
-
-    this.printer.lineBreak()
-  }
-
   displayGameStart() {
     this.printer.print('🚕 레이싱 게임을 시작합니다 🚗')
     this.printer.print('각 라운드마다 랜덤 미니 게임을 진행하여 이동할 수 있습니다.')
     this.printer.lineBreak()
   }
 
+  displayStartRound({ currentRound }) {
+    this.printer.printWithTemplate('roundStart', [currentRound])
+  }
+
   displayMiniGameStart(playerName) {
     this.printer.lineBreak()
     this.printer.printWithTemplate('miniGameStart', [playerName])
+  }
+
+  displayGameLogs({ results }) {
+    const { gameLogs } = results.at(-1)
+    this.printer.lineBreak()
+    Object.entries(gameLogs).forEach(([name, log]) => {
+      this.printer.printWithTemplate('gameLog', [name.padEnd(5, ' '), ...Object.values(log)])
+    })
+    this.printer.lineBreak()
+  }
+
+  displayRoundResult({ results, maxPosition, currentRound }) {
+    const { positions } = results[currentRound - 1]
+    const prevPositions = currentRound > 1 ? results[currentRound - 2].positions : {}
+    Object.entries(positions).forEach(([name, position]) => {
+      const positionString = this.formatPositionString(position, maxPosition)
+      const positionDiffArgs = this.getPositionDiffArgs(position, prevPositions[name] || 0)
+      this.printer.printWithTemplate('carPosition', [name.padEnd(5, ' '), positionString, ...positionDiffArgs])
+    })
+    this.printer.lineBreak()
+  }
+
+  displayWinners({ winners }) {
+    this.printer.printWithTemplate('winner', [winners.join(', ')])
+    this.printer.lineBreak()
   }
 
   async readPlayerCarNames() {
@@ -78,8 +64,12 @@ export default class RacingGameViewer {
     return await readInput('몇 라운드 플레이할 지 알려주세요.\n')
   }
 
-  displayWinners({ winners }) {
-    this.printer.printWithTemplate('winner', [winners.join(', ')])
-    this.printer.lineBreak()
+  formatPositionString(position, maxPosition) {
+    return '⛳️'.padStart((position + 1) * 2, '__').padEnd((maxPosition + 1) * 2, '__')
+  }
+
+  getPositionDiffArgs(position, prevPosition) {
+    const positionDiff = position - prevPosition
+    return [positionDiff < 0 ? '' : '+', positionDiff, position]
   }
 }

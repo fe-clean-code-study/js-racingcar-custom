@@ -12,13 +12,20 @@ export default class RacingGameController {
     this.viewer.displayStartRound(this.racingGame)
   }
 
+  onMiniGameStart(name) {
+    this.viewer.displayMiniGameStart(name)
+  }
+
   onRoundEnd() {
     this.viewer.displayGameLogs(this.racingGame)
     this.viewer.displayRoundResult(this.racingGame)
   }
 
-  onMiniGameStart(name) {
-    this.viewer.displayMiniGameStart(name)
+  async startGame() {
+    this.viewer.displayGameStart()
+    await this.setupGame()
+    await this.racingGame.play()
+    this.viewer.displayWinners(this.racingGame)
   }
 
   async setupGame() {
@@ -31,14 +38,4 @@ export default class RacingGameController {
     const maxRound = await this.viewer.readRoundCount()
     this.racingGame.setMaxRound(Number(maxRound))
   }
-
-  async startGame() {
-    this.viewer.displayGameStart()
-    await this.setupGame()
-    await this.racingGame.play()
-
-    this.viewer.displayWinners(this.racingGame)
-  }
 }
-
-
