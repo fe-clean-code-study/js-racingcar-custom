@@ -1,46 +1,54 @@
+import { getRandomNumber } from '../utils/getRandomNumber.js';
+import { EventEmitter } from 'events';
+
 export default class Game {
-  constructor({ display, maxRound, config }) {
-    this.display = display
-    this.currentRound = 0
-    this.maxRound = maxRound
-    this.config = config
-    this.rounds = []
-    this.bindRounds()
+  #results;
+  #miniGames;
+
+  constructor({ miniGames }) {
+    this.maxRound = 1;
+    this.currentRound = 1;
+
+    this.#miniGames = miniGames;
+    this.currentMiniGame = '';
+
+    this.#results = [];
+    this.eventEmitter = new EventEmitter();
   }
 
-  async setup() {}
-
-  eachRound() {}
-
-  finish() {}
-
-  bindRounds() {
-    if (Object.getPrototypeOf(this).hasOwnProperty('eachRound')) {
-      this.rounds = Array.from({ length: this.maxRound }, _ =>
-        this.eachRound.bind(this)
-      )
-    } else {
-      const roundMethodNames = Object.getOwnPropertyNames(
-        Object.getPrototypeOf(this)
-      ).filter(prop => prop.startsWith('round') && prop !== 'rounds')
-      this.rounds = roundMethodNames.map(methodName =>
-        this[methodName].bind(this)
-      )
-    }
+  get results() {
+    return this.#results;
   }
 
-  async play() {
-    try {
-      await this.setup()
-    } catch (error) {
-      this.display.printError(error)
-      return this.play()
-    }
+  get miniGames() {
+    return this.#miniGames;
+  }
 
-    while (this.currentRound < this.maxRound) {
-      this.rounds[this.currentRound++]()
-    }
+  get lastResult() {
+    return this.#results.at(-1);
+  }
 
-    this.finish()
+  selectRandomMiniGame() {
+    const miniGameNames = Object.keys(this.miniGames);
+    this.currentMiniGame =
+      miniGameNames[getRandomNumber(0, miniGameNames.length - 1)];
+  }
+
+  emitEvent(eventName, ...args) {
+    this.eventEmitter.emit(eventName, ...args);
+  }
+
+  addResult(resultAfterRound) {
+    this.#results.push(resultAfterRound);
+  }
+
+  doRound() {}
+
+  async play(startRound = this.currentRound, endRound = this.maxRound) {
+    this.currentRound = startRound;
+    while (this.currentRound <= endRound) {
+      await this.doRound();
+      this.currentRound += 1;
+    }
   }
 }
