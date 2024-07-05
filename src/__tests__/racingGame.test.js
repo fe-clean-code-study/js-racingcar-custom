@@ -3,8 +3,14 @@ import RacingGame from '../domains/racingGame/RacingGame.js';
 import { racingValidations } from '../validations/racing.js';
 
 const mockMiniGame = {
-  PvC: vi.fn().mockResolvedValue({ score: 1, log: { player: 1, computer: 0, result: 'win' } }),
-  CvC: vi.fn().mockResolvedValue({ score: 2, log: { player: 1, computer: 0, result: 'win' } }),
+  PvC: vi.fn().mockResolvedValue({
+    score: 1,
+    log: { player: 1, computer: 0, result: 'win' },
+  }),
+  CvC: vi.fn().mockResolvedValue({
+    score: 2,
+    log: { player: 1, computer: 0, result: 'win' },
+  }),
 };
 
 describe('RacingGame', () => {
@@ -27,22 +33,32 @@ describe('RacingGame', () => {
   });
 
   test('유효하지 않은 자동차에 대해 오류를 발생시킨다.', () => {
-    expect(() => game.setCars(['자동차1', '자동차1'], [])).toThrow(racingValidations.uniqueCarName.errorMessage);
-    expect(() => game.setCars([], [])).toThrow(racingValidations.leastCarCount.errorMessage);
+    expect(() => game.setCars(['자동차1', '자동차1'], [])).toThrow(
+      racingValidations.uniqueCarName.errorMessage,
+    );
+    expect(() => game.setCars([], [])).toThrow(
+      racingValidations.leastCarCount.errorMessage,
+    );
   });
 
   test('유효하지 않은 최대 라운드 값에 대해 오류를 발생시킨다.', () => {
-    expect(() => game.setMaxRound('문자열')).toThrow(racingValidations.maxRoundNumber.errorMessage);
-    expect(() => game.setMaxRound(6)).toThrow(racingValidations.maxRoundRange.errorMessage);
+    expect(() => game.setMaxRound('문자열')).toThrow(
+      racingValidations.maxRoundNumber.errorMessage,
+    );
+    expect(() => game.setMaxRound(6)).toThrow(
+      racingValidations.maxRoundRange.errorMessage,
+    );
   });
 
   test('유효하지 않은 미니게임 함수에 대해 오류를 발생시킨다.', () => {
     const invalidMiniGame = {
-      CvC: vi.fn().mockResolvedValue({ score: 1, log: { player: 1, computer: 0 } }),
+      CvC: vi
+        .fn()
+        .mockResolvedValue({ score: 1, log: { player: 1, computer: 0 } }),
     };
-    expect(() => new RacingGame({ miniGames: { MockGame: invalidMiniGame } })).toThrow(
-      racingValidations.miniGameInterface.errorMessage,
-    );
+    expect(
+      () => new RacingGame({ miniGames: { MockGame: invalidMiniGame } }),
+    ).toThrow(racingValidations.miniGameInterface.errorMessage);
   });
 
   test('유효하지 않은 미니게임 결과에 대해 오류를 발생시킨다.', async () => {
@@ -66,7 +82,7 @@ describe('RacingGame', () => {
     game.setCars(['자동차1'], ['자동차2']);
     await game.doRound();
 
-    expect(game.winners).toEqual(['자동차1', '자동차2']);
+    expect(game.winners).toEqual(['자동차2']);
   });
 
   test('점수를 올바르게 저장하고 계산할 수 있다.', async () => {
