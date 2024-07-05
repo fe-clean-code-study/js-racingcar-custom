@@ -1,5 +1,14 @@
-import { RacingGame, RacingGameViewer,  RacingGameController } from './domains/racingGame'
-import { GuessTimeOut, GuessRandomNumber, RockPaperScissors, DiceDiffGame } from './domains/miniGames'
+import {
+  RacingGame,
+  RacingGameViewer,
+  RacingGameController,
+} from './domains/racingGame';
+import {
+  GuessTimeOut,
+  GuessRandomNumber,
+  RockPaperScissors,
+  DiceDiffGame,
+} from './domains/miniGames';
 
 async function main() {
   await new RacingGameController({
@@ -11,8 +20,8 @@ async function main() {
         DiceDiffGame,
       },
     }),
-    viewer: new RacingGameViewer()
-  }).startGame()
+    viewer: new RacingGameViewer(),
+  }).startGame();
 }
 
-main()
+main();

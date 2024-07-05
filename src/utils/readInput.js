@@ -1,32 +1,32 @@
-import createReadline from './createReadline.js'
+import createReadline from './createReadline.js';
 
 const askQuestion = (rl, message) => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     rl.question(message, input => {
-      resolve(input)
-    })
-  })
-}
+      resolve(input);
+    });
+  });
+};
 
 const findInputError = (input, validations) => {
-  const { errorMessage } = validations.find(({ check }) => !check(input)) ?? {}
-  return errorMessage
-}
+  const { errorMessage } = validations.find(({ check }) => !check(input)) ?? {};
+  return errorMessage;
+};
 
 const readInput = (message, validations = [], option = 'repeat') => {
-  const rl = createReadline()
+  const rl = createReadline();
   const processInput = async () => {
-    const input = await askQuestion(rl, message)
-    const errorMessage = findInputError(input, validations)
+    const input = await askQuestion(rl, message);
+    const errorMessage = findInputError(input, validations);
 
     if (option === 'repeat' && errorMessage) {
-      console.error(errorMessage)
-      return processInput()
+      console.error(errorMessage);
+      return processInput();
     }
-    rl.close()
-    return input
-  }
-  return processInput()
-}
+    rl.close();
+    return input;
+  };
+  return processInput();
+};
 
-export default readInput
+export default readInput;

@@ -1,32 +1,32 @@
-import { carValidations } from '../validations/car.js'
+import { carValidations } from '../validations/car.js';
 
 export default class Car {
-  #position
+  #position;
 
   constructor(name) {
-    this.name = name.replaceAll(' ', '')
+    this.name = name.replaceAll(' ', '');
 
-    this.validate()
-    this.#position = 0
+    this.validate();
+    this.#position = 0;
   }
 
   get position() {
-    return this.#position
+    return this.#position;
   }
 
   move(diff) {
     if (this.#position + diff < 0) {
-      this.#position = 0
+      this.#position = 0;
     } else {
-      this.#position += diff
+      this.#position += diff;
     }
   }
 
   validate() {
     Object.values(carValidations).forEach(({ check, errorMessage }) => {
       if (!check(this.name)) {
-        throw new Error(errorMessage)
+        throw new Error(errorMessage);
       }
-    })
+    });
   }
 }

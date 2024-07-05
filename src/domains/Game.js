@@ -1,56 +1,54 @@
-import { getRandomNumber } from '../utils/getRandomNumber.js'
-import { EventEmitter } from 'events'
+import { getRandomNumber } from '../utils/getRandomNumber.js';
+import { EventEmitter } from 'events';
 
 export default class Game {
-  #results
-  #miniGames
+  #results;
+  #miniGames;
 
   constructor({ miniGames }) {
-    this.maxRound = 1
-    this.currentRound = 1
+    this.maxRound = 1;
+    this.currentRound = 1;
 
-    this.#miniGames = miniGames
-    this.currentMiniGame = ''
+    this.#miniGames = miniGames;
+    this.currentMiniGame = '';
 
-    this.#results = []
-    this.eventEmitter = new EventEmitter()
+    this.#results = [];
+    this.eventEmitter = new EventEmitter();
   }
 
   get results() {
-    return this.#results
+    return this.#results;
   }
 
   get miniGames() {
-    return this.#miniGames
+    return this.#miniGames;
   }
 
   get lastResult() {
-    return this.#results.at(-1)
+    return this.#results.at(-1);
   }
 
   selectRandomMiniGame() {
-    const miniGameNames = Object.keys(this.miniGames)
-    this.currentMiniGame = miniGameNames[getRandomNumber(0, miniGameNames.length - 1)]
+    const miniGameNames = Object.keys(this.miniGames);
+    this.currentMiniGame =
+      miniGameNames[getRandomNumber(0, miniGameNames.length - 1)];
   }
 
   emitEvent(eventName, ...args) {
-    this.eventEmitter.emit(eventName, ...args)
+    this.eventEmitter.emit(eventName, ...args);
   }
-
 
   addResult(resultAfterRound) {
-    this.#results.push(resultAfterRound)
+    this.#results.push(resultAfterRound);
   }
 
-  doRound() {
-  }
-
+  doRound() {}
 
   async play(startRound = this.currentRound, endRound = this.maxRound) {
-    this.currentRound = startRound
+    this.currentRound = startRound;
     while (this.currentRound <= endRound) {
-      await this.doRound()
-      this.currentRound += 1
+      await this.doRound();
+      this.currentRound += 1;
     }
   }
 }
