@@ -1,6 +1,7 @@
 import Car from '../Car.js';
 import Game from '../Game.js';
-import { racingValidations, createValidator } from '../../validations';
+import { racingValidations } from '../../validations/racing.js';
+import createValidator from '../../validations/createValidator.js';
 
 export default class RacingGame extends Game {
   constructor({ miniGames }) {

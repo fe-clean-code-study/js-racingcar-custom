@@ -1,6 +1,6 @@
 import { getRandomNumber } from '../../utils/getRandomNumber.js';
 import readInput from '../../utils/readInput.js';
-import { guessRandomNumberValidations } from '../../validations';
+import { guessRandomNumberValidations } from '../../validations/miniGames.js';
 
 export default class GuessRandomNumber {
   static get randomNumber() {

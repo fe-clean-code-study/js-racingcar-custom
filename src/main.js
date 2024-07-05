@@ -1,14 +1,10 @@
-import {
-  RacingGame,
-  RacingGameViewer,
-  RacingGameController,
-} from './domains/racingGame';
-import {
-  GuessTimeOut,
-  GuessRandomNumber,
-  RockPaperScissors,
-  DiceDiffGame,
-} from './domains/miniGames';
+import RacingGame from './domains/racingGame/RacingGame.js';
+import RacingGameController from './domains/racingGame/RacingGameController.js';
+import RacingGameViewer from './domains/racingGame/RacingGameViewer.js';
+import RockPaperScissors from './domains/miniGames/RockPaperScissors.js';
+import GuessRandomNumber from './domains/miniGames/GuessRandomNumber.js';
+import GuessTimeOut from './domains/miniGames/GuessTimeOut.js';
+import DiceDiffGame from './domains/miniGames/DiceDiffGame.js';
 
 async function main() {
   await new RacingGameController({

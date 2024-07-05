@@ -1,6 +1,6 @@
 import { getRandomNumber } from '../../utils/getRandomNumber.js';
 import readInput from '../../utils/readInput.js';
-import { rockPaperScissorsValidations } from '../../validations';
+import { rockPaperScissorsValidations } from '../../validations/miniGames.js';
 
 const rockScissorPaperMap = {
   rock: {
