@@ -1,11 +1,13 @@
 import Car from './Car.js'
 import Game from './Game.js'
+import createValidator from "../validations/createValidator.js";
+import {racingValidations} from "../validations/racing.js";
 
 export default class RacingGame extends Game {
   constructor({ miniGames }) {
     super({ miniGames })
-    this.cars = []
-    this.players = []
+    this.validate = createValidator(racingValidations)
+    this.validate(this.miniGames, ['miniGameInterface', 'miniGameSize'])
   }
 
   get maxPosition() {
@@ -19,17 +21,20 @@ export default class RacingGame extends Game {
 
   setMaxRound(maxRound) {
     this.maxRound = maxRound
+    this.validate(this.maxRound, ['maxRoundNumber', 'maxRoundRange'])
   }
 
-  addPlayer(name) {
-    const newPlayerCar = new Car(name)
-    this.players.push(newPlayerCar.name)
-    this.cars.push(newPlayerCar)
-  }
-
-  addCar(name) {
-    const newCar = new Car(name)
-    this.cars.push(newCar)
+  setCars(playerNames, botNames) {
+    this.cars = []
+    this.players = [];
+    [...playerNames, ...botNames].forEach(name => {
+      const newCar = new Car(name);
+      this.cars.push(newCar);
+      if (playerNames.includes(name)) {
+        this.players.push(newCar.name);
+      }
+    });
+    this.validate(this.cars,['leastCarCount', 'uniqueCarName'])
   }
 
   async doRound() {
@@ -75,7 +80,6 @@ export default class RacingGame extends Game {
       this.emitEvent('miniGameStart', car.name)
       return await miniGame.PvC(car.name)
     }
-
     return miniGame.CvC(car.name)
   }
 }

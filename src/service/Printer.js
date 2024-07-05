@@ -5,9 +5,11 @@ export default class ConsolePrinter {
 
   format(templateKey, messages) {
     let result = this.template[templateKey]
-    messages.forEach((message, index) => {
-      result = result.replaceAll(`%{${index + 1}}`, message)
-    })
+    if (messages && messages.length > 0) {
+      messages.forEach((message, index) => {
+        result = result.replaceAll(`%{${index + 1}}`, message)
+      })
+    }
     return result
   }
 

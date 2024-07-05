@@ -7,7 +7,7 @@ export default class DiceDiffGame {
   }
 
   static getPlayerResult(playerName, playerAnswer, opponentAnswer) {
-    const diff = opponentAnswer - playerAnswer
+    const diff = playerAnswer - opponentAnswer
     return {
       score: diff,
       log: {
@@ -25,7 +25,6 @@ export default class DiceDiffGame {
   static async PvC(playerName) {
     await readInput('주사위 던지기 게임 : Enter 입력 시 주사위를 던지고, 그 차이만큼 이동합니다.')
     const answer = this.diceNumber
-    console.log(`${answer}이 나왔습니다.`)
     return this.getPlayerResult(`*${playerName}`, answer, this.diceNumber)
   }
 }

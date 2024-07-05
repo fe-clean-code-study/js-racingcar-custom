@@ -23,19 +23,33 @@ export default class RacingGameController {
 
   async startGame() {
     this.viewer.displayGameStart()
-    await this.setupGame()
+    await this.setupNames()
+    await this.setupMaxRound()
     await this.racingGame.play()
     this.viewer.displayWinners(this.racingGame)
   }
 
-  async setupGame() {
-    const playerNames = await this.viewer.readPlayerCarNames()
-    playerNames.split(',').forEach(name => this.racingGame.addPlayer(name))
+  async setupNames() {
+    try {
+      const playerNames = await this.viewer.readPlayerCarNames()
+      const botNames = await this.viewer.readBotCarNames()
+      this.racingGame.setCars(
+          playerNames.split(',').filter(Boolean),
+          botNames.split(',').filter(Boolean),
+      )
+    } catch (error) {
+      this.viewer.displayError(error)
+      await this.setupNames()
+    }
+  }
 
-    const carNames = await this.viewer.readCarNames()
-    carNames.split(',').forEach(name => this.racingGame.addCar(name))
-
-    const maxRound = await this.viewer.readRoundCount()
-    this.racingGame.setMaxRound(Number(maxRound))
+  async setupMaxRound() {
+    try {
+      const maxRound = await this.viewer.readRoundCount()
+      this.racingGame.setMaxRound(Number(maxRound))
+    }catch (error) {
+      this.viewer.displayError(error)
+      await this.setupMaxRound()
+    }
   }
 }
