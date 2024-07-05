@@ -1,9 +1,7 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 
-import {
-  RacingGame,
-  RacingGameController,
-} from '../domains/racingGame/index.js';
+import RacingGame from '../domains/racingGame/RacingGame.js';
+import RacingGameController from '../domains/racingGame/RacingGameController.js';
 
 const mockMiniGame = {
   PvC: null,
