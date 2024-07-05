@@ -1,7 +1,6 @@
-import Car from './Car.js'
-import Game from './Game.js'
-import createValidator from "../validations/createValidator.js";
-import {racingValidations} from "../validations/racing.js";
+import Car from '../Car.js'
+import Game from '../Game.js'
+import { racingValidations, createValidator } from "../../validations";
 
 export default class RacingGame extends Game {
   constructor({ miniGames }) {
@@ -64,6 +63,8 @@ export default class RacingGame extends Game {
 
   async race(car) {
     const miniGameResult = await this.doMiniGame(car)
+    this.validate(miniGameResult, ['miniGameResult'])
+
     if (miniGameResult.hasOwnProperty('score')) {
       car.move(miniGameResult.score)
     }

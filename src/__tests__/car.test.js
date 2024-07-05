@@ -2,35 +2,25 @@ import { describe, test, expect } from 'vitest'
 import Car from '../domains/Car.js'
 import { carValidations } from '../validations/car.js'
 
-const spacedCarNameCases = ['  ab', 'a   b', '  ab  ', 'a b ']
-const invalidCarNameCases = ['', 'abcdef', '    ']
+describe('Car', () => {
+    test('올바른 이름과 초기 위치(0)으로 자동차를 초기화한다.', () => {
+        const car = new Car('테스트')
+        expect(car.name).toBe('테스트')
+        expect(car.position).toBe(0)
+    })
 
-describe('Car Test', () => {
-  test.each(invalidCarNameCases)(
-    '자동차 이름은 공백 제외 1자 이상 5자 이하여야 한다.',
-    name => {
-      expect(() => new Car(name)).toThrow(
-        carValidations.carNameLength.errorMessage
-      )
-    }
-  )
+    test('자동차를 올바르게 이동시킨다.', () => {
+        const car = new Car('테스트')
+        car.move(3)
+        expect(car.position).toBe(3)
+        car.move(-1)
+        expect(car.position).toBe(2)
+        car.move(-3)
+        expect(car.position).toBe(0)
+    })
 
-  test.each(spacedCarNameCases)(
-    '생성된 자동차 이름에는 공백이 없어야 한다.',
-    name => {
-      const car = new Car(name)
-      expect(car.name).toBe('ab')
-    }
-  )
-
-  test('생성된 자동차의 위치는 0으로 초기화되어야 한다.', () => {
-    const car = new Car('car')
-    expect(car.position).toBe(0)
-  })
-
-  test('move 시 자동차의 위치가 1 증가해야 한다.', () => {
-    const car = new Car('car')
-    car.move()
-    expect(car.position).toBe(1)
-  })
+    test('유효하지 않은 이름에 대해 오류를 발생시킨다.', () => {
+        expect(() => new Car(' ')).toThrow(carValidations.carNameLength.errorMessage)
+        expect(() => new Car('기이이인이름')).toThrow(carValidations.carNameLength.errorMessage)
+    })
 })

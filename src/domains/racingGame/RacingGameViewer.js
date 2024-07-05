@@ -29,8 +29,8 @@ export default class RacingGameViewer {
     this.printer.printWithTemplate('miniGameStart', [playerName])
   }
 
-  displayGameLogs({ results }) {
-    const { gameLogs } = results.at(-1)
+  displayGameLogs({ lastResult }) {
+    const { gameLogs } = lastResult
     this.printer.lineBreak()
     Object.entries(gameLogs).forEach(([name, log]) => {
       this.printer.printWithTemplate('gameLog', [name.padEnd(5, ' '), ...Object.values(log)])

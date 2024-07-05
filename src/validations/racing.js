@@ -25,5 +25,17 @@ export const racingValidations = {
     miniGameSize: {
         check: (miniGames) => Object.values(miniGames).length > 0,
         errorMessage: '최대 1개 이상의 미니게임이 있어야 합니다.'
+    },
+    miniGameResult: {
+        check: (miniGameResult) =>  {
+            const isResultCorrect =  (
+                miniGameResult.hasOwnProperty('score') ||
+                miniGameResult.hasOwnProperty('win')
+            ) && miniGameResult.hasOwnProperty('log')
+
+            const { log } = miniGameResult
+            return isResultCorrect && log.hasOwnProperty('player') && log.hasOwnProperty('computer') && log.hasOwnProperty('result')
+        },
+        errorMessage: '올바른 미니게임 결과가 아닙니다.'
     }
 }

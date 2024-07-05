@@ -1,5 +1,5 @@
 export default class RacingGameController {
-  constructor(racingGame, viewer) {
+  constructor({ racingGame, viewer }) {
     this.racingGame = racingGame
     this.viewer = viewer
 
