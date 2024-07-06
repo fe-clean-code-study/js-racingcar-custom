@@ -22,10 +22,7 @@ class Validator {
   }
 
   static integer(value, errorMessage) {
-    Validator.throwErrorWithCondition(
-      typeof value !== "number" || !Number.isInteger(value),
-      errorMessage
-    );
+    Validator.throwErrorWithCondition(!Number.isInteger(value), errorMessage);
   }
 
   static array(value, errorMessage) {
