@@ -1,4 +1,5 @@
 import { outputManager } from "../service/index.js";
+import { validate } from "../utils/index.js";
 import Race from "./Race.js";
 
 class RaceScoreboard {
@@ -32,9 +33,7 @@ class RaceScoreboard {
   }
 
   static #validateRace(race) {
-    if (!(race instanceof Race)) {
-      throw new Error("Race 클래스의 인스턴스가 아닙니다.");
-    }
+    validate.instance(race, Race, "Race 클래스의 인스턴스가 아닙니다.");
   }
 }
 

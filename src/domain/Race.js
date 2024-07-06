@@ -1,52 +1,56 @@
-import { deepCopy, getRandomNumber, isSubclass } from "../utils/index.js";
+import { deepCopy, getRandomNumber, validate } from "../utils/index.js";
 import Racer from "./Racer.js";
 
 class Race {
-  #Racer;
+  static #DEFAULT_RULES = [() => 4 <= getRandomNumber(0, 9)];
   #laps;
   #racers;
   #records;
 
-  constructor(Racer, laps) {
-    Race.#validateRacer(Racer);
+  constructor(laps) {
     Race.#validateLaps(laps);
-    this.#Racer = Racer;
     this.#laps = laps;
     this.#racers = [];
     this.#records = [];
   }
 
-  ready(racerNameList) {
-    Race.#validateRacerNameList(racerNameList);
+  start(racers, rules = Race.#DEFAULT_RULES) {
+    Race.#validateRacers(racers);
+    Race.#validateRules(rules);
 
-    this.#addRacers(racerNameList);
-  }
+    this.#addRacers(racers);
 
-  start() {
-    Array.from({ length: this.#laps }).forEach(() => {
-      this.#progressRace();
-    });
+    this.#progressRace(rules);
   }
 
   #addRacer(racer) {
+    Race.#validateRacer(racer);
+
     this.#racers.push(racer);
   }
 
-  #addRacers(racerNameList) {
-    racerNameList.forEach((name) => {
-      this.#addRacer(new this.#Racer(name));
+  #addRacers(racers) {
+    racers.forEach((racer) => {
+      this.#addRacer(racer);
     });
   }
 
-  #progressRace() {
+  #progressRacePerLap(rule) {
     let recordPerLap = [];
 
     this.#racers.forEach((racer) => {
-      Race.#movementStrategy(racer);
+      Race.#moveByRule(racer, rule);
       recordPerLap.push({ name: racer.name, position: racer.position });
     });
 
     this.#records.push(recordPerLap);
+  }
+
+  #progressRace(rules) {
+    Array.from({ length: this.#laps }).forEach(() => {
+      const rule = rules.length === 1 ? rules[0] : rule.shift();
+      this.#progressRacePerLap(rule);
+    });
   }
 
   get records() {
@@ -67,36 +71,40 @@ class Race {
     return finalLapRecord.filter((racer) => racer.position === maxPosition);
   }
 
-  static #movementStrategy(racer) {
-    const number = getRandomNumber(0, 9);
-
-    if (4 <= number) racer.move();
+  static #moveByRule(racer, rule) {
+    if (rule()) racer.move();
   }
 
   static #validateRacer(racer) {
-    if (!isSubclass(racer, Racer)) {
-      throw new Error("레이서가 Racer 클래스를 자식 클래스가 아닙니다.");
-    }
+    validate.instance(racer, Racer, "레이스에 적합하지 않은 레이서입니다.");
   }
 
   static #validateLaps(laps) {
-    if (typeof laps !== "number") {
-      throw new Error("레이스 횟수는 숫자여야 합니다.");
-    }
-
-    if (laps < 1) {
-      throw new Error("레이스 횟수는 1이상이어야 합니다.");
-    }
+    validate.integer(laps, "레이스 횟수는 숫자여야 합니다.");
+    validate.lessThan(laps, 1, "레이스 횟수는 1이상이어야 합니다.");
   }
 
-  static #validateRacerNameList(racerNameList) {
-    if (!Array.isArray(racerNameList)) {
-      throw new Error("경기 준비에 적합하지 않은 입력값입니다.");
-    }
+  static #validateRacers(racers) {
+    validate.array(racers, "레이스 시작에 적합하지 않은 입력값입니다.");
+    validate.lessThan(
+      racers.length,
+      1,
+      "레이스를 시작하기엔 레이서가 부족합니다."
+    );
+  }
 
-    if (racerNameList.length < 1) {
-      throw new Error("경기를 준비하기엔 레이서가 부족합니다.");
-    }
+  static #validateRules(rules) {
+    validate.array(rules, "레이스 규칙에 적합하지 않은 입력값입니다.");
+    validate.lessThan(
+      rules.length,
+      1,
+      "레이스를 시작하기엔 규칙이 부족합니다."
+    );
+
+    rules.forEach((rule) => {
+      validate.function(rule, "레이스 규칙은 함수여야 합니다.");
+      validate.boolean(rule(), "레이스 규칙의 반환값으로 적합하지 않습니다.");
+    });
   }
 }
 
